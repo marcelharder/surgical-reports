@@ -1,0 +1,9 @@
+appsettings.json
+appsettings.Development.json
+**/tar
+**/bin
+**/obj
+
+
+
+

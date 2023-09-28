@@ -1,0 +1,12 @@
+global using System;
+global using System.Collections.Generic;
+global using System.Data;
+global using System.Linq;
+global using System.Threading.Tasks;
+global using surgical_reports.interfaces;
+global using surgical_reports.entities;
+global using surgical_reports.implementations;
+global using Dapper;
+global using surgical_reports.Entities;
+global using MySqlConnector;
+global using AutoMapper;

@@ -441,7 +441,6 @@ namespace surgical_reports.helpers
             var help = await _context.Valves.FirstOrDefaultAsync(x => x.SERIAL_IMP == serial);
             return help;
         }
-
         public string getReportCode(int fdType)
         {
             var result = "";

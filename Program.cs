@@ -11,7 +11,7 @@ builder.Services.AddScoped<IProcedureRepository, ProcedureRepository>();
 builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<IEmployeeRepository, EmployeeRepository>();
 builder.Services.AddScoped<IHospitalRepository, HospitalRepository>();
-builder.Services.AddScoped<IFinalReportRepo,FinalReportRepo>();
+builder.Services.AddScoped<IComposeFinalReport,ComposeFinalReport>();
 builder.Services.AddScoped<IPreviewReport, PreviewReport>();
 builder.Services.AddAutoMapper(typeof(AutoMapperProfiles));
 

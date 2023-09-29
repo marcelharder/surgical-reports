@@ -2,13 +2,23 @@ using surgical_reports.entities.dtos;
 
 namespace surgical_reports.implementations;
 
-public class FinalReportRepo : IFinalReportRepo
+public class ComposeFinalReport : IComposeFinalReport
 {
     private readonly DapperContext _context;
 
-    public FinalReportRepo(DapperContext context)
+    public ComposeFinalReport(DapperContext context)
     {
         _context = context;
+    }
+
+    public int addToExpiredReports(ReportTiming rt)
+    {
+        throw new NotImplementedException();
+    }
+
+    public Task composeAsync(int procedure_id)
+    {
+        throw new NotImplementedException();
     }
 
     public async Task<Class_Final_operative_report> CreateFinalReport(frDto fr)
@@ -260,6 +270,16 @@ public class FinalReportRepo : IFinalReportRepo
         }
     }
 
+    public int deleteExpiredReports()
+    {
+        throw new NotImplementedException();
+    }
+
+    public int deletePDF(int id)
+    {
+        throw new NotImplementedException();
+    }
+
     public async Task<List<Class_Final_operative_report>> getFinalReports()
     {
         var query = "SELECT * FROM finalReports";
@@ -268,6 +288,11 @@ public class FinalReportRepo : IFinalReportRepo
             var reports = await connection.QueryAsync<Class_Final_operative_report>(query);
             return reports.ToList();
         }
+    }
+
+    public Task<int> getReportCode(int procedure_id)
+    {
+        throw new NotImplementedException();
     }
 
     public async Task<Class_Final_operative_report> getSpecificReport(int id)
@@ -280,5 +305,8 @@ public class FinalReportRepo : IFinalReportRepo
         }
     }
 
-
+    public Task<bool> isReportExpired(int id)
+    {
+        throw new NotImplementedException();
+    }
 }

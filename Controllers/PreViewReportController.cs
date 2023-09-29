@@ -16,20 +16,11 @@ public class PreViewReportController : ControllerBase
         _repo = repo;
     }
 
-
-
-
     [HttpGet("{id}", Name = "getPreviewReport")]
-    public async Task<IActionResult> getReport(int id)
-    {
-        throw new NotImplementedException();
-    }
+    public async Task<IActionResult> getReport(int id) { return Ok( await _repo.getPreViewAsync(id)); }
+   
     [HttpGet("{reset/id}", Name = "getPreviewReport")]
-    public async Task<IActionResult> resetReport(int id)
-    {
-        throw new NotImplementedException();
-    }
-
+    public async Task<IActionResult> resetReport(int id){ await _repo.resetPreViewAsync(id); return Ok(); }
     
     
     [HttpPost]

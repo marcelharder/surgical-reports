@@ -120,7 +120,7 @@ namespace surgical_reports.helpers
 
             ReportHeaderDTO currentHeader = await mapToReportHeaderAsync(cp);
 
-            Class_Preview_Operative_report pr = await _prev.getPreViewAsync(procedure_id);
+            Class_Preview_Operative_report prev = await _prev.getPreViewAsync(procedure_id);
            
            
 

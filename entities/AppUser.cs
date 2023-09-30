@@ -2,7 +2,7 @@ using Microsoft.AspNetCore.Identity;
 
 namespace surgical_reports.entities;
 
-    public class AppUser:IdentityUser<int>
+    public class AppUser
     {
         public int hospital_id { get; set; }
         public string worked_in { get; set; }

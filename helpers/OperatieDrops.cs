@@ -5,8 +5,8 @@ using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
 
-namespace surgical_reports.helpers
-{
+namespace surgical_reports.helpers;
+
     public class OperatieDrops
     {
         XElement _testje;
@@ -23,12 +23,6 @@ namespace surgical_reports.helpers
             var test = Path.Combine(content, filename);
             XElement testje = XElement.Load($"{test}");
             _testje = testje;
-            _com = com;
-            _sp = sp;
-
-          
-
-
         }
 
        
@@ -1095,34 +1089,9 @@ namespace surgical_reports.helpers
             return _help;
         }
        
-        #region <!--HospitalStuff -->
-
-
-        public async Task<List<Class_Item>> getHospitalOptions(int userId)
-        {
-            var cl = new List<Class_Item>();
-            Class_Item ci;
-            var user = await _userManager.Users.FirstOrDefaultAsync(x => x.Id == userId);
-            var csv = user.worked_in;
-            List<string> list_of_hospitals = csv.Split(',').ToList<string>();
-
-
-            foreach (string hos in list_of_hospitals)
-            {
-                var help = await _context.Hospitals.FirstOrDefaultAsync(h => h.HospitalNo == hos.makeSureTwoChar());
-                ci = new Class_Item();
-                ci.description = help.HospitalName;
-                ci.value = Convert.ToInt32(help.HospitalNo);
-                cl.Add(ci);
-            }
-            return cl;
-        }
-
-        #endregion
-
+    }   
         
 
 
 
-   }
-}
+   

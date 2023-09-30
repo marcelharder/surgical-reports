@@ -19,7 +19,11 @@ public class InstitutionalText : IInstitutionalText
     private List<Class_Item> dropRadial = new List<Class_Item>();
     private List<Class_Item> dropLeg = new List<Class_Item>();
 
-    public InstitutionalText(IWebHostEnvironment env,
+    private IProcedureRepository _proc;
+
+    public InstitutionalText(
+    IProcedureRepository proc,
+    IWebHostEnvironment env,
     DapperContext context,
     OperatieDrops drop,
     reportMapper sm)
@@ -35,6 +39,7 @@ public class InstitutionalText : IInstitutionalText
         _element = element;
         _context = context;
         _drop = drop;
+        _proc = proc;
 
     }
     public async Task<List<string>> getText(string hospital, string soort, int procedure_id)
@@ -130,17 +135,13 @@ public class InstitutionalText : IInstitutionalText
     }
     private async Task<string> getProcedureDescriptionAsync(int procedure_id)
     {
-        var query = "SELECT * FROM Procedures WHERE ProcedureId = " + procedure_id;
-        using (var connection = _context.CreateConnection())
-        {
-            var procedure = await connection.QueryFirstOrDefaultAsync<Class_Procedure>(query);
-            return procedure.Description;
-        }
+        var r = await _proc.getSpecificProcedure(procedure_id);
+        return r.Description;
     }
     private async Task<string> getCirculationSupportAsync(int procedure_id, IEnumerable<XElement> test)
     {
         var help = "";
-        var selectedProcedure = await _context.Procedures.FirstOrDefaultAsync(x => x.ProcedureId == procedure_id);
+        var selectedProcedure = await _proc.getSpecificProcedure(procedure_id);
         if (selectedProcedure != null)
         {
             var t = selectedProcedure.SelectedInotropes; // dit is de gekozen inotropische ondersteuning
@@ -157,7 +158,7 @@ public class InstitutionalText : IInstitutionalText
     private async Task<string> getPMWiresAsync(int procedure_id, IEnumerable<XElement> test)
     {
         var help = "";
-        var selectedProcedure = await _context.Procedures.FirstOrDefaultAsync(x => x.ProcedureId == procedure_id);
+        var selectedProcedure = await _proc.getSpecificProcedure(procedure_id);
         if (selectedProcedure != null)
         {
             var t = selectedProcedure.SelectedInotropes; // dit is de gekozen inotropische ondersteuning
@@ -174,7 +175,11 @@ public class InstitutionalText : IInstitutionalText
     private async Task<string> getIABPUsedAsync(int procedure_id, IEnumerable<XElement> test)
     {
         var help = "";
+        
         var selectedProcedure = await _context.CPBS.FirstOrDefaultAsync(x => x.PROCEDURE_ID == procedure_id);
+
+
+
         if (selectedProcedure != null)
         {
             var t = selectedProcedure.IABP_IND; // dit is de gekozen indicatie voor de IABP

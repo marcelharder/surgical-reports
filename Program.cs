@@ -1,6 +1,3 @@
-using System.Reflection;
-using surgical_reports.helpers;
-
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.

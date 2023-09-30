@@ -13,9 +13,9 @@ namespace surgical_reports.Controllers
     [Route("api/[controller]")]
     public class FinalReportController : ControllerBase
     {
-        private readonly IFinalReportRepo _final;
+        private readonly IComposeFinalReport _final;
 
-        public FinalReportController(IFinalReportRepo final)
+        public FinalReportController(IComposeFinalReport final)
         {
             _final = final;
         }

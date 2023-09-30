@@ -25,7 +25,7 @@ public class PreviewReport : IPreviewReport
     }
     public async Task<Class_Preview_Operative_report> getPreViewAsync(int procedure_id)
     {
-        if (await findPreview(procedure_id)) {return await getPreViewAsync(procedure_id);}
+        if (await findPreview(procedure_id)) { return await getPreViewAsync(procedure_id); }
         else
         {
             //add a new preview instance to database
@@ -85,10 +85,6 @@ public class PreviewReport : IPreviewReport
             return preview;
         }
     }
-    private Task<Class_Preview_Operative_report> getHospitalSuggestion(int procedure_id)
-    {
-        throw new NotImplementedException();
-    }
     private async Task<bool> findPreview(int procedure_id)
     {
         var query = "SELECT * FROM Previews WHERE procedure_id = @procedure_id";
@@ -136,7 +132,7 @@ public class PreviewReport : IPreviewReport
         var parameters = new DynamicParameters();
 
         parameters.Add("procedure_id", cp.procedure_id, DbType.Int32);
-        parameters.Add("Regel_1", cp.Regel1, DbType.String);
+        parameters.Add("Regel_1", cp.Regel_1, DbType.String);
         parameters.Add("Regel_2", cp.Regel2, DbType.String);
         parameters.Add("Regel_3", cp.Regel3, DbType.String);
         parameters.Add("Regel_4", cp.Regel4, DbType.String);

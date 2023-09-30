@@ -68,7 +68,7 @@ public class InstitutionalText : IInstitutionalText
 
                 }
                 else
-                {  // there is a institutional record for this procedure
+                {  // there is a institutional record for this soort of procedure
                     foreach (XElement ad in t)
                     {
                         result = await this.getExitingRecordAsync(ad, procedure_id, op);
@@ -242,7 +242,7 @@ public class InstitutionalText : IInstitutionalText
     {
         var content = _env.ContentRootPath;
         var filename = "conf/InstitutionalReports.xml";
-         var test = Path.Combine(content, filename);
+        var test = Path.Combine(content, filename);
         IEnumerable<XElement> op = from el in _doc.Descendants("hospital")
                                    where (string)el.Attribute("id") == "99999"
                                    select el;

@@ -8,11 +8,13 @@ public class CPBRepo : ICPBRepo
     {
         _context = context;
     }
-    Task<Class_CPB> ICPBRepo.getSpecificCPB(int id)
+    async Task<Class_CPB> ICPBRepo.getSpecificCPB(int id)
     {
         var query = "SELECT * FROM CPBS WHERE id = @id";
-        using(var connection = _context.CreateConnection()){
-            
+        using (var connection = _context.CreateConnection())
+        {
+            var report = await connection.QuerySingleOrDefaultAsync<Class_CPB>(query, new { id });
+            return report;
         }
 
     }

@@ -1,5 +1,3 @@
-using surgical_reports.entities.dtos;
-
 namespace surgical_reports.implementations;
 
 public class ComposeFinalReport : IComposeFinalReport
@@ -15,12 +13,10 @@ public class ComposeFinalReport : IComposeFinalReport
     {
         throw new NotImplementedException();
     }
-
     public Task composeAsync(int procedure_id)
     {
         throw new NotImplementedException();
     }
-
     public async Task<Class_Final_operative_report> CreateFinalReport(frDto fr)
     {
         var query = "INSERT INTO finalReports (procedure_id, MedRecNumber, Name, ProcedureDescription, Attending, OperatieDate, Diagnosis, " +
@@ -269,17 +265,14 @@ public class ComposeFinalReport : IComposeFinalReport
             return createdFinalReport;
         }
     }
-
     public int deleteExpiredReports()
     {
         throw new NotImplementedException();
     }
-
     public int deletePDF(int id)
     {
         throw new NotImplementedException();
     }
-
     public async Task<List<Class_Final_operative_report>> getFinalReports()
     {
         var query = "SELECT * FROM finalReports";
@@ -289,12 +282,10 @@ public class ComposeFinalReport : IComposeFinalReport
             return reports.ToList();
         }
     }
-
     public Task<int> getReportCode(int procedure_id)
     {
         throw new NotImplementedException();
     }
-
     public async Task<Class_Final_operative_report> getSpecificReport(int id)
     {
         var query = "SELECT * FROM finalReports WHERE procedure_id = @id";
@@ -304,7 +295,6 @@ public class ComposeFinalReport : IComposeFinalReport
             return report;
         }
     }
-
     public Task<bool> isReportExpired(int id)
     {
         throw new NotImplementedException();

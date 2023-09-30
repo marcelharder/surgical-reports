@@ -10,3 +10,8 @@ global using Dapper;
 global using surgical_reports.Entities;
 global using MySqlConnector;
 global using AutoMapper;
+global using Microsoft.AspNetCore.Mvc;
+global using surgical_reports.entities.dtos;
+global using System.Xml.Linq;
+global using surgical_reports.helpers;
+

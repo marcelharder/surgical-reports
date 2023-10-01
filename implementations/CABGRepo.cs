@@ -11,7 +11,7 @@ public class CABGRepo : ICABGRepo
 
     public async Task<Class_CABG> getSpecificCABG(int id)
     {
-        var query = "SELECT * FROM CABGS WHERE id = @id";
+        var query = "SELECT * FROM CABGS WHERE Id = @id";
         using (var connection = _context.CreateConnection())
         {
             var report = await connection.QuerySingleOrDefaultAsync<Class_CABG>(query, new { id });

@@ -14,6 +14,10 @@ namespace surgical_reports.helpers
         private readonly IMapper _map;
         private IWebHostEnvironment _env;
 
+        private ICABGRepo _cabg;
+
+        private IValveRepo _valve;
+
         private IHospitalRepository _hos;
 
         private IEmployeeRepository _emp;
@@ -21,9 +25,12 @@ namespace surgical_reports.helpers
         private IProcedureRepository _proc;
         private IPreviewReport _prev;
 
+      
         private IUserRepository _user;
 
         public reportMapper(
+            ICABGRepo cabg,
+            IValveRepo valve,
             IMapper map, 
             IWebHostEnvironment env, 
             IUserRepository user, 
@@ -33,12 +40,14 @@ namespace surgical_reports.helpers
             IPreviewReport prev)
         {
             _map = map;
+            _cabg = cabg;
             _env = env;
             _user = user;
             _hos = hos;
             _emp = emp;
             _proc = proc;
             _prev = prev;
+            _valve = valve;
         }
 
 
@@ -444,12 +453,18 @@ namespace surgical_reports.helpers
         }
         private async Task<Class_CABG> getCabgDetailsAsync(int procedure_id)
         {
-            var help = await _context.CABGS.FirstOrDefaultAsync(x => x.PROCEDURE_ID == procedure_id);
+            //var help = await _context.CABGS.FirstOrDefaultAsync(x => x.PROCEDURE_ID == procedure_id);
+            var help = await _cabg.getSpecificCABG(procedure_id);
             return help;
         }
         private async Task<Class_Valve> getValvesDetailsAsync(string implantPosition, int procedure_id)
         {
-            var help = await _context.Valves.FirstOrDefaultAsync(x => x.SERIAL_IMP == serial);
+            // needs some work obviously
+            var serial = "";
+            //var help = await _context.Valves.FirstOrDefaultAsync(x => x.SERIAL_IMP == serial);
+            var help = await _valve.getValveBySerial(serial);
+            
+
             return help;
         }
         public string getReportCode(int fdType)

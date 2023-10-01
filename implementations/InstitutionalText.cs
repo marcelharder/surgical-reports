@@ -16,7 +16,7 @@ public class InstitutionalText : IInstitutionalText
     private ICABGRepo _cabg;
 
     public InstitutionalText(
-        ICABGRepo cabg,
+    ICABGRepo cabg,
     ICPBRepo icpb,
     IProcedureRepository proc,
     IWebHostEnvironment env,
@@ -37,6 +37,7 @@ public class InstitutionalText : IInstitutionalText
         _drop = drop;
         _proc = proc;
         _icpb = icpb;
+        _cabg = cabg;
 
     }
     public async Task<List<string>> getText(string hospital, string soort, int procedure_id)

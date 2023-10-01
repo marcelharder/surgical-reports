@@ -6,6 +6,7 @@ builder.Services.AddSingleton<DapperContext>();
 builder.Services.AddSingleton<reportMapper>();
 builder.Services.AddScoped<ICPBRepo,CPBRepo>();
 builder.Services.AddScoped<ICABGRepo,CABGRepo>();
+builder.Services.AddScoped<IValveRepo,ValveRepo>();
 builder.Services.AddScoped<IProcedureRepository, ProcedureRepository>();
 builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<IEmployeeRepository, EmployeeRepository>();

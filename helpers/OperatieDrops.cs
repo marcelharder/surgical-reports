@@ -10,7 +10,7 @@ namespace surgical_reports.helpers;
     public class OperatieDrops
     {
         XElement _testje;
-        XElement _val;
+        
         private IWebHostEnvironment _env;
          List<Class_Item> _help = new List<Class_Item>();
      
@@ -23,6 +23,7 @@ namespace surgical_reports.helpers;
             var test = Path.Combine(content, filename);
             XElement testje = XElement.Load($"{test}");
             _testje = testje;
+            
         }
 
        
@@ -903,40 +904,11 @@ namespace surgical_reports.helpers;
         #endregion
 
         #region <!--Valve--> 
-        internal List<Class_Item> getTricuspidRingType()
-        {
-            IEnumerable<XElement> op = _val.Descendants("valve_codes");
-            foreach (XElement s in op)
-            {
-                if (s.Element("fd_Type").Value == "R")
-                {
-                    Class_Item _result = new Class_Item();
-                    _result.description = s.Element("Description").Value;
-                    _result.value = Convert.ToInt32(s.Element("Valve_id").Value);
-                    _help.Add(_result);
-                }
-            }
+        
 
 
-            return _help;
-        }
-        internal List<Class_Item> getMitralRingType()
-        {
-            IEnumerable<XElement> op = _val.Descendants("valve_codes");
-            foreach (XElement s in op)
-            {
-                if (s.Element("fd_Type").Value == "R")
-                {
-                    Class_Item _result = new Class_Item();
-                    _result.description = s.Element("Description").Value;
-                    _result.value = Convert.ToInt32(s.Element("Valve_id").Value);
-                    _help.Add(_result);
-                }
-            }
-
-
-            return _help;
-        }
+    
+        
         internal async Task<List<Class_Item>> getImplantPositionAsync()
         {
             await Task.Run(() =>

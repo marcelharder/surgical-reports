@@ -1,6 +1,3 @@
-
-using surgical_reports.helpers;
-
 namespace surgical_reports.implementations;
 
 public class PreviewReport : IPreviewReport

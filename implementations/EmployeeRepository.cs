@@ -1,10 +1,5 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+namespace surgical_reports.implementations;
 
-namespace surgical_reports.implementations
-{
     public class EmployeeRepository : IEmployeeRepository
     {
  private readonly DapperContext _context;
@@ -23,4 +18,3 @@ namespace surgical_reports.implementations
         }
         }
     }
-}

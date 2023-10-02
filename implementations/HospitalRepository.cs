@@ -1,9 +1,3 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using surgical_reports.helpers;
-
 namespace surgical_reports.implementations;
 
 public class HospitalRepository : IHospitalRepository

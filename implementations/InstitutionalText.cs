@@ -1,4 +1,3 @@
-
 namespace surgical_reports.implementations;
 
 public class InstitutionalText : IInstitutionalText

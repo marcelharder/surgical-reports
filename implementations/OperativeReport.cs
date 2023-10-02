@@ -1,6 +1,3 @@
-
-
-
 namespace surgical_reports.implementations;
 
 public class OperativeReport : IOperativeReport
@@ -173,10 +170,9 @@ public class OperativeReport : IOperativeReport
             Image test;
             if (_frs.HospitalUrl == null)
             {
-
                 try
                 {
-                    test = Image.GetInstance(new Uri("https://res.cloudinary.com/marcelcloud/image/upload/v1668181198/zbzftf4medwmdyqnuobi.jpg"));
+                    test = Image.GetInstance(new Uri("https://res.cloudinary.com/marcelcloud/image/upload/v1574199666/sibput7sssqzfenyozlv.jpg"));
 
                 }
                 catch (System.Exception)

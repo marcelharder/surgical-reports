@@ -1,3 +1,5 @@
+using Microsoft.Extensions.Configuration;
+
 namespace surgical_reports.entities;
 
     public class DapperContext

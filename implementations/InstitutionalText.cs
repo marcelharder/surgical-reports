@@ -4,22 +4,22 @@ namespace surgical_reports.implementations;
 public class InstitutionalText : IInstitutionalText
 {
     private XDocument _doc;
-
-
     private XElement _element;
-
     private reportMapper _sm;
-
-
     private OperatieDrops _drop;
     private IWebHostEnvironment _env;
-
     private DapperContext _context;
-
     private List<Class_Item> dropRadial = new List<Class_Item>();
     private List<Class_Item> dropLeg = new List<Class_Item>();
+    private IProcedureRepository _proc;
+    private ICPBRepo _icpb;
+    private ICABGRepo _cabg;
 
-    public InstitutionalText(IWebHostEnvironment env,
+    public InstitutionalText(
+    ICABGRepo cabg,
+    ICPBRepo icpb,
+    IProcedureRepository proc,
+    IWebHostEnvironment env,
     DapperContext context,
     OperatieDrops drop,
     reportMapper sm)
@@ -35,6 +35,9 @@ public class InstitutionalText : IInstitutionalText
         _element = element;
         _context = context;
         _drop = drop;
+        _proc = proc;
+        _icpb = icpb;
+        _cabg = cabg;
 
     }
     public async Task<List<string>> getText(string hospital, string soort, int procedure_id)
@@ -68,7 +71,7 @@ public class InstitutionalText : IInstitutionalText
 
                 }
                 else
-                {  // there is a institutional record for this procedure
+                {  // there is a institutional record for this soort of procedure
                     foreach (XElement ad in t)
                     {
                         result = await this.getExitingRecordAsync(ad, procedure_id, op);
@@ -79,10 +82,10 @@ public class InstitutionalText : IInstitutionalText
         });
         return result;
     }
-    private string translateHarvestLocationLeg(int procedure_id, List<Class_Item> dropLeg)
+    private async Task<string> translateHarvestLocationLeg(int procedure_id, List<Class_Item> dropLeg)
     {
         var help = "";
-        var cabg = _context.CABGS.FirstOrDefault(x => x.PROCEDURE_ID == procedure_id);
+        var cabg = await _cabg.getSpecificCABG(procedure_id);
 
         if (cabg != null && cabg.leg_harvest_location == "")
         {
@@ -93,11 +96,10 @@ public class InstitutionalText : IInstitutionalText
 
         return help;
     }
-    private string translateHarvestLocationRadial(int procedure_id, List<Class_Item> dropRadial)
+    private async Task<string> translateHarvestLocationRadial(int procedure_id, List<Class_Item> dropRadial)
     {
         var help = "";
-        var cabg = _context.CABGS.FirstOrDefault(x => x.PROCEDURE_ID == procedure_id);
-
+        var cabg = await _cabg.getSpecificCABG(procedure_id);
         if (cabg != null && cabg.radial_harvest_location == "")
         {
             var test = Convert.ToInt32(cabg.radial_harvest_location);
@@ -107,40 +109,36 @@ public class InstitutionalText : IInstitutionalText
 
         return help;
     }
-    private string getCardioPlegiaTemp(int procedure_id)
+    private async Task<string> getCardioPlegiaTemp(int procedure_id)
     {
         var help = "";
-        Class_CPB cpb = _context.CPBS.FirstOrDefault(x => x.PROCEDURE_ID == procedure_id);
+        Class_CPB cpb = await _icpb.getSpecificCPB(procedure_id);
         if (cpb != null) { }
         return help;
     }
-    private string getCardioPlegiaRoute(int procedure_id)
+    private async Task<string> getCardioPlegiaRoute(int procedure_id)
     {
         var help = "";
-        Class_CPB cpb = _context.CPBS.FirstOrDefault(x => x.PROCEDURE_ID == procedure_id);
+        Class_CPB cpb =  await _icpb.getSpecificCPB(procedure_id);
         if (cpb != null) { }
         return help;
     }
-    private string getCardioPlegiaType(int procedure_id)
+    private async Task<string> getCardioPlegiaType(int procedure_id)
     {
         var help = "";
-        Class_CPB cpb = _context.CPBS.FirstOrDefault(x => x.PROCEDURE_ID == procedure_id);
+        Class_CPB cpb =  await _icpb.getSpecificCPB(procedure_id);
         if (cpb != null) { }
         return help;
     }
     private async Task<string> getProcedureDescriptionAsync(int procedure_id)
     {
-        var query = "SELECT * FROM Procedures WHERE ProcedureId = " + procedure_id;
-        using (var connection = _context.CreateConnection())
-        {
-            var procedure = await connection.QueryFirstOrDefaultAsync<Class_Procedure>(query);
-            return procedure.Description;
-        }
+        var r = await _proc.getSpecificProcedure(procedure_id);
+        return r.Description;
     }
     private async Task<string> getCirculationSupportAsync(int procedure_id, IEnumerable<XElement> test)
     {
         var help = "";
-        var selectedProcedure = await _context.Procedures.FirstOrDefaultAsync(x => x.ProcedureId == procedure_id);
+        var selectedProcedure = await _proc.getSpecificProcedure(procedure_id);
         if (selectedProcedure != null)
         {
             var t = selectedProcedure.SelectedInotropes; // dit is de gekozen inotropische ondersteuning
@@ -157,7 +155,7 @@ public class InstitutionalText : IInstitutionalText
     private async Task<string> getPMWiresAsync(int procedure_id, IEnumerable<XElement> test)
     {
         var help = "";
-        var selectedProcedure = await _context.Procedures.FirstOrDefaultAsync(x => x.ProcedureId == procedure_id);
+        var selectedProcedure = await _proc.getSpecificProcedure(procedure_id);
         if (selectedProcedure != null)
         {
             var t = selectedProcedure.SelectedInotropes; // dit is de gekozen inotropische ondersteuning
@@ -174,10 +172,10 @@ public class InstitutionalText : IInstitutionalText
     private async Task<string> getIABPUsedAsync(int procedure_id, IEnumerable<XElement> test)
     {
         var help = "";
-        var selectedProcedure = await _context.CPBS.FirstOrDefaultAsync(x => x.PROCEDURE_ID == procedure_id);
-        if (selectedProcedure != null)
+        var selectedCPB = await _icpb.getSpecificCPB(procedure_id);
+        if (selectedCPB != null)
         {
-            var t = selectedProcedure.IABP_IND; // dit is de gekozen indicatie voor de IABP
+            var t = selectedCPB.IABP_IND; // dit is de gekozen indicatie voor de IABP
             foreach (XElement el in test)// dit is het correcte ziekenhuis, dus ook de juiste taal
             {
                 IEnumerable<XElement> te = from tr in test.Descendants("reports").Elements("iabp").Elements("items")
@@ -242,7 +240,7 @@ public class InstitutionalText : IInstitutionalText
     {
         var content = _env.ContentRootPath;
         var filename = "conf/InstitutionalReports.xml";
-         var test = Path.Combine(content, filename);
+        var test = Path.Combine(content, filename);
         IEnumerable<XElement> op = from el in _doc.Descendants("hospital")
                                    where (string)el.Attribute("id") == "99999"
                                    select el;

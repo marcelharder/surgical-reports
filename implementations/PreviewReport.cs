@@ -6,26 +6,31 @@ namespace surgical_reports.implementations;
 public class PreviewReport : IPreviewReport
 {
     private DapperContext _context;
-    private reportMapper _reportM;
+    private IWebHostEnvironment _env;
     private IMapper _map;
     private IProcedureRepository _repo;
     private IInstitutionalText _text;
     public PreviewReport(
+        IWebHostEnvironment env,
         DapperContext context,
         IInstitutionalText text,
         IProcedureRepository repo,
-        IMapper map,
-        reportMapper reportM)
+        IMapper map
+       )
     {
         _context = context;
         _repo = repo;
         _map = map;
-        _reportM = reportM;
         _text = text;
+        _env = env;
     }
     public async Task<Class_Preview_Operative_report> getPreViewAsync(int procedure_id)
     {
-        if (await findPreview(procedure_id)) { return await getPreViewAsync(procedure_id); }
+        if (await findPreview(procedure_id)) {
+            
+             return await getPreviewAsync(procedure_id);
+             
+              }
         else
         {
             //add a new preview instance to database
@@ -45,7 +50,7 @@ public class PreviewReport : IPreviewReport
             else
             // get the generic preview from the hospital
             {
-                var report_code = _reportM.getReportCode(currentProcedure.fdType);
+                var report_code = getReportCode(currentProcedure.fdType.ToString());
                 if (report_code == "6")
                 {
                     result.regel_1 = "Please enter your custom report here and 'Save as suggestion'";
@@ -53,6 +58,9 @@ public class PreviewReport : IPreviewReport
                 }
                 else
                 {
+                    // check to see if there is an XML file for this hospital
+                    await _text.addRecordInXML(currentProcedure.hospital.ToString());
+                        
                     // get the suggestion from the InstitutionalReports.xml
                     var text = await _text.getText(currentProcedure.hospital.ToString(), currentProcedure.fdType.ToString(), currentProcedure.ProcedureId);
                     result.regel_1 = text[0]; result.regel_2 = text[1]; result.regel_3 = text[2]; result.regel_4 = text[3]; result.regel_5 = text[4];
@@ -215,7 +223,7 @@ public class PreviewReport : IPreviewReport
         }
     
     }
-    public async Task updatePVR(Class_Preview_Operative_report pv)
+    public async Task<int> updatePVR(Class_Preview_Operative_report pv)
     {
         var query = "UPDATE Previews SET Regel_1 = @Regel_1, Regel_2 = @Regel_2 " + 
         "Regel_3 = @Regel_3, Regel_4 = @Regel_4, Regel_5 = @Regel_5, " +
@@ -265,5 +273,20 @@ public class PreviewReport : IPreviewReport
         parameters.Add("Regel_33", pv.regel_33);
        
         using(var connection = _context.CreateConnection()) { await connection.ExecuteAsync(query, parameters); }
+
+        return 1;
     }
+   
+    public string getReportCode(string fdType)
+    {
+            var result = "";
+            var contentRoot = _env.ContentRootPath;
+            var filename = Path.Combine(contentRoot, "xml/procedure.xml");
+            XDocument order = XDocument.Load(filename);
+            IEnumerable<XElement> help = from d in order.Descendants("Code")
+                                         where d.Element("ID").Value == fdType.ToString()
+                                         select d;
+            foreach (XElement x in help) { result = x.Element("report_code").Value; }
+            return result;
+        }
 }

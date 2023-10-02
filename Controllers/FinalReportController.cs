@@ -1,52 +1,70 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
-using surgical_reports.entities.dtos;
-using surgical_reports.Entities;
-using surgical_reports.implementations;
 
-namespace surgical_reports.Controllers
-{
+
+namespace surgical_reports.Controllers;
+
     [ApiController]
     [Route("api/[controller]")]
     public class FinalReportController : ControllerBase
     {
-        private readonly IComposeFinalReport _final;
+       
+private readonly IWebHostEnvironment _env;
+        private IProcedureRepository _proc;
+        private IManageFinalReport _impdf;
 
-        public FinalReportController(IComposeFinalReport final)
+
+        public FinalReportController(
+            IWebHostEnvironment env,
+            IManageFinalReport impdf,
+
+            IProcedureRepository proc)
         {
-            _final = final;
+            _env = env;
+            _impdf = impdf;
+            _proc = proc;
+
+
         }
 
-        [HttpGet]
-        public async Task<IActionResult> getReports()
+        [AllowAnonymous]
+        [HttpGet("{id}")]
+        public IActionResult Get(int id)
         {
-            var result = await _final.getFinalReports();
-            return Ok(result);
+           return File(this.GetStream(id.ToString()), "application/pdf", $"{id}.pdf");
         }
-
-        [HttpGet("{id}", Name = "getFinalReport")]
-        public async Task<IActionResult> getReports(int id)
+        [AllowAnonymous]
+        [HttpGet("getRefReport/{hash}")]
+        public async Task<IActionResult> getPdfForRefPhys(string hash)
         {
-            var result = await _final.getSpecificReport(id);
-            return Ok(result);
-        }
-
-        [HttpPost]
-        public async Task<IActionResult> createFinalReport(frDto final)
-        {
-            try
+            _impdf.DeleteExpiredReports(); // delete expired reports 
+            var id = await _proc.getProcedureIdFromHash(hash);
+            if (id == 0 || await _impdf.PdfDoesNotExists(id.ToString()))
             {
-                var createdFinalReport = await _final.CreateFinalReport(final);
-                return CreatedAtRoute("getFinalReport", new { id = createdFinalReport.Id }, createdFinalReport);
+                return BadRequest("Your operative report is not found or expired ...");
             }
-            catch (Exception ex)
-            {
-                //log error
-                return StatusCode(500, ex.Message);
-            }
+            return File(this.GetStream(id.ToString()), "application/pdf", $"{id}.pdf");
         }
+
+        [AllowAnonymous]
+        [HttpGet("deleteExpiredReports")]
+        public IActionResult deleteExpiredReports()
+        {
+            var help = 0;
+            help = _impdf.DeleteExpiredReports();
+            if (help == 2) { return BadRequest(new { message = "Something went wrong in removing the expired reports" }); }
+            return Ok("Success");
+        }
+
+        private Stream GetStream(string id_string)
+        {
+
+            var pathToFile = _env.ContentRootPath + "/assets/pdf/";
+            var file_name = pathToFile + id_string + ".pdf";
+            var stream = new FileStream(file_name, FileMode.Open, FileAccess.Read);
+            stream.Position = 0;
+            return stream;
+
+        }
+       
+
+       
     }
-}

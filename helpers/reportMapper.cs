@@ -51,14 +51,7 @@ namespace surgical_reports.helpers
         }
 
 
-        internal Class_Preview_Operative_report mapToClassPreviewOperativeReport(PreviewForReturnDTO pvfr, Class_Preview_Operative_report cp)
-        {
-            return _map.Map<PreviewForReturnDTO, Class_Preview_Operative_report>(pvfr, cp);
-        }
-        internal Class_privacy_model mapToClassPrivacyModel(PreviewForReturnDTO pvfr)
-        {
-            return _map.Map<PreviewForReturnDTO, Class_privacy_model>(pvfr);
-        }
+     
 
           public async Task<ReportHeaderDTO> mapToReportHeaderAsync(Class_Procedure proc)
         {
@@ -130,6 +123,8 @@ namespace surgical_reports.helpers
             ReportHeaderDTO currentHeader = await mapToReportHeaderAsync(cp);
 
             Class_Preview_Operative_report prev = await _prev.getPreViewAsync(procedure_id);
+
+
            
            
 
@@ -467,18 +462,6 @@ namespace surgical_reports.helpers
 
             return help;
         }
-        public string getReportCode(int fdType)
-        {
-            var result = "";
-            var contentRoot = _env.ContentRootPath;
-            var filename = Path.Combine(contentRoot, "conf/procedure.xml");
-            XDocument order = XDocument.Load(filename);
-            IEnumerable<XElement> help = from d in order.Descendants("Code")
-                                         where d.Element("ID").Value == fdType.ToString()
-                                         select d;
-            foreach (XElement x in help) { result = x.Element("report_code").Value; }
-            return result;
-        }
         private string translateCabgStuff(int soort, string test)
         {
             var result = "";
@@ -605,6 +588,17 @@ namespace surgical_reports.helpers
         }
         public HospitalForReturnDTO mapToHospitalForReturn(Class_Hospital x) { return _map.Map<Class_Hospital, HospitalForReturnDTO>(x); }
         public Class_Hospital mapToHospital(HospitalForReturnDTO x, Class_Hospital h) { h = _map.Map<HospitalForReturnDTO, Class_Hospital>(x, h); return h; }
-      
+        private string getReportCode(int fdType)
+        {
+            var result = "";
+            var contentRoot = _env.ContentRootPath;
+            var filename = Path.Combine(contentRoot, "conf/procedure.xml");
+            XDocument order = XDocument.Load(filename);
+            IEnumerable<XElement> help = from d in order.Descendants("Code")
+                                         where d.Element("ID").Value == fdType.ToString()
+                                         select d;
+            foreach (XElement x in help) { result = x.Element("report_code").Value; }
+            return result;
+        }
     }
 }

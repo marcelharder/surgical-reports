@@ -9,11 +9,13 @@ namespace surgical_reports.implementations;
 public class HospitalRepository : IHospitalRepository
 {
     private readonly DapperContext _context;
-    private reportMapper _map;
-    public HospitalRepository(DapperContext context, reportMapper map)
+    private IMapper _map;
+   
+    public HospitalRepository(DapperContext context, IMapper map)
     {
         _context = context;
         _map = map;
+       
     }
 
     public async Task<HospitalForReturnDTO> GetSpecificHospital(string id)
@@ -22,7 +24,9 @@ public class HospitalRepository : IHospitalRepository
         using (var connection = _context.CreateConnection())
         {
             var report = await connection.QuerySingleOrDefaultAsync<Class_Hospital>(query, new { id });
-        return _map.mapToHospitalForReturn(report);
+            var result = _map.Map<HospitalForReturnDTO>(report);
+
+        return result;
         }
     }
 }

@@ -8,5 +8,6 @@ namespace surgical_reports.interfaces
     public interface IInstitutionalText
     {
         Task<List<string>> getText(string hospital, string soort, int procedure_id);
+        Task addRecordInXML(string id);
     }
 }

@@ -5,7 +5,6 @@ public class InstitutionalText : IInstitutionalText
 {
     private XDocument _doc;
     private XElement _element;
-    private reportMapper _sm;
     private OperatieDrops _drop;
     private IWebHostEnvironment _env;
     private DapperContext _context;
@@ -21,13 +20,11 @@ public class InstitutionalText : IInstitutionalText
     IProcedureRepository proc,
     IWebHostEnvironment env,
     DapperContext context,
-    OperatieDrops drop,
-    reportMapper sm)
+    OperatieDrops drop)
     {
         _env = env;
-        _sm = sm;
         var content = _env.ContentRootPath;
-        var filename = "conf/InstitutionalReports.xml";
+        var filename = "xml/InstitutionalReports.xml";
         var test = Path.Combine(content, filename);
         XDocument doc = XDocument.Load($"{test}");
         _doc = doc;
@@ -55,7 +52,7 @@ public class InstitutionalText : IInstitutionalText
             if (op.Count() == 0)
             {
                 //add a new Element for this hospital to the XML file
-                addElementToInstitutionalXML(hospital);
+                await addRecordInXML(hospital);
             }
 
             foreach (XElement el in op)
@@ -78,7 +75,6 @@ public class InstitutionalText : IInstitutionalText
                     }
                 }
             }
-
         });
         return result;
     }
@@ -197,15 +193,15 @@ public class InstitutionalText : IInstitutionalText
     private async Task<List<string>> getExitingRecordAsync(XElement ad, int procedure_id, IEnumerable<XElement> test)
     {
         var result = new List<string>();
-        result.Add(ad.Element("regel_1_a").Value + "" + ad.Element("regel_1_b").Value + "" + this.translateHarvestLocationLeg(procedure_id, dropLeg) + "" + ad.Element("regel_1_c").Value);
-        result.Add(ad.Element("regel_2_a").Value + "" + ad.Element("regel_2_b").Value + "" + this.translateHarvestLocationRadial(procedure_id, dropRadial) + "" + ad.Element("regel_2_c").Value);
+        result.Add(ad.Element("regel_1_a").Value + "" + ad.Element("regel_1_b").Value + "" + await translateHarvestLocationLeg(procedure_id, dropLeg) + "" + ad.Element("regel_1_c").Value);
+        result.Add(ad.Element("regel_2_a").Value + "" + ad.Element("regel_2_b").Value + "" + await translateHarvestLocationRadial(procedure_id, dropRadial) + "" + ad.Element("regel_2_c").Value);
         result.Add(ad.Element("regel_3_a").Value + "" + ad.Element("regel_3_b").Value + "" + ad.Element("regel_3_c").Value);
         result.Add(ad.Element("regel_4_a").Value + "" + ad.Element("regel_4_b").Value + "" + ad.Element("regel_4_c").Value);
         result.Add(ad.Element("regel_5_a").Value + "" + 34 + "" + ad.Element("regel_5_b").Value + "" + ad.Element("regel_5_c").Value);
         result.Add(ad.Element("regel_6_a").Value + "" + ad.Element("regel_6_b").Value +
-        "" + this.getCardioPlegiaTemp(procedure_id) +
-        "" + this.getCardioPlegiaRoute(procedure_id) +
-        "" + this.getCardioPlegiaType(procedure_id) +
+        "" + await getCardioPlegiaTemp(procedure_id) +
+        "" + await getCardioPlegiaRoute(procedure_id) +
+        "" + await getCardioPlegiaType(procedure_id) +
         "" + ad.Element("regel_6_c").Value);
         result.Add(ad.Element("regel_7_a").Value + "" + ad.Element("regel_7_b").Value + "" + ad.Element("regel_7_c").Value);
         result.Add(ad.Element("regel_8_a").Value + "" + ad.Element("regel_8_b").Value + "" + ad.Element("regel_8_c").Value);
@@ -221,9 +217,9 @@ public class InstitutionalText : IInstitutionalText
         result.Add(ad.Element("regel_18").Value);
         result.Add(ad.Element("regel_19").Value);
         result.Add(ad.Element("regel_20").Value);
-        result.Add(await this.getCirculationSupportAsync(procedure_id, test));
-        result.Add(await this.getIABPUsedAsync(procedure_id, test));
-        result.Add(await this.getPMWiresAsync(procedure_id, test));
+        result.Add(await getCirculationSupportAsync(procedure_id, test));
+        result.Add(await getIABPUsedAsync(procedure_id, test));
+        result.Add(await getPMWiresAsync(procedure_id, test));
         result.Add(ad.Element("regel_24").Value);
         result.Add(ad.Element("regel_25").Value);
         result.Add(ad.Element("regel_26").Value);
@@ -236,24 +232,42 @@ public class InstitutionalText : IInstitutionalText
         result.Add(ad.Element("regel_33").Value);
         return result;
     }
-    private void addElementToInstitutionalXML(string hospital)
-    {
-        var content = _env.ContentRootPath;
-        var filename = "conf/InstitutionalReports.xml";
-        var test = Path.Combine(content, filename);
-        IEnumerable<XElement> op = from el in _doc.Descendants("hospital")
-                                   where (string)el.Attribute("id") == "99999"
-                                   select el;
-        foreach (XElement el in op)
+    public async Task addRecordInXML(string id)
         {
-            XElement help = el;
-            _doc.Add(help);
-            IEnumerable<XElement> op1 = from element in _doc.Descendants("hospital") select el;
-            op1.Last().SetAttributeValue("id", hospital);
-            _doc.Save($"{test}");
+            // find out if there is a record with this id
+            if (IsNotInXML(id)) // add a node to the xml with hospital_id attribute
+            {
+                await Task.Run(() =>
+            {
+                var nodes = _doc.Root.Descendants("hospital");
+                IEnumerable<XElement> op = from el in _doc.Descendants("hospital")
+                                           where (string)el.Attribute("id") == "01"
+                                           select el;
+                foreach (XElement el in op)
+                {
+                  XElement nxl = new XElement(el);
+                  nxl.Attribute("id").SetValue(id);
+                  _doc.Element("root").Add(nxl);
+                }
+                 var content = _env.ContentRootPath;
+                 var filename = "xml/InstitutionalReports.xml";
+                 var test = Path.Combine(content, filename);
+                _doc.Save($"{test}");
+            }
+            );
+            }
+        }
+       private Boolean IsNotInXML(string hospital)
+        {
+            IEnumerable<XElement> op = from el in _doc.Descendants("hospital")
+                                       where (string)el.Attribute("id") == hospital
+                                       select el;
+            if (op.Count() == 0) { return true; }
+            else { return false; }
+
         }
 
 
+    
 
-    }
 }

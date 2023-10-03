@@ -8,10 +8,10 @@ namespace surgical_reports.Controllers;
 public class SuggestionController : ControllerBase
 {
     private ISuggestion _repo;
-    private IPV _previewReport;
+    private IPreviewReport _previewReport;
 
     private IMapper _map;
-    public SuggestionController(ISuggestion repo, IMapper map, IPV previewReport)
+    public SuggestionController(ISuggestion repo, IMapper map, IPreviewReport previewReport)
     {
         _repo = repo;
         _map = map;

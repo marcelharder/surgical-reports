@@ -14,4 +14,9 @@ global using Microsoft.AspNetCore.Mvc;
 global using surgical_reports.entities.dtos;
 global using System.Xml.Linq;
 global using surgical_reports.helpers;
+global using Microsoft.AspNetCore.Authorization;
+global using System.Xml.Serialization;
+global using iTextSharp.text;
+global using iTextSharp.text.pdf;
+
 

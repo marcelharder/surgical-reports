@@ -1,10 +1,5 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+namespace surgical_reports.entities;
 
-namespace surgical_reports.entities
-{
     public class Class_CPB
     {
         public int Id { get; set; }
@@ -73,4 +68,3 @@ namespace surgical_reports.entities
         public string other_cardiac_support { get; set; }
         public string cardiac_support { get; set; }
     }
-}

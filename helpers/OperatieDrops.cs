@@ -5,70 +5,28 @@ using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
 
-namespace surgical_reports.helpers
-{
+namespace surgical_reports.helpers;
+
     public class OperatieDrops
     {
-          XElement _testje;
-        XElement _val;
-        List<Class_Item> _help = new List<Class_Item>();
+        XElement _testje;
+        
         private IWebHostEnvironment _env;
-        private readonly IOptions<ComSettings> _com;
-        private UserManager<AppUser> _userManager;
-        private DataContext _context;
+         List<Class_Item> _help = new List<Class_Item>();
+     
 
-        private SpecialMaps _sp;
-
-        public OperatieDrops(IWebHostEnvironment env,
-        DataContext context,
-        SpecialMaps sp,
-        UserManager<AppUser> userManager,
-        IOptions<ComSettings> com)
+        public OperatieDrops(IWebHostEnvironment env)     
         {
             _env = env;
-            _userManager = userManager;
             var content = _env.ContentRootPath;
-            var filename = "conf/language_file.xml";
+            var filename = "xml/language_file.xml";
             var test = Path.Combine(content, filename);
             XElement testje = XElement.Load($"{test}");
             _testje = testje;
-            _com = com;
-            _sp = sp;
-
-            var v = "conf/Valve.xml";
-            var va = Path.Combine(content, v);
-            XElement val = XElement.Load($"{va}");
-            _val = val;
-
-
-            _context = context;
-
-            Class_Item _result = new Class_Item();
-            _result.description = "Choose";
-            _result.value = 0;
-            _help.Add(_result);
-
+            
         }
 
-        #region <!--postop-->
-
-        public async Task<List<Class_Item>> getAutologousBloodTiming()
-        {
-            await Task.Run(() =>
-            {
-                IEnumerable<XElement> op = _testje.Descendants("postop").Elements("autologous_blood_timing").Elements("items");
-                foreach (XElement s in op)
-                {
-                    Class_Item _result = new Class_Item();
-                    _result.description = s.Element("description").Value;
-                    _result.value = Convert.ToInt32(s.Element("value").Value);
-                    _help.Add(_result);
-                }
-            });
-            return _help;
-        }
-
-        #endregion
+       
         #region <!--ltx-->
 
         public async Task<List<Class_Item>> getLTXIndication()
@@ -946,40 +904,11 @@ namespace surgical_reports.helpers
         #endregion
 
         #region <!--Valve--> 
-        internal List<Class_Item> getTricuspidRingType()
-        {
-            IEnumerable<XElement> op = _val.Descendants("valve_codes");
-            foreach (XElement s in op)
-            {
-                if (s.Element("fd_Type").Value == "R")
-                {
-                    Class_Item _result = new Class_Item();
-                    _result.description = s.Element("Description").Value;
-                    _result.value = Convert.ToInt32(s.Element("Valve_id").Value);
-                    _help.Add(_result);
-                }
-            }
+        
 
 
-            return _help;
-        }
-        internal List<Class_Item> getMitralRingType()
-        {
-            IEnumerable<XElement> op = _val.Descendants("valve_codes");
-            foreach (XElement s in op)
-            {
-                if (s.Element("fd_Type").Value == "R")
-                {
-                    Class_Item _result = new Class_Item();
-                    _result.description = s.Element("Description").Value;
-                    _result.value = Convert.ToInt32(s.Element("Valve_id").Value);
-                    _help.Add(_result);
-                }
-            }
-
-
-            return _help;
-        }
+    
+        
         internal async Task<List<Class_Item>> getImplantPositionAsync()
         {
             await Task.Run(() =>
@@ -1131,127 +1060,10 @@ namespace surgical_reports.helpers
             }
             return _help;
         }
-        public async Task<List<Class_Item>> getYN()
-        {
-            await Task.Run(() =>
-                            {
-                                IEnumerable<XElement> op = _testje.Descendants("history").Elements("select1").Elements("items");
-                                _help = getCABGDrops(op);
-                            });
-            return _help;
-        }
-
-        #region <!--HospitalStuff -->
-
-
-        public async Task<List<Class_Item>> getHospitalOptions(int userId)
-        {
-            var cl = new List<Class_Item>();
-            Class_Item ci;
-            var user = await _userManager.Users.FirstOrDefaultAsync(x => x.Id == userId);
-            var csv = user.worked_in;
-            List<string> list_of_hospitals = csv.Split(',').ToList<string>();
-
-
-            foreach (string hos in list_of_hospitals)
-            {
-                var help = await _context.Hospitals.FirstOrDefaultAsync(h => h.HospitalNo == hos.makeSureTwoChar());
-                ci = new Class_Item();
-                ci.description = help.HospitalName;
-                ci.value = Convert.ToInt32(help.HospitalNo);
-                cl.Add(ci);
-            }
-            return cl;
-        }
-
-        public async Task<List<Class_Item>> getAvailableHospitalOptions(string country)
-        {
-            var cl = new List<Class_Item>();
-            var hospitalsInInventory = new List<Class_Item>();
-            var hospitalsInTrac = new List<Class_Item>();
-            var code = _sp.getCountryCode(country);
-
-
-            // get all the hospitals known to valveinventory 
-            var invaddress = _com.Value.valveURL;
-            var test = invaddress + "getHospitalsInCountry/" + code;
-
-            using (var httpClient = new HttpClient())
-            {
-                var request = new HttpRequestMessage
-                {
-                    Method = HttpMethod.Get,
-                    RequestUri = new Uri(test),
-                    Content = new StringContent("your json", Encoding.UTF8, "application/json"),
-                };
-
-                using (var response = await httpClient.SendAsync(request))
-                {
-                    var apiResponse = await response.Content.ReadAsStringAsync();
-                    hospitalsInInventory = JsonSerializer.Deserialize<List<Class_Item>>(apiResponse);
-                }
-            }
-
-            // now get the list from here
-            // hospitalsInTrac = await getAllHospitalsPerCountry(country);
-
-            // remove all the local hospitals from the hospitalsInInventory
-            // var help = compareList(hospitalsInTrac, hospitalsInInventory);
-
-            return hospitalsInInventory;
-
-        }
-        #endregion
-
-        private List<Class_Item> compareList(List<Class_Item> _listA, List<Class_Item> _listB)
-        {
-            var result = new List<Class_Item>();
-            foreach (var itemB in _listB)
-            {
-                var flat = 0;
-                foreach (var itemA in _listA)
-                {
-                    if (itemA.value == itemB.value)
-                    {
-                        flat = 1;
-                        break;
-                    }
-                }
-                if (flat == 0)
-                {
-                    result.Add(itemB);
-                }
-            }
-            return result;
-        }
+       
+    }   
+        
 
 
 
-         public async Task<List<Class_Item>> getAllHospitalsPerCountry(string country)
-        {
-
-            var cl = new List<Class_Item>();
-            Class_Item ci;
-            var all_hospitals = await _context.Hospitals.ToListAsync();
-            all_hospitals = all_hospitals.Where(h => h.Country == country).ToList();
-
-            foreach (Class_Hospital hos in all_hospitals)
-            {
-                ci = new Class_Item();
-                ci.description = hos.HospitalName;
-                ci.value = Convert.ToInt32(hos.HospitalNo);
-                cl.Add(ci);
-            }
-            return cl;
-        } 
-        public async Task<List<Class_Item>> getCareerItems()
-        {
-            await Task.Run(() =>
-                            {
-                                IEnumerable<XElement> op = _testje.Descendants("career").Elements("items");
-                                _help = getCABGDrops(op);
-                            });
-            return _help;
-        }
-    }
-}
+   

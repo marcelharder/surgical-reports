@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -8,7 +7,7 @@ namespace surgical_reports.entities
 {
     public class Class_Procedure
     {
-        [Key]
+        
         public virtual int ProcedureId { get; set; }
         public virtual int hospital { get; set; }
         public virtual int refPhys {get; set;}

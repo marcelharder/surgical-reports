@@ -466,7 +466,7 @@ namespace surgical_reports.helpers
         {
             var result = "";
             var contentRoot = _env.ContentRootPath;
-            var filename = Path.Combine(contentRoot, "conf/language_file.xml");
+            var filename = Path.Combine(contentRoot, "xml/language_file.xml");
             XDocument order = XDocument.Load(filename);
             IEnumerable<XElement> help = from d in order.Descendants("cabg") select d;
             foreach (XElement x in help)
@@ -592,7 +592,7 @@ namespace surgical_reports.helpers
         {
             var result = "";
             var contentRoot = _env.ContentRootPath;
-            var filename = Path.Combine(contentRoot, "conf/procedure.xml");
+            var filename = Path.Combine(contentRoot, "xml/procedure.xml");
             XDocument order = XDocument.Load(filename);
             IEnumerable<XElement> help = from d in order.Descendants("Code")
                                          where d.Element("ID").Value == fdType.ToString()

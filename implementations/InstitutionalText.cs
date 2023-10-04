@@ -98,7 +98,7 @@ public class InstitutionalText : IInstitutionalText
         if (cabg != null && cabg.radial_harvest_location == "")
         {
             var test = Convert.ToInt32(cabg.radial_harvest_location);
-            var ci = dropLeg.Single(x => x.value == test);
+            var ci = dropRadial.Single(x => x.value == test);
             help = ci.description;
         }
 

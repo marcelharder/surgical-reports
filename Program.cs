@@ -8,6 +8,7 @@ builder.Services.AddScoped<OperatieDrops>();
 builder.Services.AddScoped<IOperativeReport , OperativeReport>();
 builder.Services.AddScoped<IInstitutionalText, InstitutionalText>();
 builder.Services.AddScoped<IManageFinalReport, ManageFinalReport>();
+builder.Services.AddScoped<ISuggestion,Suggestion>();
 builder.Services.AddScoped<ICPBRepo,CPBRepo>();
 builder.Services.AddScoped<ICABGRepo,CABGRepo>();
 builder.Services.AddScoped<IValveRepo,ValveRepo>();

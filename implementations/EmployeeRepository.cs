@@ -10,7 +10,7 @@ namespace surgical_reports.implementations;
     }
         public async Task<Class_Employee> getSpecificEmployee(int id)
         {
-             var query = "SELECT * FROM Employyees WHERE id = @id";
+             var query = "SELECT * FROM Employees WHERE id = @id";
         using (var connection = _context.CreateConnection())
         {
             var report = await connection.QuerySingleOrDefaultAsync<Class_Employee>(query, new { id });

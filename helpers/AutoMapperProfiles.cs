@@ -26,6 +26,13 @@ namespace surgical_reports.helpers;
             CreateMap<PreviewForReturnDTO, Class_Preview_Operative_report>().ForMember(dest => dest.Id, opt => opt.Ignore());
             CreateMap<PreviewForReturnDTO, Class_privacy_model>();
 
+            CreateMap<Class_Hospital, HospitalForReturnDTO>();
+
+            CreateMap<HospitalForReturnDTO, Class_Hospital>()
+            .ForMember(dest => dest.RegExpr, opt => opt.Ignore())
+            .ForMember(dest => dest.SampleMrn, opt => opt.Ignore())
+            .ForMember(dest => dest.ImageUrl, opt => opt.Ignore());
+
 
             
         }

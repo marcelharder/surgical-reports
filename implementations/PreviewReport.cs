@@ -225,7 +225,7 @@ public class PreviewReport : IPreviewReport
     }
     public async Task<int> updatePVR(Class_Preview_Operative_report pv)
     {
-        var query = "UPDATE Previews SET Regel_1 = @Regel_1, Regel_2 = @Regel_2 " + 
+        var query = "UPDATE Previews SET Regel_1 = @Regel_1, Regel_2 = @Regel_2, " + 
         "Regel_3 = @Regel_3, Regel_4 = @Regel_4, Regel_5 = @Regel_5, " +
         "Regel_6 = @Regel_6, Regel_7 = @Regel_7, Regel_8 = @Regel_8, " +
         "Regel_9 = @Regel_9, Regel_10 = @Regel_10, Regel_11 = @Regel_11, " +

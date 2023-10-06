@@ -12,7 +12,7 @@ public class OperatieDrops
         {
             _env = env;
            var content = _env.ContentRootPath;
-            var filename = "conf/language_file.xml";
+            var filename = "xml/language_file.xml";
             var test = Path.Combine(content, filename);
             XElement testje = XElement.Load($"{test}");
             _testje = testje;

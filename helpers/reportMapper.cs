@@ -25,16 +25,16 @@ namespace surgical_reports.helpers
         private IProcedureRepository _proc;
         private IPreviewReport _prev;
 
-      
+
         private IUserRepository _user;
 
         public reportMapper(
             ICABGRepo cabg,
             IValveRepo valve,
-            IMapper map, 
-            IWebHostEnvironment env, 
-            IUserRepository user, 
-            IHospitalRepository hos, 
+            IMapper map,
+            IWebHostEnvironment env,
+            IUserRepository user,
+            IHospitalRepository hos,
             IEmployeeRepository emp,
             IProcedureRepository proc,
             IPreviewReport prev)
@@ -51,11 +51,11 @@ namespace surgical_reports.helpers
         }
 
 
-     
 
-          public async Task<ReportHeaderDTO> mapToReportHeaderAsync(Class_Procedure proc)
+
+        public async Task<ReportHeaderDTO> mapToReportHeaderAsync(Class_Procedure proc)
         {
-            var current_hospital = await _hos.GetSpecificHospital(proc.hospital.ToString());
+            var current_hospital = await _hos.GetSpecificHospital(proc.hospital.ToString().makeSureTwoChar());
 
             if (current_hospital == null) { return new ReportHeaderDTO(); }
             else
@@ -78,7 +78,7 @@ namespace surgical_reports.helpers
                 }
 
                 var l = new List<string>();
-                l = await this.getHeaderTextAsync(proc.hospital.ToString());
+                l = await this.getHeaderTextAsync(current_hospital);
 
                 var dto = new ReportHeaderDTO
                 {
@@ -108,25 +108,22 @@ namespace surgical_reports.helpers
                 return dto;
             }
         }
-      
 
-            public async Task<Class_Final_operative_report> updateFinalReportAsync(Class_privacy_model pm, int procedure_id)
+
+        public async Task<Class_Final_operative_report> updateFinalReportAsync(Class_privacy_model pm, int procedure_id)
         {
 
             var help = new Class_Final_operative_report();
             help.procedure_id = procedure_id;
 
             Class_Procedure cp = await _proc.getSpecificProcedure(procedure_id);
-            
+            var current_user = await _user.GetUser(cp.SelectedSurgeon);
+
             // this is used to compile the final report from different sources
 
             ReportHeaderDTO currentHeader = await mapToReportHeaderAsync(cp);
 
             Class_Preview_Operative_report prev = await _prev.getPreViewAsync(procedure_id);
-
-
-           
-           
 
             var report_code = Convert.ToInt32(this.getReportCode(cp.fdType));
             if (report_code == 1)
@@ -246,24 +243,23 @@ namespace surgical_reports.helpers
                 help.Regel24 = prev.regel_8;
 
                 // get the valve where implant position is 'Aortic'
-            Class_Valve cv = await getValvesDetailsAsync("Aortic",cp.ProcedureId);
-
-
-                if (cp.fdType == 3)
-                { // aortic valve replacement
-                    help.Regel25 = cv.MODEL;
-                    help.Regel26 = cv.SIZE;
-                    help.Regel27 = cv.SERIAL_IMP;
-                }
-                if (cp.fdType == 30)
-                {// aortic valve replacement, minimally invasive approach
-                    help.Regel25 = cv.MODEL;
-                    help.Regel26 = cv.SIZE;
-                    help.Regel27 = cv.SERIAL_IMP;
+                Class_Valve cv = await getValvesDetailsAsync("Aortic", cp.ProcedureId);
+                if (cv != null)
+                {
+                    if (cp.fdType == 3)
+                    { // aortic valve replacement
+                        help.Regel25 = cv.MODEL;
+                        help.Regel26 = cv.SIZE;
+                        help.Regel27 = cv.SERIAL_IMP;
+                    }
+                    if (cp.fdType == 30)
+                    {// aortic valve replacement, minimally invasive approach
+                        help.Regel25 = cv.MODEL;
+                        help.Regel26 = cv.SIZE;
+                        help.Regel27 = cv.SERIAL_IMP;
+                    }
                 }
                 help = this.getGeneralDetails(help, prev);
-
-
             }
             if (report_code == 4)
             {
@@ -277,20 +273,21 @@ namespace surgical_reports.helpers
                 help.Regel23 = prev.regel_7;
                 help.Regel24 = prev.regel_8;
 
-                Class_Valve cv = await getValvesDetailsAsync("Mitral",cp.ProcedureId);
-
-
-                if (cp.fdType == 4)
-                {// mitral valve replacement
-                    help.Regel28 = cv.MODEL;
-                    help.Regel29 = cv.SIZE;
-                    help.Regel30 = cv.SERIAL_IMP;
-                }
-                if (cp.fdType == 41)
-                {// mitral valve repair
-                    help.Regel28 = cv.MODEL;
-                    help.Regel29 = cv.SIZE;
-                    help.Regel30 = cv.SERIAL_IMP;
+                Class_Valve cv = await getValvesDetailsAsync("Mitral", cp.ProcedureId);
+                if (cv != null)
+                { // there is no valve entered, should not happen :-)
+                    if (cp.fdType == 4)
+                    {// mitral valve replacement
+                        help.Regel28 = cv.MODEL;
+                        help.Regel29 = cv.SIZE;
+                        help.Regel30 = cv.SERIAL_IMP;
+                    }
+                    if (cp.fdType == 41)
+                    {// mitral valve repair
+                        help.Regel28 = cv.MODEL;
+                        help.Regel29 = cv.SIZE;
+                        help.Regel30 = cv.SERIAL_IMP;
+                    }
                 }
                 help = this.getGeneralDetails(help, prev);
 
@@ -317,18 +314,21 @@ namespace surgical_reports.helpers
                 help.Regel36 = prev.regel_32;
                 help.Regel37 = prev.regel_33;
 
-                Class_Valve cv = await getValvesDetailsAsync("Aortic",cp.ProcedureId);
+                Class_Valve cv = await getValvesDetailsAsync("Aortic", cp.ProcedureId);
+                if (cv != null)
+                {
+                    help.Regel25 = cv.MODEL;
+                    help.Regel26 = cv.SIZE;
+                    help.Regel27 = cv.SERIAL_IMP;
+                }
 
-                help.Regel25 = cv.MODEL;
-                help.Regel26 = cv.SIZE;
-                help.Regel27 = cv.SERIAL_IMP;
-
-
-                Class_Valve cvm = await getValvesDetailsAsync("Mitral",cp.ProcedureId);
-
-                help.Regel28 = cvm.MODEL;
-                help.Regel29 = cvm.SIZE;
-                help.Regel30 = cvm.SERIAL_IMP;
+                Class_Valve cvm = await getValvesDetailsAsync("Mitral", cp.ProcedureId);
+                if (cvm != null)
+                {
+                    help.Regel28 = cvm.MODEL;
+                    help.Regel29 = cvm.SIZE;
+                    help.Regel30 = cvm.SERIAL_IMP;
+                }
 
                 // this will go in avr/mvr blok 3
                 help.Regel38 = prev.regel_15;
@@ -414,7 +414,7 @@ namespace surgical_reports.helpers
             help.Comment2 = cp.Comment2;
             help.Comment3 = cp.Comment3;
 
-            help.UserName = "get current user somehow";
+            help.UserName = current_user.KnownAs;
 
             /*   help.AorticLineA = "";
               help.AorticLineB = "";
@@ -431,19 +431,20 @@ namespace surgical_reports.helpers
 
 
 
-        private async Task<List<string>> getHeaderTextAsync(string current_hospital_id)
+        private async Task<List<string>> getHeaderTextAsync(HospitalForReturnDTO sh)
         {
             var help = new List<string>();
-            var sh = await _hos.GetSpecificHospital(current_hospital_id.makeSureTwoChar());
-          
-            if (sh != null) // check if this id is in the list of hospitals
+            await Task.Run(() =>
             {
-                help.Add(sh.OpReportDetails1);
-                help.Add(sh.OpReportDetails2);
-                help.Add("Hospital No:");
-                help.Add(sh.OpReportDetails4);
-                help.Add(sh.OpReportDetails5);
-            }
+                if (sh != null) // check if this id is in the list of hospitals
+                {
+                    help.Add(sh.OpReportDetails1);
+                    help.Add(sh.OpReportDetails2);
+                    help.Add("Hospital No:");
+                    help.Add(sh.OpReportDetails4);
+                    help.Add(sh.OpReportDetails5);
+                }
+            });
             return help;
         }
         private async Task<Class_CABG> getCabgDetailsAsync(int procedure_id)
@@ -454,19 +455,14 @@ namespace surgical_reports.helpers
         }
         private async Task<Class_Valve> getValvesDetailsAsync(string implantPosition, int procedure_id)
         {
-            // needs some work obviously
-            var serial = "";
-            //var help = await _context.Valves.FirstOrDefaultAsync(x => x.SERIAL_IMP == serial);
-            var help = await _valve.getValveBySerial(serial);
-            
-
+            var help = await _valve.getValve(implantPosition, procedure_id);
             return help;
         }
         private string translateCabgStuff(int soort, string test)
         {
             var result = "";
             var contentRoot = _env.ContentRootPath;
-            var filename = Path.Combine(contentRoot, "conf/language_file.xml");
+            var filename = Path.Combine(contentRoot, "xml/language_file.xml");
             XDocument order = XDocument.Load(filename);
             IEnumerable<XElement> help = from d in order.Descendants("cabg") select d;
             foreach (XElement x in help)
@@ -592,7 +588,7 @@ namespace surgical_reports.helpers
         {
             var result = "";
             var contentRoot = _env.ContentRootPath;
-            var filename = Path.Combine(contentRoot, "conf/procedure.xml");
+            var filename = Path.Combine(contentRoot, "xml/procedure.xml");
             XDocument order = XDocument.Load(filename);
             IEnumerable<XElement> help = from d in order.Descendants("Code")
                                          where d.Element("ID").Value == fdType.ToString()

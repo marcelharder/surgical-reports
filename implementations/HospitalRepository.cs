@@ -14,10 +14,11 @@ public class HospitalRepository : IHospitalRepository
 
     public async Task<HospitalForReturnDTO> GetSpecificHospital(string id)
     {
-        var query = "SELECT * FROM Hospitals WHERE HospitalNo = @id";
+        var hospitalNo = id.makeSureTwoChar();
+        var query = "SELECT * FROM Hospitals WHERE HospitalNo = @hospitalNo";
         using (var connection = _context.CreateConnection())
         {
-            var report = await connection.QuerySingleOrDefaultAsync<Class_Hospital>(query, new { id });
+            var report = await connection.QuerySingleOrDefaultAsync<Class_Hospital>(query, new { hospitalNo });
             var result = _map.Map<HospitalForReturnDTO>(report);
 
         return result;

@@ -92,7 +92,7 @@ public class PreviewReport : IPreviewReport
             return preview;
         }
     }
-    private async Task<bool> findPreview(int procedure_id)
+    public async Task<bool> findPreview(int procedure_id)
     {
         var query = "SELECT * FROM Previews WHERE procedure_id = @procedure_id";
         using (var connection = _context.CreateConnection())
@@ -290,4 +290,14 @@ public class PreviewReport : IPreviewReport
             foreach (XElement x in help) { result = x.Element("report_code").Value; }
             return result;
         }
+
+    public async Task<Class_Preview_Operative_report> getSpecificPVR(int procedure_id)
+    {
+         var query = "SELECT * FROM Previews WHERE procedure_id = @procedure_id";
+        using (var connection = _context.CreateConnection())
+        {
+            var preview = await connection.QuerySingleOrDefaultAsync<Class_Preview_Operative_report>(query, new { procedure_id });
+            return preview;
+        }
+    }
 }

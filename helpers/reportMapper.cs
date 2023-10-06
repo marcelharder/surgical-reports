@@ -68,12 +68,16 @@ namespace surgical_reports.helpers
                 if (proc.SelectedPerfusionist == 0) { current_perfusionist = "n/a"; }
                 else
                 {
-                    (await _emp.getSpecificEmployee(proc.SelectedPerfusionist)).name.UppercaseFirst();
+                    Class_Employee item = new Class_Employee();
+                    item = await _emp.getSpecificEmployee(proc.SelectedPerfusionist);
+                    current_perfusionist = item.name.UppercaseFirst();
                 }
                 if (proc.SelectedAnaesthesist == 0) { current_anaesthesiologist = "n/a"; }
                 else
                 {
-                    (await _emp.getSpecificEmployee(proc.SelectedAnaesthesist)).name.UppercaseFirst();
+                    Class_Employee item = new Class_Employee();
+                    item = await _emp.getSpecificEmployee(proc.SelectedAnaesthesist);
+                    current_anaesthesiologist = item.name.UppercaseFirst();
 
                 }
 
@@ -110,22 +114,19 @@ namespace surgical_reports.helpers
         }
 
 
-        public async Task<Class_Final_operative_report> updateFinalReportAsync(Class_privacy_model pm, int procedure_id)
+        public async Task<Class_Final_operative_report> updateFinalReportAsync(
+            Class_privacy_model pm, 
+            Class_Procedure cp,
+            int report_code)
         {
-
             var help = new Class_Final_operative_report();
-            help.procedure_id = procedure_id;
-
-            Class_Procedure cp = await _proc.getSpecificProcedure(procedure_id);
+            help.procedure_id = cp.ProcedureId;
             var current_user = await _user.GetUser(cp.SelectedSurgeon);
 
             // this is used to compile the final report from different sources
-
             ReportHeaderDTO currentHeader = await mapToReportHeaderAsync(cp);
-
-            Class_Preview_Operative_report prev = await _prev.getPreViewAsync(procedure_id);
-
-            var report_code = Convert.ToInt32(this.getReportCode(cp.fdType));
+            Class_Preview_Operative_report prev = await _prev.getSpecificPVR(cp.ProcedureId);
+            
             if (report_code == 1)
             {
                 help.Regel17 = prev.regel_1;

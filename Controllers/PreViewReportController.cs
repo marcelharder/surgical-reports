@@ -40,25 +40,24 @@ public class PreViewReportController : ControllerBase
          try
             {  
                 Class_privacy_model pm = _map.Map<PreviewForReturnDTO,Class_privacy_model>(pvfr);
-                Class_Preview_Operative_report pv = await _repo.getPreViewAsync(pvfr.procedure_id);
+                Class_Preview_Operative_report pv  = new Class_Preview_Operative_report();
+
+                if(await _repo.findPreview(pvfr.procedure_id)){pv = await _repo.getSpecificPVR(pvfr.procedure_id);}
+                else {return BadRequest("No preview found in the database ...");}
+              
                 pv = _map.Map<PreviewForReturnDTO, Class_Preview_Operative_report>(pvfr, pv);
                 // save the Class_Preview_Operative_report to the database first
                 var result = await _repo.updatePVR(pv);
+
                 // generate final operative report Class
-                var classFR = await _rm.updateFinalReportAsync(pm, pv.procedure_id);
+                 Class_Procedure cp = await _proc.getSpecificProcedure(pv.procedure_id);
+                 var help = _repo.getReportCode(cp.fdType.ToString());
+                 var report_code = Convert.ToInt32(help);
+
+                var classFR = await _rm.updateFinalReportAsync(pm,Class_Procedure cp, int report_code);
                 // generate PDF and store for 3 days
-               try
-               {
-                     var current_procedure = await _proc.getSpecificProcedure(pvfr.procedure_id);
-                     var help = _repo.getReportCode(current_procedure.fdType.ToString());
-                     var report_code = Convert.ToInt32(help);
-                     await _iorep.getPdf(report_code,classFR);
-               }
-               catch (Exception a)
-               {
-                   Console.WriteLine(a.InnerException); 
-                   return BadRequest("Error creating the pdf");
-               } 
+               try { await _iorep.getPdf(report_code,classFR); }
+               catch (Exception a){ Console.WriteLine(a.InnerException); return BadRequest("Error creating the pdf"); } 
                return Ok(result);
             }
             catch (Exception e) { Console.WriteLine(e.InnerException); }

@@ -56,13 +56,11 @@ private readonly IWebHostEnvironment _env;
 
         private Stream GetStream(string id_string)
         {
-
             var pathToFile = _env.ContentRootPath + "/assets/pdf/";
             var file_name = pathToFile + id_string + ".pdf";
             var stream = new FileStream(file_name, FileMode.Open, FileAccess.Read);
             stream.Position = 0;
             return stream;
-
         }
        
 

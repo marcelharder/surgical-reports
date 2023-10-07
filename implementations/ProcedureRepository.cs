@@ -11,12 +11,13 @@ namespace surgical_reports.implementations;
         }
 
     public async Task<int> getProcedureIdFromHash(string hash)
-    {
+    {   var result = 0;
         var query = "SELECT * FROM Procedures WHERE emailHash = @hash";
             using (var connection = _context.CreateConnection())
             {
                 var report = await connection.QuerySingleOrDefaultAsync<Class_Procedure>(query, new { hash });
-                return report.ProcedureId;
+                if(report != null){result = report.ProcedureId;}
+                return result;
             }
     }
 

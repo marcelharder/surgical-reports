@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ArrayOfReportTiming xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <ReportTiming>
+    <id>3</id>
+    <publishTime>2023-10-07T11:06:50.4039946Z</publishTime>
+    <fileLocation />
+  </ReportTiming>
+  <ReportTiming>
+    <id>6</id>
+    <publishTime>2023-10-07T11:07:58.1631856Z</publishTime>
+    <fileLocation />
+  </ReportTiming>
+  <ReportTiming>
+    <id>3</id>
+    <publishTime>2023-10-07T11:10:11.7926948Z</publishTime>
+    <fileLocation />
+  </ReportTiming>
+  <ReportTiming>
+    <id>2</id>
+    <publishTime>2023-10-07T11:25:13.4442505Z</publishTime>
+    <fileLocation />
+  </ReportTiming>
+</ArrayOfReportTiming>

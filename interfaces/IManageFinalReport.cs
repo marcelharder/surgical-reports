@@ -7,4 +7,6 @@ public interface IManageFinalReport
         int AddToExpiredReports(ReportTiming rt);
         Task<bool> IsReportExpired(int id);
         Task<bool> PdfDoesNotExists(string id_string);
+        List<ReportTiming> GetXmlDetails();
+        void SaveXmlDetails(List<ReportTiming> l);
     }

@@ -77,15 +77,28 @@ public class ManageFinalReport : IManageFinalReport
     }
     public int DeleteExpiredReports()
     {
-        // this is called by a CRON job and checks if there are expired reports, which are then deleted
         var currentTicks = DateTime.UtcNow.Ticks; // use UTC time instead of local time
         var interval = TimeSpan.FromDays(3).Ticks; // use TimeSpan to define interval
 
         try
         {
             // load the xml file im a list of ReportTimings
-            var reportTimings = GetXmlDetails();
-
+            var reportTimings = new List<ReportTiming>();
+            var pathToFile = Path.Combine(_env.ContentRootPath, "xml", "timingsRefReport.xml");
+            if (!File.Exists(pathToFile)) { return 2; }
+            else
+            {
+                try
+                {
+                    using (var stream = File.Open(pathToFile, FileMode.Open))
+                    {
+                        var serializer = new XmlSerializer(typeof(List<ReportTiming>));
+                        reportTimings = (List<ReportTiming>)serializer.Deserialize(stream);
+                    }
+                }
+                catch (Exception e) { // the root element is mising
+                                    Console.Write(e.InnerException); }
+            }
             // filter on expired report timings
             var expiredReportTimings = reportTimings.Where(rt => (rt.publishTime.Ticks + interval) < currentTicks).ToList();
             foreach (ReportTiming rt in expiredReportTimings) { DeletePDF(rt.id); } // delete expired pdf's
@@ -105,7 +118,8 @@ public class ManageFinalReport : IManageFinalReport
             return 2;
         }
     }
-    private List<ReportTiming> GetXmlDetails()
+    
+    public List<ReportTiming> GetXmlDetails()
     {
         // load the xml file into a list of ReportTimings
         var pathToFile = Path.Combine(_env.ContentRootPath, "xml", "timingsRefReport.xml");
@@ -120,8 +134,12 @@ public class ManageFinalReport : IManageFinalReport
             var serializer = new XmlSerializer(typeof(List<ReportTiming>));
             return (List<ReportTiming>)serializer.Deserialize(stream);
         }
+
+
+
+
     }
-    private void SaveXmlDetails(List<ReportTiming> reportTimings)
+    public void SaveXmlDetails(List<ReportTiming> reportTimings)
     {
         // save the list of ReportTimings to an xml file
         var pathToFile = Path.Combine(_env.ContentRootPath, "xml", "timingsRefReport.xml");

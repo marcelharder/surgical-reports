@@ -76,7 +76,6 @@ public class PreviewReport : IPreviewReport
             }
         }
     }
-
     public async Task<Class_Preview_Operative_report> resetPreViewAsync(int procedure_id)
     {
         var query = "DELETE FROM Previews WHERE procedure_id = @procedure_id";
@@ -277,7 +276,6 @@ public class PreviewReport : IPreviewReport
 
         return 1;
     }
-   
     public string getReportCode(string fdType)
     {
             var result = "";
@@ -290,7 +288,6 @@ public class PreviewReport : IPreviewReport
             foreach (XElement x in help) { result = x.Element("report_code").Value; }
             return result;
         }
-
     public async Task<Class_Preview_Operative_report> getSpecificPVR(int procedure_id)
     {
          var query = "SELECT * FROM Previews WHERE procedure_id = @procedure_id";

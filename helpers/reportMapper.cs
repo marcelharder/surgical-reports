@@ -141,7 +141,7 @@ namespace surgical_reports.helpers
 
 
 
-                Class_CABG cb = await getCabgDetailsAsync(procedure_id);
+                Class_CABG cb = await getCabgDetailsAsync(cp.ProcedureId);
 
 
                 help.Regel25 = translateCabgStuff(1, cb.B1_SITE);
@@ -194,7 +194,7 @@ namespace surgical_reports.helpers
 
 
 
-                Class_CABG cb = await getCabgDetailsAsync(procedure_id);
+                Class_CABG cb = await getCabgDetailsAsync(cp.ProcedureId);
                 help.Regel25 = translateCabgStuff(1, cb.B1_SITE);
                 help.Regel26 = translateCabgStuff(2, cb.Q01);
                 help.Regel27 = translateCabgStuff(4, cb.ANGLE01);
@@ -415,7 +415,7 @@ namespace surgical_reports.helpers
             help.Comment2 = cp.Comment2;
             help.Comment3 = cp.Comment3;
 
-            help.UserName = current_user.KnownAs;
+            help.UserName = current_user.KnownAs; // this is the user that prints the page
 
             /*   help.AorticLineA = "";
               help.AorticLineB = "";

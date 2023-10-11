@@ -193,8 +193,20 @@ public class Suggestion : ISuggestion
         using (var connection = _context.CreateConnection())
         {
             result = await connection.QuerySingleOrDefaultAsync<Class_Suggestion>(query, new { userId, soort });
+            if(result == null){
+                var sug = new Class_Suggestion();
+                sug.user = userId;
+                sug.soort = soort;
+                return await AddIndividualSuggestion(sug);
+            }
             return result;
         }
+
+        
+
+
+
+
     }
     public async Task<int> updateSuggestion(Class_Suggestion cs)
     {
@@ -351,7 +363,6 @@ public class Suggestion : ISuggestion
         });
         return help;
     }
-
     private Class_Item mapSuggestionToClassItem(Class_Suggestion sug)
     {
         var help = new Class_Item();

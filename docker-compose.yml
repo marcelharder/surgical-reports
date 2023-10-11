@@ -38,6 +38,15 @@ services:
     depends_on:
       - db 
 
+  reports:
+    image: reports:v1
+    networks:
+      - internal-container-network
+    ports:
+      - 8086:80
+    depends_on:
+      - db
+
   onlinevalve_md:
     image: inventory_md:v26
     networks:

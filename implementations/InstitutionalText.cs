@@ -256,7 +256,7 @@ public class InstitutionalText : IInstitutionalText
             );
             }
         }
-       private Boolean IsNotInXML(string hospital)
+    private Boolean IsNotInXML(string hospital)
         {
             IEnumerable<XElement> op = from el in _doc.Descendants("hospital")
                                        where (string)el.Attribute("id") == hospital

@@ -197,6 +197,8 @@ public class Suggestion : ISuggestion
                 var sug = new Class_Suggestion();
                 sug.user = userId;
                 sug.soort = soort;
+                // get the text from the current hospital
+                
                 return await AddIndividualSuggestion(sug);
             }
             return result;

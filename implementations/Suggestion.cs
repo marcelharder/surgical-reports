@@ -189,26 +189,17 @@ public class Suggestion : ISuggestion
     public async Task<Class_Suggestion> GetIndividualSuggestion(int soort, string userId)
     {
         var query = "SELECT * FROM Suggestions WHERE user = @userId AND soort = @soort";
-        var result = new Class_Suggestion();
         using (var connection = _context.CreateConnection())
         {
-            result = await connection.QuerySingleOrDefaultAsync<Class_Suggestion>(query, new { userId, soort });
+            var result = await connection.QuerySingleOrDefaultAsync<Class_Suggestion>(query, new { userId, soort });
             if(result == null){
                 var sug = new Class_Suggestion();
                 sug.user = userId;
                 sug.soort = soort;
-                // get the text from the current hospital
-                
                 return await AddIndividualSuggestion(sug);
             }
             return result;
         }
-
-        
-
-
-
-
     }
     public async Task<int> updateSuggestion(Class_Suggestion cs)
     {

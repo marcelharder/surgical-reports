@@ -48,9 +48,8 @@ public class SuggestionController : ControllerBase
     [HttpPost]
     public async Task<IActionResult> Post(Class_Suggestion c)
     {
-        var p = await _repo.AddIndividualSuggestion(c);
-        if(p != null){return Ok(p);}
-        else { throw new Exception($"Adding suggestion {c.user} failed on save"); };
+        var p = await _repo.updateSuggestion(c);
+        return Ok();
     }
 
 }

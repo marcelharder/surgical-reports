@@ -2,7 +2,7 @@ namespace surgical_reports.entities;
 
 public class Class_CABG
     {
-         public int Id { get; set; }
+        public int Id { get; set; }
         public int PROCEDURE_ID { get; set; }
         public int PATIENT_ID { get; set; }
         public string CAB { get; set; }

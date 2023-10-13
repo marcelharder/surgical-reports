@@ -10,7 +10,7 @@ public class CPBRepo : ICPBRepo
     }
     async Task<Class_CPB> ICPBRepo.getSpecificCPB(int id)
     {
-        var query = "SELECT * FROM CPBS WHERE Id = @id";
+        var query = "SELECT * FROM CPBS WHERE PROCEDURE_ID = @id";
         using (var connection = _context.CreateConnection())
         {
             var report = await connection.QuerySingleOrDefaultAsync<Class_CPB>(query, new { id });

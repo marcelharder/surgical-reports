@@ -72,7 +72,7 @@ public class PreViewReportController : ControllerBase
                 rt.id = pv.procedure_id;
                 rt.fileLocation = "";
 
-                // get the list of reportTimings from the xml file
+                // save this to the xml file timingsRefReport.xml
                 _final.AddToExpiredReports(rt);
                 
             }

@@ -10,7 +10,7 @@ public class ValveRepo : IValveRepo
 
     public async Task<Class_Valve> getValve(string implantPosition, int procedure_id)
     {
-         var query = "SELECT * FROM Valves WHERE ImplantPosition = @implantPosition AND PROCEDURE_ID = @procedure_id";
+         var query = "SELECT * FROM Valves WHERE Implant_Position = @implantPosition AND ProcedureId = @procedure_id";
             using (var connection = _context.CreateConnection())
             {
                 var report = await connection.QuerySingleOrDefaultAsync<Class_Valve>(query, new { implantPosition, procedure_id });

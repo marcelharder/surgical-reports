@@ -183,12 +183,7 @@ public class OperativeReport : IOperativeReport
             test = Image.GetInstance(new Uri(_frs.HospitalUrl)); // hospital url is eigenlijk de foto van de chirurg
         }
 
-
-
-
         test.ScaleToFit(80.0F, 85.0F);
-
-
         var my_picture = new PdfPCell(test);
         my_picture.BackgroundColor = header_background_color;
 

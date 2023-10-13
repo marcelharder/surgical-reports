@@ -33,11 +33,9 @@ public class PreViewReportController : ControllerBase
 
     [HttpGet("{id}", Name = "getPreviewReport")]
     public async Task<IActionResult> getReport(int id) { return Ok(await _repo.getPreViewAsync(id)); }
-
     [HttpGet("reset/{id}")]
-    public async Task<IActionResult> resetReport(int id) { await _repo.resetPreViewAsync(id); return Ok(); }
-
-
+    public async Task<IActionResult> resetReport(int id) { var help = await _repo.resetPreViewAsync(id); return Ok(help); }
+  
     [HttpPost]
     // this comes from the save and print button and results in a pdf
     public async Task<IActionResult> Post(PreviewForReturnDTO pvfr)
@@ -47,7 +45,8 @@ public class PreViewReportController : ControllerBase
             Class_privacy_model pm = _map.Map<PreviewForReturnDTO, Class_privacy_model>(pvfr);
             Class_Preview_Operative_report pv = new Class_Preview_Operative_report();
 
-            if (await _repo.findPreview(pvfr.procedure_id)) { pv = await _repo.getSpecificPVR(pvfr.procedure_id); }
+            if (await _repo.findPreview(pvfr.procedure_id)) {
+                 pv = await _repo.getSpecificPVR(pvfr.procedure_id); }
             else { return BadRequest("No preview found in the database ..."); }
 
             pv = _map.Map<PreviewForReturnDTO, Class_Preview_Operative_report>(pvfr, pv);
@@ -72,15 +71,10 @@ public class PreViewReportController : ControllerBase
                 rt.publishTime = DateTime.UtcNow;
                 rt.id = pv.procedure_id;
                 rt.fileLocation = "";
+
                 // get the list of reportTimings from the xml file
-                List<ReportTiming> list = new List<ReportTiming>();
-                // als procedure_id al voorkomt dan moet er niks gebeuren
-                list = _final.GetXmlDetails();
-                if (list.FirstOrDefault(item => item.id == pv.procedure_id)== null)
-                {
-                    list.Add(rt);
-                    _final.SaveXmlDetails(list);
-                }
+                _final.AddToExpiredReports(rt);
+                
             }
             catch (Exception a) { Console.WriteLine(a.InnerException); return BadRequest("Error creating the pdf"); }
             return Ok(result);

@@ -21,8 +21,6 @@ private readonly IWebHostEnvironment _env;
             _env = env;
             _impdf = impdf;
             _proc = proc;
-
-
         }
 
         [AllowAnonymous]
@@ -42,16 +40,6 @@ private readonly IWebHostEnvironment _env;
                 return BadRequest("Your operative report is not found or expired ...");
             }
             return File(this.GetStream(id.ToString()), "application/pdf", $"{id}.pdf");
-        }
-
-        [AllowAnonymous]
-        [HttpGet("deleteExpiredReports")]
-        public IActionResult deleteExpiredReports()
-        {
-            var help = 0;
-            help = _impdf.DeleteExpiredReports();
-            if (help == 2) { return BadRequest(new { message = "Something went wrong in removing the expired reports" }); }
-            return Ok("Success");
         }
 
         private Stream GetStream(string id_string)

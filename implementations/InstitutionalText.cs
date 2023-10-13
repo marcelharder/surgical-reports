@@ -3,10 +3,8 @@ namespace surgical_reports.implementations;
 public class InstitutionalText : IInstitutionalText
 {
     private XDocument _doc;
-    private XElement _element;
     private OperatieDrops _drop;
     private IWebHostEnvironment _env;
-    private DapperContext _context;
     private List<Class_Item> dropRadial = new List<Class_Item>();
     private List<Class_Item> dropLeg = new List<Class_Item>();
     private IProcedureRepository _proc;
@@ -18,7 +16,6 @@ public class InstitutionalText : IInstitutionalText
     ICPBRepo icpb,
     IProcedureRepository proc,
     IWebHostEnvironment env,
-    DapperContext context,
     OperatieDrops drop)
     {
         _env = env;
@@ -27,9 +24,6 @@ public class InstitutionalText : IInstitutionalText
         var test = Path.Combine(content, filename);
         XDocument doc = XDocument.Load($"{test}");
         _doc = doc;
-        XElement element = XElement.Load($"{test}");
-        _element = element;
-        _context = context;
         _drop = drop;
         _proc = proc;
         _icpb = icpb;
@@ -114,14 +108,14 @@ public class InstitutionalText : IInstitutionalText
     private async Task<string> getCardioPlegiaRoute(int procedure_id)
     {
         var help = "";
-        Class_CPB cpb =  await _icpb.getSpecificCPB(procedure_id);
+        Class_CPB cpb = await _icpb.getSpecificCPB(procedure_id);
         if (cpb != null) { }
         return help;
     }
     private async Task<string> getCardioPlegiaType(int procedure_id)
     {
         var help = "";
-        Class_CPB cpb =  await _icpb.getSpecificCPB(procedure_id);
+        Class_CPB cpb = await _icpb.getSpecificCPB(procedure_id);
         if (cpb != null) { }
         return help;
     }
@@ -232,41 +226,41 @@ public class InstitutionalText : IInstitutionalText
         return result;
     }
     public async Task addRecordInXML(string id)
+    {
+        // find out if there is a record with this id
+        if (IsNotInXML(id)) // add a node to the xml with hospital_id attribute
         {
-            // find out if there is a record with this id
-            if (IsNotInXML(id)) // add a node to the xml with hospital_id attribute
-            {
-                await Task.Run(() =>
-            {
-                var nodes = _doc.Root.Descendants("hospital");
-                IEnumerable<XElement> op = from el in _doc.Descendants("hospital")
-                                           where (string)el.Attribute("id") == "01"
-                                           select el;
-                foreach (XElement el in op)
-                {
-                  XElement nxl = new XElement(el);
-                  nxl.Attribute("id").SetValue(id);
-                  _doc.Element("root").Add(nxl);
-                }
-                 var content = _env.ContentRootPath;
-                 var filename = "xml/InstitutionalReports.xml";
-                 var test = Path.Combine(content, filename);
-                _doc.Save($"{test}");
-            }
-            );
-            }
-        }
-    private Boolean IsNotInXML(string hospital)
+            await Task.Run(() =>
         {
+            var nodes = _doc.Root.Descendants("hospital");
             IEnumerable<XElement> op = from el in _doc.Descendants("hospital")
-                                       where (string)el.Attribute("id") == hospital
+                                       where (string)el.Attribute("id") == "01"
                                        select el;
-            if (op.Count() == 0) { return true; }
-            else { return false; }
-
+            foreach (XElement el in op)
+            {
+                XElement nxl = new XElement(el);
+                nxl.Attribute("id").SetValue(id);
+                _doc.Element("root").Add(nxl);
+            }
+            var content = _env.ContentRootPath;
+            var filename = "xml/InstitutionalReports.xml";
+            var test = Path.Combine(content, filename);
+            _doc.Save($"{test}");
         }
+        );
+        }
+    }
+    private Boolean IsNotInXML(string hospital)
+    {
+        IEnumerable<XElement> op = from el in _doc.Descendants("hospital")
+                                   where (string)el.Attribute("id") == hospital
+                                   select el;
+        if (op.Count() == 0) { return true; }
+        else { return false; }
+
+    }
 
 
-    
+
 
 }

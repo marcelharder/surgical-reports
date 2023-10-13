@@ -4,12 +4,9 @@ namespace surgical_reports.implementations;
 public class ManageFinalReport : IManageFinalReport
 {
     private readonly IWebHostEnvironment _env;
-
-
     public ManageFinalReport(IWebHostEnvironment env)
     {
         _env = env;
-
     }
     public int DeletePDF(int id)
     {
@@ -23,13 +20,21 @@ public class ManageFinalReport : IManageFinalReport
             Thread.Sleep(20);
         }
         return 1;
-
     }
     public int AddToExpiredReports(ReportTiming rt)
     {
-        var l = GetXmlDetails();
         bool changesMade = false;
 
+        var l = GetXmlDetails();
+        // remove a possible previous version
+
+        var sameId = l.SingleOrDefault(r => r.id == rt.id);
+        if(sameId != null){
+            var itemtoremove = l.Single(r => r.id == sameId.id);
+            l.Remove(itemtoremove);
+            changesMade = true;
+        } 
+        
         if (!l.Any(r => r.id == rt.id))
         {
             l.Add(rt);
@@ -40,7 +45,6 @@ public class ManageFinalReport : IManageFinalReport
         {
             SaveXmlDetails(l);
         }
-
         return 3;
     }
     public async Task<bool> IsReportExpired(int id)
@@ -118,26 +122,19 @@ public class ManageFinalReport : IManageFinalReport
             return 2;
         }
     }
-    
     public List<ReportTiming> GetXmlDetails()
     {
         // load the xml file into a list of ReportTimings
         var pathToFile = Path.Combine(_env.ContentRootPath, "xml", "timingsRefReport.xml");
-
         if (!File.Exists(pathToFile))
         {
             return new List<ReportTiming>();
         }
-
         using (var stream = File.Open(pathToFile, FileMode.Open))
         {
             var serializer = new XmlSerializer(typeof(List<ReportTiming>));
             return (List<ReportTiming>)serializer.Deserialize(stream);
         }
-
-
-
-
     }
     public void SaveXmlDetails(List<ReportTiming> reportTimings)
     {
@@ -156,7 +153,5 @@ public class ManageFinalReport : IManageFinalReport
         var fileExists = await Task.Run(() => File.Exists(pathToFile));
         return !fileExists;
     }
-
-
 }
 

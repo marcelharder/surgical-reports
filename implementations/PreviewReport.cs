@@ -58,11 +58,11 @@ public class PreviewReport : IPreviewReport
                 }
                 else
                 {
-                    // check to see if there is an XML file for this hospital
+                    // check to see if there is an XML file for this hospital, if no record available than add one now.
                     await _text.addRecordInXML(currentProcedure.hospital.ToString());
                         
                     // get the suggestion from the InstitutionalReports.xml
-                    var text = await _text.getText(currentProcedure.hospital.ToString(), report_code, currentProcedure.ProcedureId);
+                    var text = await _text.getText(currentProcedure.hospital.ToString(), currentProcedure.fdType.ToString(), currentProcedure.ProcedureId);
                     result.regel_1 = text[0]; result.regel_2 = text[1]; result.regel_3 = text[2]; result.regel_4 = text[3]; result.regel_5 = text[4];
                     result.regel_6 = text[5]; result.regel_7 = text[6]; result.regel_8 = text[7]; result.regel_9 = text[8]; result.regel_10 = text[9];
                     result.regel_11 = text[10]; result.regel_12 = text[11]; result.regel_13 = text[12]; result.regel_14 = text[13]; result.regel_15 = text[14];

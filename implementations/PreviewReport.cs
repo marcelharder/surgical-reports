@@ -63,14 +63,22 @@ public class PreviewReport : IPreviewReport
                         
                     // get the suggestion from the InstitutionalReports.xml
                     var text = await _text.getText(currentProcedure.hospital.ToString(), currentProcedure.fdType.ToString(), currentProcedure.ProcedureId);
-                    result.regel_1 = text[0]; result.regel_2 = text[1]; result.regel_3 = text[2]; result.regel_4 = text[3]; result.regel_5 = text[4];
+                 
+                 
+                 /*    result.regel_1 = text[0]; result.regel_2 = text[1]; result.regel_3 = text[2]; result.regel_4 = text[3]; result.regel_5 = text[4];
                     result.regel_6 = text[5]; result.regel_7 = text[6]; result.regel_8 = text[7]; result.regel_9 = text[8]; result.regel_10 = text[9];
                     result.regel_11 = text[10]; result.regel_12 = text[11]; result.regel_13 = text[12]; result.regel_14 = text[13]; result.regel_15 = text[14];
                     result.regel_16 = text[15]; result.regel_17 = text[16]; result.regel_18 = text[17]; result.regel_19 = text[18]; result.regel_20 = text[19];
                     result.regel_21 = text[20]; result.regel_22 = text[21]; result.regel_23 = text[22]; result.regel_24 = text[23]; result.regel_25 = text[24];
                     result.regel_26 = text[25]; result.regel_27 = text[26]; result.regel_28 = text[27]; result.regel_29 = text[28]; result.regel_30 = text[29];
                     result.regel_31 = text[30]; result.regel_32 = text[31]; result.regel_33 = text[32];
-                    return await saveNewPreviewReport(result);
+ */
+                    var help = _map.Map<InstitutionalDTO, Class_Suggestion>(text);
+                    var no = _map.Map<Class_Suggestion, Class_Preview_Operative_report>(help);
+                    no.procedure_id = currentProcedure.ProcedureId;
+
+
+                    return await saveNewPreviewReport(no);
                 }
 
             }

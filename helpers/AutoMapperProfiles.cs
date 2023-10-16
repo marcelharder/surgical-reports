@@ -23,6 +23,12 @@ namespace surgical_reports.helpers;
             .ForMember(dest => dest.regel_13, opt => opt.MapFrom(src => src.regel_13_a + src.regel_13_b + src.regel_13_c))
             .ForMember(dest => dest.regel_14, opt => opt.MapFrom(src => src.regel_14_a + src.regel_14_b + src.regel_14_c));
 
+
+            CreateMap<InstitutionalDTO, Class_Suggestion>()
+            .ForMember(dest => dest.Id, opt => opt.Ignore())
+            .ForMember(dest => dest.user, opt => opt.Ignore())
+            .ForMember(dest => dest.soort, opt => opt.Ignore());
+
             CreateMap<PreviewForReturnDTO, Class_Preview_Operative_report>().ForMember(dest => dest.Id, opt => opt.Ignore());
             CreateMap<PreviewForReturnDTO, Class_privacy_model>();
 

@@ -2,6 +2,87 @@ namespace surgical_reports.entities.dtos;
 
 public class InstitutionalDTO
     {
+
+        public InstitutionalDTO()
+        {
+            Regel1A = "";
+            Regel1B = "";
+            Regel1C = "";
+   
+            Regel2A = "";
+            Regel2B = "";
+            Regel2C = "";
+     
+            Regel3A = "";
+            Regel3B = "";
+            Regel3C = "";
+   
+            Regel4A = "";
+            Regel4B = "";
+            Regel4C = "";
+            
+            Regel5A = "";
+            Regel5B = "";
+            Regel5C = "";
+   
+            Regel6A = "";
+            Regel6B = "";
+            Regel6C = "";
+     
+            Regel7A = "";
+            Regel7B = "";
+            Regel7C = "";
+   
+            Regel8A = "";
+            Regel8B = "";
+            Regel8C = "";
+
+            Regel9A = "";
+            Regel9B = "";
+            Regel9C = "";
+   
+            Regel10A = "";
+            Regel10B = "";
+            Regel10C = "";
+     
+            Regel11A = "";
+            Regel11B = "";
+            Regel11C = "";
+   
+            Regel12A = "";
+            Regel12B = "";
+            Regel12C = "";
+            
+            Regel13A = "";
+            Regel13B = "";
+            Regel13C = "";
+   
+            Regel14A = "";
+            Regel14B = "";
+            Regel14C = "";
+     
+            Regel15 = "";
+            Regel16 = "";
+            Regel17 = "";
+            Regel18 = "";
+            Regel19 = "";
+            Regel20 = "";
+            Regel21 = "";
+            Regel22 = "";
+            Regel23 = "";
+            Regel24 = "";
+            Regel25 = "";
+            Regel26 = "";
+            Regel27 = "";
+            Regel28 = "";
+            Regel29 = "";
+            Regel30 = "";
+            Regel31 = "";
+            Regel32 = "";
+            Regel33 = "";
+            
+      
+        }
         public string Regel1A { get; set; }
         public string Regel1B { get; set; }
         public string Regel1C { get; set; }

@@ -1,7 +1,7 @@
 namespace surgical_reports.entities;
 
-    public class Class_Suggestion
-    {
+public class Class_Suggestion
+{
     public virtual int Id { get; set; }
     public int soort { get; set; }
     public string user { get; set; }
@@ -66,5 +66,44 @@ namespace surgical_reports.entities;
     public string regel_31 { get; set; }
     public string regel_32 { get; set; }
     public string regel_33 { get; set; }
-  
+
+    public Class_Suggestion()
+    {
+        regel_1_a = ""; regel_1_b = ""; regel_1_c = "";
+        regel_2_a = ""; regel_2_b = ""; regel_2_c = "";
+        regel_3_a = ""; regel_3_b = ""; regel_3_c = "";
+        regel_4_a = ""; regel_4_b = ""; regel_4_c = "";
+        regel_5_a = ""; regel_5_b = ""; regel_5_c = "";
+        regel_6_a = ""; regel_6_b = ""; regel_6_c = "";
+        regel_7_a = ""; regel_7_b = ""; regel_7_c = "";
+        regel_8_a = ""; regel_8_b = ""; regel_8_c = "";
+        regel_9_a = ""; regel_9_b = ""; regel_9_c = "";
+        regel_10_a = ""; regel_10_b = ""; regel_10_c = "";
+        regel_11_a = ""; regel_11_b = ""; regel_11_c = "";
+        regel_12_a = ""; regel_12_b = ""; regel_12_c = "";
+        regel_13_a = ""; regel_13_b = ""; regel_13_c = "";
+        regel_14_a = ""; regel_14_b = ""; regel_14_c = "";
+        regel_15 = "";
+        regel_16 = "";
+        regel_17 = "";
+        regel_18 = "";
+        regel_19 = "";
+        regel_20 = "";
+        regel_21 = "";
+        regel_22 = "";
+        regel_23 = "";
+        regel_24 = "";
+        regel_25 = "";
+        regel_26 = "";
+        regel_27 = "";
+        regel_28 = "";
+        regel_29 = "";
+        regel_30 = "";
+        regel_31 = "";
+        regel_32 = "";
+        regel_33 = "";
+
+
     }
+
+}

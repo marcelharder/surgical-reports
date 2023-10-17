@@ -33,6 +33,7 @@ public class PreViewReportController : ControllerBase
 
     [HttpGet("{id}", Name = "getPreviewReport")]
     public async Task<IActionResult> getReport(int id) { return Ok(await _repo.getPreViewAsync(id)); }
+   
     [HttpGet("reset/{id}")]
     public async Task<IActionResult> resetReport(int id) { var help = await _repo.resetPreViewAsync(id); return Ok(help); }
   

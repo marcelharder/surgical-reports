@@ -26,11 +26,7 @@ public class PreviewReport : IPreviewReport
     }
     public async Task<Class_Preview_Operative_report> getPreViewAsync(int procedure_id)
     {
-        if (await findPreview(procedure_id)) {
-            
-             return await getPreviewAsync(procedure_id);
-             
-              }
+        if (await findPreview(procedure_id)) { return await getPRA(procedure_id);}
         else
         {
             //add a new preview instance to database
@@ -88,6 +84,7 @@ public class PreviewReport : IPreviewReport
     {
         var query = "DELETE FROM Previews WHERE procedure_id = @procedure_id";
         using (var connection = _context.CreateConnection()) { await connection.ExecuteAsync(query, new { procedure_id }); }
+        
         return await getPreViewAsync(procedure_id);
     }
     private async Task<Class_Suggestion> getUserSpecificSuggestion(int user_id, int soort)
@@ -95,7 +92,7 @@ public class PreviewReport : IPreviewReport
         var query = "SELECT * FROM Suggestions WHERE user = @user_id AND soort = @soort";
         using (var connection = _context.CreateConnection())
         {
-            var preview = await connection.QuerySingleOrDefaultAsync<Class_Suggestion>(query, new { user_id });
+            var preview = await connection.QuerySingleOrDefaultAsync<Class_Suggestion>(query, new { user_id, soort });
             return preview;
         }
     }
@@ -108,21 +105,22 @@ public class PreviewReport : IPreviewReport
             return preview != null;
         }
     }
-    private async Task<Class_Preview_Operative_report> getPreviewAsync(int procedure_id)
+    private async Task<Class_Preview_Operative_report> getPRA(int procedure_id)
     {
         var query = "SELECT * FROM Previews WHERE procedure_id = @procedure_id";
         using (var connection = _context.CreateConnection())
         {
             var preview = await connection.QuerySingleOrDefaultAsync<Class_Preview_Operative_report>(query, new { procedure_id });
+            
             return preview;
         }
     }
     private async Task<bool> UserHasASuggestionForThisProcedure(int user_id, int soort)
     {
-        var query = "SELECT * FROM Suggestions WHERE user = @user_id AND soort = @fdType";
+        var query = "SELECT * FROM Suggestions WHERE user = @user_id AND soort = @soort";
         using (var connection = _context.CreateConnection())
         {
-            var preview = await connection.QuerySingleOrDefaultAsync<Class_Suggestion>(query, new { user_id });
+            var preview = await connection.QuerySingleOrDefaultAsync<Class_Suggestion>(query, new { user_id, soort });
             return preview != null;
         }
     }

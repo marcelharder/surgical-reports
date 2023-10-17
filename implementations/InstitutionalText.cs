@@ -4,9 +4,7 @@ namespace surgical_reports.implementations;
 public class InstitutionalText : IInstitutionalText
 {
     private XDocument _doc;
-    private OperatieDrops _drop;
     private IWebHostEnvironment _env;
-    private List<Class_Item> dropRadial = new List<Class_Item>();
     private List<Class_Item> dropLeg = new List<Class_Item>();
     private IProcedureRepository _proc;
     private ICPBRepo _icpb;
@@ -16,8 +14,7 @@ public class InstitutionalText : IInstitutionalText
     ICABGRepo cabg,
     ICPBRepo icpb,
     IProcedureRepository proc,
-    IWebHostEnvironment env,
-    OperatieDrops drop)
+    IWebHostEnvironment env)
     {
         _env = env;
         var content = _env.ContentRootPath;
@@ -25,18 +22,17 @@ public class InstitutionalText : IInstitutionalText
         var test = Path.Combine(content, filename);
         XDocument doc = XDocument.Load($"{test}");
         _doc = doc;
-        _drop = drop;
         _proc = proc;
         _icpb = icpb;
         _cabg = cabg;
 
     }
-    #region <!--institutional stuff-->
-    public async Task<InstitutionalDTO> getText(string hospital, string soort, int procedure_id)
+    
+    public async Task<InstitutionalDTO> getInstitutionalReport(string hospital, string soort, int procedure_id)
     {
         hospital = hospital.makeSureTwoChar();
-        dropRadial = await _drop.getCABGRadial();
-        dropLeg = await _drop.getCABGLeg();
+        //dropRadial = await _drop.getCABGRadial();
+        //dropLeg = await _drop.getCABGLeg();
         var result = new InstitutionalDTO();
         await Task.Run(async () =>
         {
@@ -60,7 +56,8 @@ public class InstitutionalText : IInstitutionalText
                   // get description from fdType
                     var description = await getProcedureDescriptionAsync(procedure_id);
                     result = this.getEmptyRecord(description);
-
+                    // now save this to the xml file again
+                    await addXelementtoXML(hospital, soort, result);
                 }
                 else
                 {  // there is a institutional record for this soort of procedure
@@ -75,9 +72,8 @@ public class InstitutionalText : IInstitutionalText
     }
     public string updateInstitutionalReport(InstitutionalDTO rep, int soort, int hospitalNo)
     {
-
         var contentRoot = _env.ContentRootPath;
-        var filename = Path.Combine(contentRoot, "conf/InstitutionalReports.xml");
+        var filename = Path.Combine(contentRoot, "xml/InstitutionalReports.xml");
         XDocument doc = XDocument.Load(filename);
         IEnumerable<XElement> help = from d in doc.Descendants("hospital")
                                      where d.Attribute("id").Value == hospitalNo.ToString().makeSureTwoChar()
@@ -101,13 +97,6 @@ public class InstitutionalText : IInstitutionalText
 
         return "";
     }
-
-
-
-
-    #endregion
-
-    #region <!--additionalReport stuff-->
     public AdditionalReportDTO getAdditionalReportItems(int hospitalNo, int which)
     {
         var ar = new AdditionalReportDTO();
@@ -241,7 +230,9 @@ public class InstitutionalText : IInstitutionalText
         File.WriteAllText(filename, test_json);
         return 1;
     }
-    public string createAdditionalReport(int hospitalNo)
+
+
+    private string createAdditionalReport(int hospitalNo)
     {
         var contentRoot = _env.ContentRootPath;
         var filename = Path.Combine(contentRoot, "assets/json/additionalReportItems.json");
@@ -304,9 +295,6 @@ public class InstitutionalText : IInstitutionalText
 
         return test_json;
     }
-
-    #endregion
-
     private async Task<string> translateHarvestLocationLeg(int procedure_id, List<Class_Item> dropLeg)
     {
         var help = "";
@@ -438,7 +426,7 @@ public class InstitutionalText : IInstitutionalText
         result.Regel4B = ad.Element("regel_4_b").Value;
         result.Regel4C = ad.Element("regel_4_c").Value;
 
-        result.Regel5A = ad.Element("regel_5_a").Value + " " + 34 + " ";
+        result.Regel5A = ad.Element("regel_5_a").Value;
         result.Regel5B = ad.Element("regel_5_b").Value;
         result.Regel5C = ad.Element("regel_5_c").Value;
 
@@ -498,7 +486,7 @@ public class InstitutionalText : IInstitutionalText
         result.Regel31 = ad.Element("regel_31").Value;
         result.Regel32 = ad.Element("regel_32").Value;
         result.Regel33 = ad.Element("regel_33").Value;
-       
+
         return result;
     }
     public async Task addRecordInXML(string id)
@@ -708,6 +696,41 @@ public class InstitutionalText : IInstitutionalText
 
 
         return test;
+    }
+    private async Task addXelementtoXML(string hospital, string soort, InstitutionalDTO result)
+    {
+        await Task.Run(() =>
+        {
+            IEnumerable<XElement> op = from el in _doc.Descendants("hospital")
+                                       where (string)el.Attribute("id") == hospital
+                                       select el;
+            foreach (XElement el in op)
+            {
+                IEnumerable<XElement> t = from tr in op.Descendants("reports").Elements("text_by_type_of_surgery").Elements("soort")
+                                          where (string)tr.Attribute("id") == "1"
+                                          select tr;
+                foreach (XElement top in t)
+                {
+                    XElement nxl = new XElement(top);
+                    nxl = updateXML(nxl, result);
+                    nxl.Attribute("id").SetValue(soort);
+                    addNewElement(nxl, hospital);
+                }
+            }
+        });
+    }
+    private void addNewElement(XElement nxl, string hospital)
+    {
+        XElement help = _doc.Descendants("hospital")
+        .Where(x => (string)x.Attribute("id") == hospital)
+        .Elements("reports").Elements("text_by_type_of_surgery")
+        .FirstOrDefault();
+        
+        help.Add(nxl);
+        var content = _env.ContentRootPath;
+        var filename = "xml/InstitutionalReports.xml";
+        var test = Path.Combine(content, filename);
+        _doc.Save($"{test}");
     }
 
 }

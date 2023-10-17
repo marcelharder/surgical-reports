@@ -15,43 +15,30 @@ public class InstitutionalReportController : ControllerBase
     [HttpGet("{id}/{soort}/{procedure_id}")]
     public async Task<IActionResult> getInstitutionalReport(string id, string soort, int procedure_id)
     {
-        var result = await _t.getText(id, soort, procedure_id);
+        var result = await _t.getInstitutionalReport(id, soort, procedure_id);
         return Ok(result);
     }
-
-    #region <!-- InstitutionalReports stuff -->
-
-    [HttpPut("InstitutionalReport/{id}/{soort}")]
-    public IActionResult updateIRep([FromBody] InstitutionalDTO rep, string id, int soort)
+ 
+    [HttpPut("{hospitalNo}/{soort}")]
+    public IActionResult updateInstitutionalReport([FromBody] InstitutionalDTO rep, int soort, int hospitalNo)
     {
-        var help = _t.updateInstitutionalReport(rep, soort, Convert.ToInt32(id));
-        return Ok(help);
-    }
-    [HttpPost("InstitutionalReport/{id}")]
-    public IActionResult createIRep(string id)
-    {
-        var help = _t.addRecordInXML(id);
+        var help = _t.updateInstitutionalReport(rep, soort, hospitalNo);
         return Ok(help);
     }
 
     [HttpGet("AdditionalReportItems/{id}/{which}")]
-    public IActionResult getARI(string id, int which)
+    public IActionResult getAdditionalReport(int id, int which)
     {
-        var help = _t.getAdditionalReportItems(Convert.ToInt32(id), which);
+        var help = _t.getAdditionalReportItems(id, which);
         return Ok(help);
     }
 
-    [HttpPut("UpdateAdditionalReportItems/{id}/{which}")]
-    public IActionResult getARk([FromBody] AdditionalReportDTO l, string id, int which)
+    [HttpPut("AdditionalReportItems/{id}/{which}")]
+    public IActionResult updateAdditionalReport([FromBody] AdditionalReportDTO l, int id, int which)
     {
-        var help = _t.updateAdditionalReportItem(l, Convert.ToInt32(id), which);
+        var help = _t.updateAdditionalReportItem(l, id, which);
         return Ok(help);
     }
 
-    #endregion
-
-
-
-
-}
+  }
 

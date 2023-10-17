@@ -62,7 +62,7 @@ public class PreviewReport : IPreviewReport
                     await _text.addRecordInXML(currentProcedure.hospital.ToString());
                         
                     // get the suggestion from the InstitutionalReports.xml
-                    var text = await _text.getText(currentProcedure.hospital.ToString(), currentProcedure.fdType.ToString(), currentProcedure.ProcedureId);
+                    var text = await _text.getInstitutionalReport(currentProcedure.hospital.ToString(), currentProcedure.fdType.ToString(), currentProcedure.ProcedureId);
                  
                  
                  /*    result.regel_1 = text[0]; result.regel_2 = text[1]; result.regel_3 = text[2]; result.regel_4 = text[3]; result.regel_5 = text[4];

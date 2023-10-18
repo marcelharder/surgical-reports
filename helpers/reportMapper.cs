@@ -585,17 +585,6 @@ namespace surgical_reports.helpers
         }
         public HospitalForReturnDTO mapToHospitalForReturn(Class_Hospital x) { return _map.Map<Class_Hospital, HospitalForReturnDTO>(x); }
         public Class_Hospital mapToHospital(HospitalForReturnDTO x, Class_Hospital h) { h = _map.Map<HospitalForReturnDTO, Class_Hospital>(x, h); return h; }
-        private string getReportCode(int fdType)
-        {
-            var result = "";
-            var contentRoot = _env.ContentRootPath;
-            var filename = Path.Combine(contentRoot, "xml/procedure.xml");
-            XDocument order = XDocument.Load(filename);
-            IEnumerable<XElement> help = from d in order.Descendants("Code")
-                                         where d.Element("ID").Value == fdType.ToString()
-                                         select d;
-            foreach (XElement x in help) { result = x.Element("report_code").Value; }
-            return result;
-        }
+        
     }
 }

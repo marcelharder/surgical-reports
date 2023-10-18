@@ -1,4 +1,7 @@
 
+using System.Net.WebSockets;
+using System.Resources;
+
 namespace surgical_reports.implementations;
 
 public class InstitutionalText : IInstitutionalText
@@ -27,8 +30,8 @@ public class InstitutionalText : IInstitutionalText
         _cabg = cabg;
 
     }
-    
-    public async Task<InstitutionalDTO> getInstitutionalReport(string hospital, string soort, int procedure_id)
+
+    public async Task<InstitutionalDTO> getInstitutionalReport(string hospital, string soort, string description)
     {
         hospital = hospital.makeSureTwoChar();
         //dropRadial = await _drop.getCABGRadial();
@@ -54,7 +57,7 @@ public class InstitutionalText : IInstitutionalText
                 if (t.Count() == 0)
                 { // no institutional record found so come up with a new record now
                   // get description from fdType
-                    var description = await getProcedureDescriptionAsync(procedure_id);
+                  // var description = await getProcedureDescriptionAsync(procedure_id);
                     result = this.getEmptyRecord(description);
                     // now save this to the xml file again
                     await addXelementtoXML(hospital, soort, result);
@@ -63,7 +66,8 @@ public class InstitutionalText : IInstitutionalText
                 {  // there is a institutional record for this soort of procedure
                     foreach (XElement ad in t)
                     {
-                        result = await this.getExitingRecordAsync(ad, procedure_id, op);
+
+                        result = await getExitingRecordAsync(ad);
                     }
                 }
             }
@@ -295,110 +299,6 @@ public class InstitutionalText : IInstitutionalText
 
         return test_json;
     }
-    private async Task<string> translateHarvestLocationLeg(int procedure_id, List<Class_Item> dropLeg)
-    {
-        var help = "";
-        var cabg = await _cabg.getSpecificCABG(procedure_id);
-
-        if (cabg != null && cabg.leg_harvest_location == "")
-        {
-            var test = Convert.ToInt32(cabg.leg_harvest_location);
-            var ci = dropLeg.Single(x => x.value == test);
-            help = ci.description;
-        }
-
-        return help;
-    }
-    private async Task<string> translateHarvestLocationRadial(int procedure_id, List<Class_Item> dropRadial)
-    {
-        var help = "";
-        var cabg = await _cabg.getSpecificCABG(procedure_id);
-        if (cabg != null && cabg.radial_harvest_location == "")
-        {
-            var test = Convert.ToInt32(cabg.radial_harvest_location);
-            var ci = dropRadial.Single(x => x.value == test);
-            help = ci.description;
-        }
-
-        return help;
-    }
-    private async Task<string> getCardioPlegiaTemp(int procedure_id)
-    {
-        var help = "";
-        Class_CPB cpb = await _icpb.getSpecificCPB(procedure_id);
-        if (cpb != null) { }
-        return help;
-    }
-    private async Task<string> getCardioPlegiaRoute(int procedure_id)
-    {
-        var help = "";
-        Class_CPB cpb = await _icpb.getSpecificCPB(procedure_id);
-        if (cpb != null) { }
-        return help;
-    }
-    private async Task<string> getCardioPlegiaType(int procedure_id)
-    {
-        var help = "";
-        Class_CPB cpb = await _icpb.getSpecificCPB(procedure_id);
-        if (cpb != null) { }
-        return help;
-    }
-    private async Task<string> getProcedureDescriptionAsync(int procedure_id)
-    {
-        var r = await _proc.getSpecificProcedure(procedure_id);
-        return r.Description;
-    }
-    private async Task<string> getCirculationSupportAsync(int procedure_id, IEnumerable<XElement> test)
-    {
-        var help = "";
-        var selectedProcedure = await _proc.getSpecificProcedure(procedure_id);
-        if (selectedProcedure != null)
-        {
-            var t = selectedProcedure.SelectedInotropes; // dit is de gekozen inotropische ondersteuning
-            foreach (XElement el in test)// dit is het correcte ziekenhuis, dus ook de juiste taal
-            {
-                IEnumerable<XElement> te = from tr in test.Descendants("reports").Elements("circulation_support").Elements("items")
-                                           where (string)tr.Attribute("id") == t.ToString()
-                                           select tr;
-                foreach (XElement f in te) { help = f.Element("regel_21").Value; }
-            }
-        }
-        return help;
-    }
-    private async Task<string> getPMWiresAsync(int procedure_id, IEnumerable<XElement> test)
-    {
-        var help = "";
-        var selectedProcedure = await _proc.getSpecificProcedure(procedure_id);
-        if (selectedProcedure != null)
-        {
-            var t = selectedProcedure.SelectedInotropes; // dit is de gekozen inotropische ondersteuning
-            foreach (XElement el in test)// dit is het correcte ziekenhuis, dus ook de juiste taal
-            {
-                IEnumerable<XElement> te = from tr in test.Descendants("reports").Elements("pmwires").Elements("items")
-                                           where (string)tr.Attribute("id") == t.ToString()
-                                           select tr;
-                foreach (XElement f in te) { help = f.Element("regel_23").Value; }
-            }
-        }
-        return help;
-    }
-    private async Task<string> getIABPUsedAsync(int procedure_id, IEnumerable<XElement> test)
-    {
-        var help = "";
-        var selectedCPB = await _icpb.getSpecificCPB(procedure_id);
-        if (selectedCPB != null)
-        {
-            var t = selectedCPB.IABP_IND; // dit is de gekozen indicatie voor de IABP
-            foreach (XElement el in test)// dit is het correcte ziekenhuis, dus ook de juiste taal
-            {
-                IEnumerable<XElement> te = from tr in test.Descendants("reports").Elements("iabp").Elements("items")
-                                           where (string)tr.Attribute("id") == t.ToString()
-                                           select tr;
-                foreach (XElement f in te) { help = f.Element("regel_22").Value; }
-            }
-        }
-        return help;
-    }
     private InstitutionalDTO getEmptyRecord(string description)
     {
         var result = new InstitutionalDTO();
@@ -406,86 +306,96 @@ public class InstitutionalText : IInstitutionalText
         result.Regel2A = "Please enter your custom report here and 'Save as suggestion'";
         return result;
     }
-    private async Task<InstitutionalDTO> getExitingRecordAsync(XElement ad, int procedure_id, IEnumerable<XElement> test)
+    private async Task<InstitutionalDTO> getExitingRecordAsync(XElement ad)
     {
         var result = new InstitutionalDTO();
+        await Task.Run(() =>
+        {
 
-        result.Regel1A = ad.Element("regel_1_a").Value;
-        result.Regel1B = ad.Element("regel_1_b").Value;
-        result.Regel1C = await translateHarvestLocationLeg(procedure_id, dropLeg);
+            result.Regel1A = ad.Element("regel_1_a").Value;
+            result.Regel1B = ad.Element("regel_1_b").Value;
+            result.Regel1C = ad.Element("regel_1_c").Value;
+            // result.Regel1C = await translateHarvestLocationLeg(procedure_id, dropLeg);
 
-        result.Regel2A = ad.Element("regel_2_a").Value;
-        result.Regel2B = ad.Element("regel_2_b").Value;
-        result.Regel2C = await translateHarvestLocationRadial(procedure_id, dropLeg);
+            result.Regel2A = ad.Element("regel_2_a").Value;
+            result.Regel2B = ad.Element("regel_2_b").Value;
+            result.Regel2C = ad.Element("regel_2_c").Value;
+            // result.Regel2C = await translateHarvestLocationRadial(procedure_id, dropLeg);
 
-        result.Regel3A = ad.Element("regel_3_a").Value;
-        result.Regel3B = ad.Element("regel_3_b").Value;
-        result.Regel3C = ad.Element("regel_3_c").Value;
+            result.Regel3A = ad.Element("regel_3_a").Value;
+            result.Regel3B = ad.Element("regel_3_b").Value;
+            result.Regel3C = ad.Element("regel_3_c").Value;
 
-        result.Regel4A = ad.Element("regel_4_a").Value;
-        result.Regel4B = ad.Element("regel_4_b").Value;
-        result.Regel4C = ad.Element("regel_4_c").Value;
+            result.Regel4A = ad.Element("regel_4_a").Value;
+            result.Regel4B = ad.Element("regel_4_b").Value;
+            result.Regel4C = ad.Element("regel_4_c").Value;
 
-        result.Regel5A = ad.Element("regel_5_a").Value;
-        result.Regel5B = ad.Element("regel_5_b").Value;
-        result.Regel5C = ad.Element("regel_5_c").Value;
+            result.Regel5A = ad.Element("regel_5_a").Value;
+            result.Regel5B = ad.Element("regel_5_b").Value;
+            result.Regel5C = ad.Element("regel_5_c").Value;
 
-        result.Regel6A = ad.Element("regel_6_a").Value + "";
-        result.Regel6B = ad.Element("regel_6_b").Value + "" + await getCardioPlegiaTemp(procedure_id) + "" + await getCardioPlegiaRoute(procedure_id) + "" + await getCardioPlegiaType(procedure_id);
-        result.Regel6C = ad.Element("regel_6_c").Value;
+            result.Regel6A = ad.Element("regel_6_a").Value;
+            result.Regel6B = ad.Element("regel_6_b").Value;
+            // result.Regel6B = ad.Element("regel_6_b").Value + "" + await getCardioPlegiaTemp(procedure_id) + "" + await getCardioPlegiaRoute(procedure_id) + "" + await getCardioPlegiaType(procedure_id);
+            result.Regel6C = ad.Element("regel_6_c").Value;
 
-        result.Regel7A = ad.Element("regel_7_a").Value;
-        result.Regel7B = ad.Element("regel_7_b").Value;
-        result.Regel7C = ad.Element("regel_7_c").Value;
+            result.Regel7A = ad.Element("regel_7_a").Value;
+            result.Regel7B = ad.Element("regel_7_b").Value;
+            result.Regel7C = ad.Element("regel_7_c").Value;
 
-        result.Regel8A = ad.Element("regel_8_a").Value;
-        result.Regel8B = ad.Element("regel_8_b").Value;
-        result.Regel8C = ad.Element("regel_8_c").Value;
+            result.Regel8A = ad.Element("regel_8_a").Value;
+            result.Regel8B = ad.Element("regel_8_b").Value;
+            result.Regel8C = ad.Element("regel_8_c").Value;
 
-        result.Regel9A = ad.Element("regel_9_a").Value;
-        result.Regel9B = ad.Element("regel_9_b").Value;
-        result.Regel9C = ad.Element("regel_9_c").Value;
+            result.Regel9A = ad.Element("regel_9_a").Value;
+            result.Regel9B = ad.Element("regel_9_b").Value;
+            result.Regel9C = ad.Element("regel_9_c").Value;
 
-        result.Regel10A = ad.Element("regel_10_a").Value;
-        result.Regel10B = ad.Element("regel_10_b").Value;
-        result.Regel10C = ad.Element("regel_10_c").Value;
+            result.Regel10A = ad.Element("regel_10_a").Value;
+            result.Regel10B = ad.Element("regel_10_b").Value;
+            result.Regel10C = ad.Element("regel_10_c").Value;
 
-        result.Regel11A = ad.Element("regel_11_a").Value;
-        result.Regel11B = ad.Element("regel_11_b").Value;
-        result.Regel11C = ad.Element("regel_11_c").Value;
+            result.Regel11A = ad.Element("regel_11_a").Value;
+            result.Regel11B = ad.Element("regel_11_b").Value;
+            result.Regel11C = ad.Element("regel_11_c").Value;
 
-        result.Regel12A = ad.Element("regel_12_a").Value;
-        result.Regel12B = ad.Element("regel_12_b").Value;
-        result.Regel12C = ad.Element("regel_12_c").Value;
+            result.Regel12A = ad.Element("regel_12_a").Value;
+            result.Regel12B = ad.Element("regel_12_b").Value;
+            result.Regel12C = ad.Element("regel_12_c").Value;
 
-        result.Regel13A = ad.Element("regel_13_a").Value;
-        result.Regel13B = ad.Element("regel_13_b").Value;
-        result.Regel13C = ad.Element("regel_13_c").Value;
+            result.Regel13A = ad.Element("regel_13_a").Value;
+            result.Regel13B = ad.Element("regel_13_b").Value;
+            result.Regel13C = ad.Element("regel_13_c").Value;
 
-        result.Regel14A = ad.Element("regel_14_a").Value;
-        result.Regel14B = ad.Element("regel_14_b").Value;
-        result.Regel14C = ad.Element("regel_14_c").Value;
+            result.Regel14A = ad.Element("regel_14_a").Value;
+            result.Regel14B = ad.Element("regel_14_b").Value;
+            result.Regel14C = ad.Element("regel_14_c").Value;
 
 
-        result.Regel15 = ad.Element("regel_15").Value;
-        result.Regel16 = ad.Element("regel_16").Value;
-        result.Regel17 = ad.Element("regel_17").Value;
-        result.Regel18 = ad.Element("regel_18").Value;
-        result.Regel19 = ad.Element("regel_19").Value;
-        result.Regel20 = ad.Element("regel_20").Value;
-        result.Regel21 = await getCirculationSupportAsync(procedure_id, test);
-        result.Regel22 = await getIABPUsedAsync(procedure_id, test);
-        result.Regel23 = await getPMWiresAsync(procedure_id, test);
-        result.Regel24 = ad.Element("regel_24").Value;
-        result.Regel25 = ad.Element("regel_25").Value;
-        result.Regel26 = ad.Element("regel_26").Value;
-        result.Regel27 = ad.Element("regel_27").Value;
-        result.Regel28 = ad.Element("regel_28").Value;
-        result.Regel29 = ad.Element("regel_29").Value;
-        result.Regel30 = ad.Element("regel_30").Value;
-        result.Regel31 = ad.Element("regel_31").Value;
-        result.Regel32 = ad.Element("regel_32").Value;
-        result.Regel33 = ad.Element("regel_33").Value;
+            result.Regel15 = ad.Element("regel_15").Value;
+            result.Regel16 = ad.Element("regel_16").Value;
+            result.Regel17 = ad.Element("regel_17").Value;
+            result.Regel18 = ad.Element("regel_18").Value;
+            result.Regel19 = ad.Element("regel_19").Value;
+            result.Regel20 = ad.Element("regel_20").Value;
+            result.Regel21 = ad.Element("regel_21").Value;
+            result.Regel22 = ad.Element("regel_22").Value;
+            result.Regel23 = ad.Element("regel_23").Value;
+
+            // result.Regel21 = await getCirculationSupportAsync(procedure_id, test);
+            // result.Regel22 = await getIABPUsedAsync(procedure_id, test);
+            // result.Regel23 = await getPMWiresAsync(procedure_id, test);
+            result.Regel24 = ad.Element("regel_24").Value;
+            result.Regel25 = ad.Element("regel_25").Value;
+            result.Regel26 = ad.Element("regel_26").Value;
+            result.Regel27 = ad.Element("regel_27").Value;
+            result.Regel28 = ad.Element("regel_28").Value;
+            result.Regel29 = ad.Element("regel_29").Value;
+            result.Regel30 = ad.Element("regel_30").Value;
+            result.Regel31 = ad.Element("regel_31").Value;
+            result.Regel32 = ad.Element("regel_32").Value;
+            result.Regel33 = ad.Element("regel_33").Value;
+        });
 
         return result;
     }
@@ -725,7 +635,7 @@ public class InstitutionalText : IInstitutionalText
         .Where(x => (string)x.Attribute("id") == hospital)
         .Elements("reports").Elements("text_by_type_of_surgery")
         .FirstOrDefault();
-        
+
         help.Add(nxl);
         var content = _env.ContentRootPath;
         var filename = "xml/InstitutionalReports.xml";
@@ -733,4 +643,13 @@ public class InstitutionalText : IInstitutionalText
         _doc.Save($"{test}");
     }
 
+    public async Task<IEnumerable<XElement>> getCurrentHospital(string hospitalNo)
+    {
+        await Task.Run(() =>
+        {
+            IEnumerable<XElement> op = from el in _doc.Descendants("hospital") where (string)el.Attribute("id") == hospitalNo select el;
+            return op;
+        });
+        return null;
+    }
 }

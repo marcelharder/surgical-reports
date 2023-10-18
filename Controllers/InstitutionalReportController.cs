@@ -12,10 +12,10 @@ public class InstitutionalReportController : ControllerBase
         _t = t;
     }
 
-    [HttpGet("{id}/{soort}/{procedure_id}")]
-    public async Task<IActionResult> getInstitutionalReport(string id, string soort, int procedure_id)
+    [HttpGet("{hospitalNo}/{soort}/{description}")]
+    public async Task<IActionResult> getInstitutionalReport(string hospitalNo, string soort, string description)
     {
-        var result = await _t.getInstitutionalReport(id, soort, procedure_id);
+        var result = await _t.getInstitutionalReport(hospitalNo, soort, description);
         return Ok(result);
     }
  

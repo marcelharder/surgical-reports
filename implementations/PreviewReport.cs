@@ -1,11 +1,12 @@
 
+using System.Collections;
 using surgical_reports.helpers;
 
 namespace surgical_reports.implementations;
 
 public class PreviewReport : IPreviewReport
 {
-    private List<Class_Item> dropLeg = new List<Class_Item>();
+    
     private DapperContext _context;
     private IWebHostEnvironment _env;
     private IMapper _map;
@@ -14,7 +15,9 @@ public class PreviewReport : IPreviewReport
     private IProcedureRepository _proc;
     private ICPBRepo _icpb;
     private ICABGRepo _cabg;
+    private OperatieDrops _drops;
     public PreviewReport(
+        OperatieDrops drops,
         IProcedureRepository proc,
         ICPBRepo icpb,
         ICABGRepo cabg,
@@ -33,10 +36,13 @@ public class PreviewReport : IPreviewReport
         _proc = proc;
         _icpb = icpb;
         _cabg = cabg;
+        _env = env;
+        _drops = drops;
+
     }
     public async Task<Class_Preview_Operative_report> getPreViewAsync(int procedure_id)
     {
-        if (await findPreview(procedure_id)) {return await getPRA(procedure_id);}
+        if (await findPreview(procedure_id)) { return await getPRA(procedure_id); }
         else
         {
             //add a new preview instance to database
@@ -45,7 +51,7 @@ public class PreviewReport : IPreviewReport
 
             var currentProcedure = await _repo.getSpecificProcedure(procedure_id);
             var user_id = currentProcedure.SelectedSurgeon;
-            var hospitalNo = currentProcedure.hospital;
+            
 
             // look for userspecificreport
             if (await UserHasASuggestionForThisProcedure(user_id, currentProcedure.fdType))
@@ -54,7 +60,7 @@ public class PreviewReport : IPreviewReport
 
                 result = _map.Map<Class_Suggestion, Class_Preview_Operative_report>(usersuggestion);
                 result.procedure_id = procedure_id;
-                return await saveNewPreviewReport(result, hospitalNo);
+                return await saveNewPreviewReport(result);
             }
             else
             // get the generic preview from the hospital
@@ -63,7 +69,7 @@ public class PreviewReport : IPreviewReport
                 if (currentProcedure.fdType == 6)
                 {
                     result.regel_1 = "This procedure is not (yet) available for reporting";
-                    return await saveNewPreviewReport(result, hospitalNo);
+                    return await saveNewPreviewReport(result);
                 }
                 else
                 {
@@ -71,13 +77,13 @@ public class PreviewReport : IPreviewReport
                     await _text.addRecordInXML(currentProcedure.hospital.ToString());
                     // get the description of this procedure from the 'soort'
                     var description = getDescription(currentProcedure.fdType.ToString());
-                   
+
                     // get the suggestion from the InstitutionalReports.xml
                     var text = await _text.getInstitutionalReport(currentProcedure.hospital.ToString(), currentProcedure.fdType.ToString(), description);
                     var no = _map.Map<InstitutionalDTO, Class_Preview_Operative_report>(text);
                     no.procedure_id = currentProcedure.ProcedureId;
 
-                    return await saveNewPreviewReport(no, hospitalNo);
+                    return await saveNewPreviewReport(no);
                 }
 
             }
@@ -139,22 +145,22 @@ public class PreviewReport : IPreviewReport
             return preview != null;
         }
     }
-    private async Task<Class_Preview_Operative_report> saveNewPreviewReport(Class_Preview_Operative_report cp, int hospitalNo)
+    private async Task<Class_Preview_Operative_report> saveNewPreviewReport(Class_Preview_Operative_report cp)
     {
-       // add the additional things
-       var currentFullHospital = await _text.getCurrentHospital(hospitalNo.ToString()); // gives a XElement from the selected hospital
-       InstitutionalDTO text = new InstitutionalDTO();
-       
-       text.Regel1C = await translateHarvestLocationLeg(cp.procedure_id, dropLeg);
-       text.Regel2C = await translateHarvestLocationRadial(cp.procedure_id, dropLeg);
-       text.Regel6B = text.Regel6B + "" + await getCardioPlegiaTemp(cp.procedure_id) + "" + await getCardioPlegiaRoute(cp.procedure_id) + "" + await getCardioPlegiaType(cp.procedure_id);
-                    
-       text.Regel21 = await getCirculationSupportAsync(cp.procedure_id, currentFullHospital);
-       text.Regel22 = await getIABPUsedAsync(cp.procedure_id, currentFullHospital);
-       text.Regel23 = await getPMWiresAsync(cp.procedure_id, currentFullHospital);
 
-       // merge the InstitutionalDTO straight to the Class_Preview_Operative_report
-        cp = _map.Map<InstitutionalDTO, Class_Preview_Operative_report>(text,cp);
+        // add the additional things
+        InstitutionalDTO text = new InstitutionalDTO();
+
+        text.Regel1C = await translateHarvestLocationLeg(cp.procedure_id);
+        text.Regel2C = await translateHarvestLocationRadial(cp.procedure_id);
+        text.Regel6B = text.Regel6B + "" + await getCardioPlegiaTemp(cp.procedure_id) + "" + await getCardioPlegiaRoute(cp.procedure_id) + "" + await getCardioPlegiaType(cp.procedure_id);
+
+        text.Regel21 = await getCirculationSupportAsync(cp.procedure_id);
+        text.Regel22 = await getIABPUsedAsync(cp.procedure_id);
+        text.Regel23 = await getPMWiresAsync(cp.procedure_id);
+
+        // merge the InstitutionalDTO straight to the Class_Preview_Operative_report
+        cp = _map.Map<InstitutionalDTO, Class_Preview_Operative_report>(text, cp);
 
 
 
@@ -336,12 +342,15 @@ public class PreviewReport : IPreviewReport
         }
     }
 
-    private async Task<string> translateHarvestLocationLeg(int procedure_id, List<Class_Item> dropLeg)
+    private async Task<string> translateHarvestLocationLeg(int procedure_id)
     {
-        var help = "";
-        var cabg = await _cabg.getSpecificCABG(procedure_id);
+        var help = "n/a";
 
-        if (cabg != null && cabg.leg_harvest_location == "")
+        var cabg = await _cabg.getSpecificCABG(procedure_id);
+        List<Class_Item> dropLeg = new List<Class_Item>();
+        dropLeg = await _drops.getCABGLeg();
+
+        if (cabg != null && cabg.leg_harvest_location != null)
         {
             var test = Convert.ToInt32(cabg.leg_harvest_location);
             var ci = dropLeg.Single(x => x.value == test);
@@ -350,11 +359,15 @@ public class PreviewReport : IPreviewReport
 
         return help;
     }
-    private async Task<string> translateHarvestLocationRadial(int procedure_id, List<Class_Item> dropRadial)
+    private async Task<string> translateHarvestLocationRadial(int procedure_id)
     {
-        var help = "";
+        var help = "n/a";
         var cabg = await _cabg.getSpecificCABG(procedure_id);
-        if (cabg != null && cabg.radial_harvest_location == "")
+        List<Class_Item> dropRadial = new List<Class_Item>();
+        dropRadial = await _drops.getCABGRadial();
+
+
+        if (cabg != null && cabg.radial_harvest_location != null)
         {
             var test = Convert.ToInt32(cabg.radial_harvest_location);
             var ci = dropRadial.Single(x => x.value == test);
@@ -365,80 +378,105 @@ public class PreviewReport : IPreviewReport
     }
     private async Task<string> getCardioPlegiaTemp(int procedure_id)
     {
+        //temp
         var help = "";
+        List<Class_Item> dropTemp = new List<Class_Item>();
+        dropTemp = await _drops.getCPB_temp();
         Class_CPB cpb = await _icpb.getSpecificCPB(procedure_id);
-        if (cpb != null) { }
+        if (cpb != null && cpb.cardiopl_temp != null)
+        {
+            var test = Convert.ToInt32(cpb.cardiopl_temp);
+            var ci = dropTemp.Single(x => x.value == test);
+            help = ci.description;
+        }
+
         return help;
     }
     private async Task<string> getCardioPlegiaRoute(int procedure_id)
     {
+        // delivery
+
+        
         var help = "";
+        List<Class_Item> dropDelivery = new List<Class_Item>();
+        dropDelivery = await _drops.getCPB_delivery();
         Class_CPB cpb = await _icpb.getSpecificCPB(procedure_id);
-        if (cpb != null) { }
+        if (cpb != null && cpb.INFUSION_MODE_ANTE != null)
+        {
+            var test = Convert.ToInt32(cpb.INFUSION_MODE_ANTE);
+            var ci = dropDelivery.Single(x => x.value == test);
+            help = ci.description;
+        }
         return help;
     }
     private async Task<string> getCardioPlegiaType(int procedure_id)
     {
+        // typeCardiopleg
         var help = "";
+        List<Class_Item> dropType = new List<Class_Item>();
+        dropType = await _drops.getTypeCardiopleg();
         Class_CPB cpb = await _icpb.getSpecificCPB(procedure_id);
-        if (cpb != null) { }
+        if (cpb != null && cpb.CARDIOPLEGIA_TYPE != null)
+        {
+            var test = Convert.ToInt32(cpb.CARDIOPLEGIA_TYPE);
+            var ci = dropType.Single(x => x.value == test);
+            help = ci.description;
+        }
         return help;
-    }
+     }
     private async Task<string> getProcedureDescriptionAsync(int procedure_id)
     {
         var r = await _proc.getSpecificProcedure(procedure_id);
         return r.Description;
     }
-    private async Task<string> getCirculationSupportAsync(int procedure_id, IEnumerable<XElement> test)
+    private async Task<string> getCirculationSupportAsync(int procedure_id)
     {
         var help = "";
-        var selectedProcedure = await _proc.getSpecificProcedure(procedure_id);
-        if (selectedProcedure != null)
+        List<Class_Item> dropCirc = new List<Class_Item>();
+        var currentProcedure = await _repo.getSpecificProcedure(procedure_id);
+        dropCirc = _drops.getInotropeOptions();
+        
+        if (currentProcedure.SelectedInotropes != 0)
         {
-            var t = selectedProcedure.SelectedInotropes; // dit is de gekozen inotropische ondersteuning
-            foreach (XElement el in test)// dit is het correcte ziekenhuis, dus ook de juiste taal
-            {
-                IEnumerable<XElement> te = from tr in test.Descendants("reports").Elements("circulation_support").Elements("items")
-                                           where (string)tr.Attribute("id") == t.ToString()
-                                           select tr;
-                foreach (XElement f in te) { help = f.Element("regel_21").Value; }
-            }
+            var t = currentProcedure.SelectedInotropes;
+            var ci = dropCirc.Single(x => x.value == t);
+            help = ci.description;
+        }
+        return help;
+        
+    }
+    private async Task<string> getPMWiresAsync(int procedure_id)
+    {
+       var help = "";
+        List<Class_Item> dropCirc = new List<Class_Item>();
+        var currentProcedure = await _repo.getSpecificProcedure(procedure_id);
+        dropCirc = _drops.getPacemakerOptions();
+        
+        if (currentProcedure.SelectedPacemaker != 0)
+        {
+            var t = currentProcedure.SelectedPacemaker;
+            var ci = dropCirc.Single(x => x.value == t);
+            help = ci.description;
         }
         return help;
     }
-    private async Task<string> getPMWiresAsync(int procedure_id, IEnumerable<XElement> test)
+    private async Task<string> getIABPUsedAsync(int procedure_id)
     {
+         // IABP
         var help = "";
-        var selectedProcedure = await _proc.getSpecificProcedure(procedure_id);
-        if (selectedProcedure != null)
+        List<Class_Item> dropIABP = new List<Class_Item>();
+        dropIABP = await _drops.getCPB_iabp_ind();
+        Class_CPB cpb = await _icpb.getSpecificCPB(procedure_id);
+        if (cpb != null && cpb.IABP_IND != null)
         {
-            var t = selectedProcedure.SelectedInotropes; // dit is de gekozen inotropische ondersteuning
-            foreach (XElement el in test)// dit is het correcte ziekenhuis, dus ook de juiste taal
-            {
-                IEnumerable<XElement> te = from tr in test.Descendants("reports").Elements("pmwires").Elements("items")
-                                           where (string)tr.Attribute("id") == t.ToString()
-                                           select tr;
-                foreach (XElement f in te) { help = f.Element("regel_23").Value; }
-            }
+            var t = Convert.ToInt32(cpb.IABP_IND);
+            var ci = dropIABP.Single(x => x.value == t);
+            help = ci.description;
         }
         return help;
     }
-    private async Task<string> getIABPUsedAsync(int procedure_id, IEnumerable<XElement> test)
-    {
-        var help = "";
-        var selectedCPB = await _icpb.getSpecificCPB(procedure_id);
-        if (selectedCPB != null)
-        {
-            var t = selectedCPB.IABP_IND; // dit is de gekozen indicatie voor de IABP
-            foreach (XElement el in test)// dit is het correcte ziekenhuis, dus ook de juiste taal
-            {
-                IEnumerable<XElement> te = from tr in test.Descendants("reports").Elements("iabp").Elements("items")
-                                           where (string)tr.Attribute("id") == t.ToString()
-                                           select tr;
-                foreach (XElement f in te) { help = f.Element("regel_22").Value; }
-            }
-        }
-        return help;
-    }
-  
+
+   
+
+   
 }

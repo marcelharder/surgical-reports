@@ -81,7 +81,7 @@ public class OperatieDrops
 
         #region <!--operatie-->
         public List<Class_Item> getTimingOptions()
-        {
+        { _help.Clear();
             IEnumerable<XElement> op = _testje.Descendants("operatie").Elements("operatie_timing").Elements("items");
             foreach (XElement s in op)
             {
@@ -93,7 +93,7 @@ public class OperatieDrops
             return _help;
         }
         public List<Class_Item> getUrgentOptions()
-        {
+         { _help.Clear();
             IEnumerable<XElement> op = _testje.Descendants("operatie").Elements("urgent_reasons").Elements("items");
             foreach (XElement s in op)
             {
@@ -105,7 +105,7 @@ public class OperatieDrops
             return _help;
         }
         public List<Class_Item> getEmergentOptions()
-        {
+         { _help.Clear();
             IEnumerable<XElement> op = _testje.Descendants("operatie").Elements("emergent_reasons").Elements("items");
             foreach (XElement s in op)
             {
@@ -117,7 +117,7 @@ public class OperatieDrops
             return _help;
         }
         public List<Class_Item> getInotropeOptions()
-        {
+         { _help.Clear();
             IEnumerable<XElement> op = _testje.Descendants("operatie").Elements("inotropica").Elements("items");
             foreach (XElement s in op)
             {
@@ -129,7 +129,7 @@ public class OperatieDrops
             return _help;
         }
         public List<Class_Item> getPericardOptions()
-        {
+         { _help.Clear();
             IEnumerable<XElement> op = _testje.Descendants("operatie").Elements("pericard").Elements("items");
             foreach (XElement s in op)
             {
@@ -141,7 +141,7 @@ public class OperatieDrops
             return _help;
         }
         public List<Class_Item> getPleuraOptions()
-        {
+         { _help.Clear();
             IEnumerable<XElement> op = _testje.Descendants("operatie").Elements("pleura").Elements("items");
             foreach (XElement s in op)
             {
@@ -153,7 +153,7 @@ public class OperatieDrops
             return _help;
         }
         public List<Class_Item> getPacemakerOptions()
-        {
+         { _help.Clear();
             IEnumerable<XElement> op = _testje.Descendants("operatie").Elements("pacemaker").Elements("items");
             foreach (XElement s in op)
             {
@@ -165,7 +165,7 @@ public class OperatieDrops
             return _help;
         }
         public List<Class_Item> getArray(int id)
-        {
+         { _help.Clear();
             IEnumerable<XElement> op = _testje.Descendants("operatie").Elements("category").Elements("items");
             foreach (XElement s in op)
             {
@@ -185,7 +185,7 @@ public class OperatieDrops
 
         #region <!--cpb-->
         public async Task<List<Class_Item>> getTypeCardiopleg()
-        {
+        {   _help.Clear();
             await Task.Run(() =>
             {
                 IEnumerable<XElement> op = _testje.Descendants("cpb").Elements("typeCardiopleg").Elements("items");
@@ -200,7 +200,7 @@ public class OperatieDrops
             return _help;
         }
         public async Task<List<Class_Item>> getMPT()
-        {
+        {   _help.Clear();
             await Task.Run(() =>
                    {
                        IEnumerable<XElement> op = _testje.Descendants("cpb").Elements("myocardial_protection").Elements("items");
@@ -209,7 +209,7 @@ public class OperatieDrops
             return _help;
         }
         public async Task<List<Class_Item>> getCPB_art_choice()
-        {
+        {   _help.Clear();
             await Task.Run(() =>
                    {
                        IEnumerable<XElement> op = _testje.Descendants("cpb").Elements("art_choice").Elements("items");
@@ -218,7 +218,7 @@ public class OperatieDrops
             return _help;
         }
         public async Task<List<Class_Item>> getCPB_ven_choice()
-        {
+        {   _help.Clear();
             await Task.Run(() =>
                    {
                        IEnumerable<XElement> op = _testje.Descendants("cpb").Elements("ven_choice").Elements("items");
@@ -227,7 +227,7 @@ public class OperatieDrops
             return _help;
         }
         public async Task<List<Class_Item>> getCPB_delivery()
-        {
+        {   _help.Clear();
             await Task.Run(() =>
                    {
                        IEnumerable<XElement> op = _testje.Descendants("cpb").Elements("delivery").Elements("items");
@@ -236,7 +236,7 @@ public class OperatieDrops
             return _help;
         }
         public async Task<List<Class_Item>> getCPB_iabp_ind()
-        {
+        {   _help.Clear();
             await Task.Run(() =>
             {
                 IEnumerable<XElement> op = _testje.Descendants("cpb").Elements("iabp_ind").Elements("items");
@@ -245,7 +245,7 @@ public class OperatieDrops
             return _help;
         }
         public async Task<List<Class_Item>> getCPB_iabp_timing()
-        {
+        {   _help.Clear();
             await Task.Run(() =>
             {
                 IEnumerable<XElement> op = _testje.Descendants("cpb").Elements("iabp_ind_when").Elements("items");
@@ -254,7 +254,7 @@ public class OperatieDrops
             return _help;
         }
         public async Task<List<Class_Item>> getCPB_nccp()
-        {
+        {   _help.Clear();
             await Task.Run(() =>
             {
                 IEnumerable<XElement> op = _testje.Descendants("cpb").Elements("nccp").Elements("items");
@@ -263,7 +263,7 @@ public class OperatieDrops
             return _help;
         }
         public async Task<List<Class_Item>> getCPB_aox()
-        {
+        {   _help.Clear();
             await Task.Run(() =>
             {
                 IEnumerable<XElement> op = _testje.Descendants("cpb").Elements("aox").Elements("items");
@@ -272,7 +272,7 @@ public class OperatieDrops
             return _help;
         }
         public async Task<List<Class_Item>> getCPB_timing()
-        {
+        {   _help.Clear();
             await Task.Run(() =>
             {
                 IEnumerable<XElement> op = _testje.Descendants("cpb").Elements("timing").Elements("items");
@@ -281,7 +281,7 @@ public class OperatieDrops
             return _help;
         }
         public async Task<List<Class_Item>> getCPB_temp()
-        {
+        {   _help.Clear();
             await Task.Run(() =>
             {
                 IEnumerable<XElement> op = _testje.Descendants("cpb").Elements("temp").Elements("items");
@@ -293,7 +293,7 @@ public class OperatieDrops
 
         #region <!--Euroscore-->
         public async Task<List<Class_Item>> getWeightIntervention()
-        {
+        {   _help.Clear();
             await Task.Run(() =>
                    {
                        IEnumerable<XElement> op = _testje.Descendants("history").Elements("weight_of_intervention").Elements("items");
@@ -302,7 +302,7 @@ public class OperatieDrops
             return _help;
         }
         public async Task<List<Class_Item>> getLVFunction()
-        {
+        {   _help.Clear();
             await Task.Run(() =>
                    {
                        IEnumerable<XElement> op = _testje.Descendants("history").Elements("LV_function").Elements("items");
@@ -311,7 +311,7 @@ public class OperatieDrops
             return _help;
         }
         public async Task<List<Class_Item>> getPulmonaryHypertension()
-        {
+        {   _help.Clear();
             await Task.Run(() =>
                    {
                        IEnumerable<XElement> op = _testje.Descendants("history").Elements("pulmonary_hypertension").Elements("items");
@@ -320,7 +320,7 @@ public class OperatieDrops
             return _help;
         }
         public async Task<List<Class_Item>> getGenderOptions()
-        {
+        {   _help.Clear();
             await Task.Run(() =>
                   {
                       IEnumerable<XElement> op = _testje.Descendants("demographics").Elements("gender").Elements("items");
@@ -329,7 +329,7 @@ public class OperatieDrops
             return _help;
         }
         public async Task<List<Class_Item>> getAgeOptions()
-        {
+        {   _help.Clear();
             await Task.Run(() =>
                   {
                       var t = new List<int>();
@@ -342,7 +342,7 @@ public class OperatieDrops
             return _help;
         }
         public async Task<List<Class_Item>> getCreatOptions()
-        {
+        {   _help.Clear();
             await Task.Run(() =>
                   {
                       var t = new List<int>();
@@ -355,7 +355,7 @@ public class OperatieDrops
             return _help;
         }
         public async Task<List<Class_Item>> getWeightOptions()
-        {
+        {   _help.Clear();
             await Task.Run(() =>
                   {
                       var t = new List<int>();
@@ -368,7 +368,7 @@ public class OperatieDrops
             return _help;
         }
         public async Task<List<Class_Item>> getHeightOptions()
-        {
+        {   _help.Clear();
             await Task.Run(() =>
             {
                 var t = new List<int>();
@@ -381,7 +381,7 @@ public class OperatieDrops
             return _help;
         }
         public async Task<List<Class_Item>> getUrgency()
-        {
+        {   _help.Clear();
             await Task.Run(() =>
                     {
                         IEnumerable<XElement> op = _testje.Descendants("operatie").Elements("operatie_timing").Elements("items");
@@ -390,7 +390,7 @@ public class OperatieDrops
             return _help;
         }
         public async Task<List<Class_Item>> getNYHA()
-        {
+        {   _help.Clear();
             await Task.Run(() =>
                    {
                        IEnumerable<XElement> op = _testje.Descendants("history").Elements("select29").Elements("items");
@@ -399,7 +399,7 @@ public class OperatieDrops
             return _help;
         }
         public async Task<List<Class_Item>> getReasonUrgent()
-        {
+        {   _help.Clear();
             await Task.Run(() =>
                    {
                        IEnumerable<XElement> op = _testje.Descendants("operatie").Elements("urgent_reasons").Elements("items");
@@ -408,7 +408,7 @@ public class OperatieDrops
             return _help;
         }
         public async Task<List<Class_Item>> getReasonEmergency()
-        {
+        {   _help.Clear();
             await Task.Run(() =>
                    {
                        IEnumerable<XElement> op = _testje.Descendants("operatie").Elements("emergent_reasons").Elements("items");
@@ -577,7 +577,7 @@ public class OperatieDrops
 
         #region <!--CABG--> 
         public async Task<List<Class_Item>> getCABGLocatie()
-        {
+        {   _help.Clear();
             await Task.Run(() =>
                    {
                        IEnumerable<XElement> op = _testje.Descendants("cabg").Elements("locatie").Elements("items");
@@ -586,7 +586,7 @@ public class OperatieDrops
             return _help;
         }
         public async Task<List<Class_Item>> getCABGQuality()
-        {
+        {   _help.Clear();
             await Task.Run(() =>
             {
                 IEnumerable<XElement> op = _testje.Descendants("cabg").Elements("quality").Elements("items");
@@ -595,7 +595,7 @@ public class OperatieDrops
             return _help;
         }
         public async Task<List<Class_Item>> getCABGDiameter()
-        {
+        {   _help.Clear();
             await Task.Run(() =>
             {
                 IEnumerable<XElement> op = _testje.Descendants("cabg").Elements("diameter").Elements("items");
@@ -604,7 +604,7 @@ public class OperatieDrops
             return _help;
         }
         public async Task<List<Class_Item>> getCABGProximal()
-        {
+        {   _help.Clear();
             await Task.Run(() =>
                    {
                        IEnumerable<XElement> op = _testje.Descendants("cabg").Elements("proximal").Elements("items");
@@ -614,7 +614,7 @@ public class OperatieDrops
         }
 
         public async Task<List<Class_Item>> getCABGConduit()
-        {
+        {   _help.Clear();
             await Task.Run(() =>
                     {
                         IEnumerable<XElement> op = _testje.Descendants("cabg").Elements("conduit").Elements("items");
@@ -623,7 +623,7 @@ public class OperatieDrops
             return _help;
         }
         public async Task<List<Class_Item>> getCABGType()
-        {
+        {   _help.Clear();
             await Task.Run(() =>
                     {
                         IEnumerable<XElement> op = _testje.Descendants("cabg").Elements("type").Elements("items");
@@ -632,7 +632,7 @@ public class OperatieDrops
             return _help;
         }
         public async Task<List<Class_Item>> getCABGProcedure()
-        {
+        {   _help.Clear();
             await Task.Run(() =>
                     {
                         IEnumerable<XElement> op = _testje.Descendants("cabg").Elements("procedure").Elements("items");
@@ -641,7 +641,7 @@ public class OperatieDrops
             return _help;
         }
         public async Task<List<Class_Item>> getCABGAngle()
-        {
+        {   _help.Clear();
             await Task.Run(() =>
                     {
                         IEnumerable<XElement> op = _testje.Descendants("cabg").Elements("angle").Elements("items");
@@ -650,7 +650,7 @@ public class OperatieDrops
             return _help;
         }
         public async Task<List<Class_Item>> getCABGDropList1()
-        {
+        {   _help.Clear();   
             await Task.Run(() =>
                             {
                                 IEnumerable<XElement> op = _testje.Descendants("cabg").Elements("dropdownlist_1").Elements("items");
@@ -659,7 +659,7 @@ public class OperatieDrops
             return _help;
         }
         public async Task<List<Class_Item>> getCABGRadial()
-        {
+        {   _help.Clear();
             await Task.Run(() =>
                             {
                                 IEnumerable<XElement> op = _testje.Descendants("cabg").Elements("dropradial").Elements("items");
@@ -668,7 +668,7 @@ public class OperatieDrops
             return _help;
         }
         public async Task<List<Class_Item>> getCABGLeg()
-        {
+        {   _help.Clear();
             await Task.Run(() =>
                             {
                                 IEnumerable<XElement> op = _testje.Descendants("cabg").Elements("dropleg").Elements("items");

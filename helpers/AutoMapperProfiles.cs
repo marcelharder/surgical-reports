@@ -23,6 +23,24 @@ namespace surgical_reports.helpers;
             .ForMember(dest => dest.regel_13, opt => opt.MapFrom(src => src.regel_13_a + src.regel_13_b + src.regel_13_c))
             .ForMember(dest => dest.regel_14, opt => opt.MapFrom(src => src.regel_14_a + src.regel_14_b + src.regel_14_c));
 
+            CreateMap<InstitutionalDTO, Class_Preview_Operative_report>()
+            .ForMember(dest => dest.Id, opt => opt.Ignore())
+            .ForMember(dest => dest.regel_1, opt => opt.MapFrom(src => src.Regel1A + src.Regel1B + src.Regel1C))
+            .ForMember(dest => dest.regel_2, opt => opt.MapFrom(src => src.Regel2A + src.Regel2B + src.Regel2C))
+            .ForMember(dest => dest.regel_3, opt => opt.MapFrom(src => src.Regel3A + src.Regel3B + src.Regel3C))
+            .ForMember(dest => dest.regel_4, opt => opt.MapFrom(src => src.Regel4A + src.Regel4B + src.Regel4C))
+            .ForMember(dest => dest.regel_5, opt => opt.MapFrom(src => src.Regel5A + src.Regel5B + src.Regel5C))
+            .ForMember(dest => dest.regel_6, opt => opt.MapFrom(src => src.Regel6A + src.Regel6B + src.Regel6C))
+            .ForMember(dest => dest.regel_7, opt => opt.MapFrom(src => src.Regel7A + src.Regel7B + src.Regel7C))
+            .ForMember(dest => dest.regel_8, opt => opt.MapFrom(src => src.Regel8A + src.Regel8B + src.Regel8C))
+            .ForMember(dest => dest.regel_9, opt => opt.MapFrom(src => src.Regel9A + src.Regel9B + src.Regel9C))
+            .ForMember(dest => dest.regel_10, opt => opt.MapFrom(src => src.Regel10A + src.Regel10B + src.Regel10C))
+            .ForMember(dest => dest.regel_11, opt => opt.MapFrom(src => src.Regel11A + src.Regel11B + src.Regel11C))
+            .ForMember(dest => dest.regel_12, opt => opt.MapFrom(src => src.Regel12A + src.Regel12B + src.Regel12C))
+            .ForMember(dest => dest.regel_13, opt => opt.MapFrom(src => src.Regel13A + src.Regel13B + src.Regel13C))
+            .ForMember(dest => dest.regel_14, opt => opt.MapFrom(src => src.Regel14A + src.Regel14B + src.Regel14C));
+
+
 
             CreateMap<InstitutionalDTO, Class_Suggestion>()
             .ForMember(dest => dest.Id, opt => opt.Ignore())

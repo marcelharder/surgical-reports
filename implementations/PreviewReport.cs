@@ -467,9 +467,9 @@ public class PreviewReport : IPreviewReport
         List<Class_Item> dropIABP = new List<Class_Item>();
         dropIABP = await _drops.getCPB_iabp_ind();
         Class_CPB cpb = await _icpb.getSpecificCPB(procedure_id);
-        if (cpb != null && cpb.IABP_IND != null)
+        if (cpb != null && cpb.IABP_IND != null && cpb.IABP_IND != "0")
         {
-            var t = Convert.ToInt32(cpb.IABP_IND);
+            var t = Convert.ToInt32(cpb.IABP_IND); 
             var ci = dropIABP.Single(x => x.value == t);
             help = ci.description;
         }

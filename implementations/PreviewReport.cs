@@ -6,7 +6,6 @@ namespace surgical_reports.implementations;
 
 public class PreviewReport : IPreviewReport
 {
-    
     private DapperContext _context;
     private IWebHostEnvironment _env;
     private IMapper _map;
@@ -42,7 +41,9 @@ public class PreviewReport : IPreviewReport
     }
     public async Task<Class_Preview_Operative_report> getPreViewAsync(int procedure_id)
     {
-        if (await findPreview(procedure_id)) { return await getPRA(procedure_id); }
+        if (await findPreview(procedure_id)) {
+            
+             return await getPRA(procedure_id); }
         else
         {
             //add a new preview instance to database
@@ -132,7 +133,7 @@ public class PreviewReport : IPreviewReport
         using (var connection = _context.CreateConnection())
         {
             var preview = await connection.QuerySingleOrDefaultAsync<Class_Preview_Operative_report>(query, new { procedure_id });
-
+            preview = await addProcedureDetails(preview);// adds things like harvest location etc ..
             return preview;
         }
     }
@@ -145,10 +146,9 @@ public class PreviewReport : IPreviewReport
             return preview != null;
         }
     }
-    private async Task<Class_Preview_Operative_report> saveNewPreviewReport(Class_Preview_Operative_report cp)
-    {
 
-        // add the additional things
+    private async Task<Class_Preview_Operative_report> addProcedureDetails(Class_Preview_Operative_report cp)
+    {
         InstitutionalDTO text = new InstitutionalDTO();
 
         text.Regel1C = await translateHarvestLocationLeg(cp.procedure_id);
@@ -159,11 +159,13 @@ public class PreviewReport : IPreviewReport
         text.Regel22 = await getIABPUsedAsync(cp.procedure_id);
         text.Regel23 = await getPMWiresAsync(cp.procedure_id);
 
-        // merge the InstitutionalDTO straight to the Class_Preview_Operative_report
+          // merge the InstitutionalDTO straight to the Class_Preview_Operative_report
         cp = _map.Map<InstitutionalDTO, Class_Preview_Operative_report>(text, cp);
-
-
-
+        return cp;
+    }
+    private async Task<Class_Preview_Operative_report> saveNewPreviewReport(Class_Preview_Operative_report cp)
+    {
+        cp = await addProcedureDetails(cp);
         var query = "INSERT INTO Previews (procedure_id,Regel_1, Regel_2, Regel_3, Regel_4, Regel_5, " +
        "Regel_6, Regel_7, Regel_8, Regel_9, Regel_10, " +
        "Regel_11, Regel_12, Regel_13, Regel_14, Regel_15, " +

@@ -9,7 +9,6 @@ public class PreviewReport : IPreviewReport
     private DapperContext _context;
     private IWebHostEnvironment _env;
     private IMapper _map;
-    private IProcedureRepository _repo;
     private IInstitutionalText _text;
     private IProcedureRepository _proc;
     private ICPBRepo _icpb;
@@ -23,12 +22,10 @@ public class PreviewReport : IPreviewReport
         IWebHostEnvironment env,
         DapperContext context,
         IInstitutionalText text,
-        IProcedureRepository repo,
         IMapper map
        )
     {
         _context = context;
-        _repo = repo;
         _map = map;
         _text = text;
         _env = env;
@@ -41,54 +38,62 @@ public class PreviewReport : IPreviewReport
     }
     public async Task<Class_Preview_Operative_report> getPreViewAsync(int procedure_id)
     {
-        if (await findPreview(procedure_id)) {
-            
-             return await getPRA(procedure_id); }
-        else
+        // check if the procedure exists
+        if (await _proc.getSpecificProcedure(procedure_id) != null)
         {
-            //add a new preview instance to database
-            var result = new Class_Preview_Operative_report();
-            result.procedure_id = procedure_id;
 
-            var currentProcedure = await _repo.getSpecificProcedure(procedure_id);
-            var user_id = currentProcedure.SelectedSurgeon;
-            
 
-            // look for userspecificreport
-            if (await UserHasASuggestionForThisProcedure(user_id, currentProcedure.fdType))
+            if (await findPreview(procedure_id))
             {
-                var usersuggestion = await getUserSpecificSuggestion(user_id, currentProcedure.fdType);
-
-                result = _map.Map<Class_Suggestion, Class_Preview_Operative_report>(usersuggestion);
-                result.procedure_id = procedure_id;
-                return await saveNewPreviewReport(result);
+                return await getPRA(procedure_id);
             }
             else
-            // get the generic preview from the hospital
             {
-                //var report_code = getReportCode(currentProcedure.fdType.ToString());
-                if (currentProcedure.fdType == 6)
+                //add a new preview instance to database
+                var result = new Class_Preview_Operative_report();
+                result.procedure_id = procedure_id;
+
+                var currentProcedure = await _proc.getSpecificProcedure(procedure_id);
+                var user_id = currentProcedure.SelectedSurgeon;
+
+
+                // look for userspecificreport
+                if (await UserHasASuggestionForThisProcedure(user_id, currentProcedure.fdType))
                 {
-                    result.regel_1 = "This procedure is not (yet) available for reporting";
+                    var usersuggestion = await getUserSpecificSuggestion(user_id, currentProcedure.fdType);
+
+                    result = _map.Map<Class_Suggestion, Class_Preview_Operative_report>(usersuggestion);
+                    result.procedure_id = procedure_id;
                     return await saveNewPreviewReport(result);
                 }
                 else
+                // get the generic preview from the hospital
                 {
-                    // check to see if there is an XML file for this hospital, if no record available than add one now.
-                    await _text.addRecordInXML(currentProcedure.hospital.ToString());
-                    // get the description of this procedure from the 'soort'
-                    var description = getDescription(currentProcedure.fdType.ToString());
+                    //var report_code = getReportCode(currentProcedure.fdType.ToString());
+                    if (currentProcedure.fdType == 6)
+                    {
+                        result.regel_1 = "This procedure is not (yet) available for reporting";
+                        return await saveNewPreviewReport(result);
+                    }
+                    else
+                    {
+                        // check to see if there is an XML file for this hospital, if no record available than add one now.
+                        await _text.addRecordInXML(currentProcedure.hospital.ToString());
+                        // get the description of this procedure from the 'soort'
+                        var description = getDescription(currentProcedure.fdType.ToString());
 
-                    // get the suggestion from the InstitutionalReports.xml
-                    var text = await _text.getInstitutionalReport(currentProcedure.hospital.ToString(), currentProcedure.fdType.ToString(), description);
-                    var no = _map.Map<InstitutionalDTO, Class_Preview_Operative_report>(text);
-                    no.procedure_id = currentProcedure.ProcedureId;
+                        // get the suggestion from the InstitutionalReports.xml
+                        var text = await _text.getInstitutionalReport(currentProcedure.hospital.ToString(), currentProcedure.fdType.ToString(), description);
+                        var no = _map.Map<InstitutionalDTO, Class_Preview_Operative_report>(text);
+                        no.procedure_id = currentProcedure.ProcedureId;
 
-                    return await saveNewPreviewReport(no);
+                        return await saveNewPreviewReport(no);
+                    }
+
                 }
-
             }
         }
+        else { return null; }
     }
     public async Task<Class_Preview_Operative_report> resetPreViewAsync(int procedure_id)
     {
@@ -149,18 +154,27 @@ public class PreviewReport : IPreviewReport
 
     private async Task<Class_Preview_Operative_report> addProcedureDetails(Class_Preview_Operative_report cp)
     {
-        InstitutionalDTO text = new InstitutionalDTO();
-
-        text.Regel1C = await translateHarvestLocationLeg(cp.procedure_id);
-        text.Regel2C = await translateHarvestLocationRadial(cp.procedure_id);
-        text.Regel6B = text.Regel6B + "" + await getCardioPlegiaTemp(cp.procedure_id) + "" + await getCardioPlegiaRoute(cp.procedure_id) + "" + await getCardioPlegiaType(cp.procedure_id);
-
-        text.Regel21 = await getCirculationSupportAsync(cp.procedure_id);
-        text.Regel22 = await getIABPUsedAsync(cp.procedure_id);
-        text.Regel23 = await getPMWiresAsync(cp.procedure_id);
-
-          // merge the InstitutionalDTO straight to the Class_Preview_Operative_report
-        cp = _map.Map<InstitutionalDTO, Class_Preview_Operative_report>(text, cp);
+       // InstitutionalDTO text = new InstitutionalDTO();
+        var cabg = await _cabg.getSpecificCABG(cp.procedure_id);
+        if (cabg != null)
+        {
+            cp.regel_1 = cp.regel_1 + await translateHarvestLocationLeg(cabg);
+            cp.regel_2 = cp.regel_2 + await translateHarvestLocationRadial(cabg);
+        }
+        var cpb = await _icpb.getSpecificCPB(cp.procedure_id);
+        if (cpb != null)
+        {
+            cp.regel_6 = cp.regel_6 + await getCardioPlegiaTemp(cpb) + "" + await getCardioPlegiaRoute(cpb) + "" + await getCardioPlegiaType(cpb);
+            cp.regel_22 = cp.regel_22 + await getIABPUsedAsync(cpb);
+        }
+        var proc = await _proc.getSpecificProcedure(cp.procedure_id);
+        if (proc != null)
+        {
+            cp.regel_21 = cp.regel_21 +  await getCirculationSupportAsync(proc);
+            cp.regel_23 = cp.regel_23 + await getPMWiresAsync(proc);
+        }
+        // merge the InstitutionalDTO straight to the Class_Preview_Operative_report
+  //    cp = _map.Map<InstitutionalDTO, Class_Preview_Operative_report>(text, cp);
         return cp;
     }
     private async Task<Class_Preview_Operative_report> saveNewPreviewReport(Class_Preview_Operative_report cp)
@@ -344,15 +358,13 @@ public class PreviewReport : IPreviewReport
         }
     }
 
-    private async Task<string> translateHarvestLocationLeg(int procedure_id)
+    private async Task<string> translateHarvestLocationLeg(Class_CABG cabg)
     {
-        var help = "n/a";
-
-        var cabg = await _cabg.getSpecificCABG(procedure_id);
+        var help = "";
         List<Class_Item> dropLeg = new List<Class_Item>();
         dropLeg = await _drops.getCABGLeg();
 
-        if (cabg != null && cabg.leg_harvest_location != null)
+        if (cabg.leg_harvest_location != null)
         {
             var test = Convert.ToInt32(cabg.leg_harvest_location);
             var ci = dropLeg.Single(x => x.value == test);
@@ -361,15 +373,13 @@ public class PreviewReport : IPreviewReport
 
         return help;
     }
-    private async Task<string> translateHarvestLocationRadial(int procedure_id)
+    private async Task<string> translateHarvestLocationRadial(Class_CABG cabg)
     {
-        var help = "n/a";
-        var cabg = await _cabg.getSpecificCABG(procedure_id);
+        var help = "";
         List<Class_Item> dropRadial = new List<Class_Item>();
         dropRadial = await _drops.getCABGRadial();
 
-
-        if (cabg != null && cabg.radial_harvest_location != null)
+        if (cabg.radial_harvest_location != null)
         {
             var test = Convert.ToInt32(cabg.radial_harvest_location);
             var ci = dropRadial.Single(x => x.value == test);
@@ -378,14 +388,13 @@ public class PreviewReport : IPreviewReport
 
         return help;
     }
-    private async Task<string> getCardioPlegiaTemp(int procedure_id)
+    private async Task<string> getCardioPlegiaTemp(Class_CPB cpb)
     {
         //temp
         var help = "";
         List<Class_Item> dropTemp = new List<Class_Item>();
         dropTemp = await _drops.getCPB_temp();
-        Class_CPB cpb = await _icpb.getSpecificCPB(procedure_id);
-        if (cpb != null && cpb.cardiopl_temp != null)
+        if (cpb.cardiopl_temp != null)
         {
             var test = Convert.ToInt32(cpb.cardiopl_temp);
             var ci = dropTemp.Single(x => x.value == test);
@@ -394,16 +403,13 @@ public class PreviewReport : IPreviewReport
 
         return help;
     }
-    private async Task<string> getCardioPlegiaRoute(int procedure_id)
+    private async Task<string> getCardioPlegiaRoute(Class_CPB cpb)
     {
         // delivery
-
-        
         var help = "";
         List<Class_Item> dropDelivery = new List<Class_Item>();
         dropDelivery = await _drops.getCPB_delivery();
-        Class_CPB cpb = await _icpb.getSpecificCPB(procedure_id);
-        if (cpb != null && cpb.INFUSION_MODE_ANTE != null)
+        if (cpb.INFUSION_MODE_ANTE != null)
         {
             var test = Convert.ToInt32(cpb.INFUSION_MODE_ANTE);
             var ci = dropDelivery.Single(x => x.value == test);
@@ -411,33 +417,40 @@ public class PreviewReport : IPreviewReport
         }
         return help;
     }
-    private async Task<string> getCardioPlegiaType(int procedure_id)
+    private async Task<string> getCardioPlegiaType(Class_CPB cpb)
     {
         // typeCardiopleg
         var help = "";
         List<Class_Item> dropType = new List<Class_Item>();
         dropType = await _drops.getTypeCardiopleg();
-        Class_CPB cpb = await _icpb.getSpecificCPB(procedure_id);
-        if (cpb != null && cpb.CARDIOPLEGIA_TYPE != null)
+        if (cpb.CARDIOPLEGIA_TYPE != null)
         {
             var test = Convert.ToInt32(cpb.CARDIOPLEGIA_TYPE);
             var ci = dropType.Single(x => x.value == test);
             help = ci.description;
         }
         return help;
-     }
-    private async Task<string> getProcedureDescriptionAsync(int procedure_id)
-    {
-        var r = await _proc.getSpecificProcedure(procedure_id);
-        return r.Description;
     }
-    private async Task<string> getCirculationSupportAsync(int procedure_id)
+    private async Task<string> getIABPUsedAsync(Class_CPB cpb)
+    {
+        // IABP
+        var help = "";
+        List<Class_Item> dropIABP = new List<Class_Item>();
+        dropIABP = await _drops.getCPB_iabp_ind();
+        if (cpb != null && cpb.IABP_IND != null && cpb.IABP_IND != "0")
+        {
+            var t = Convert.ToInt32(cpb.IABP_IND);
+            var ci = dropIABP.Single(x => x.value == t);
+            help = ci.description;
+        }
+        return help;
+    }
+    private async Task<string> getCirculationSupportAsync(Class_Procedure currentProcedure)
     {
         var help = "";
         List<Class_Item> dropCirc = new List<Class_Item>();
-        var currentProcedure = await _repo.getSpecificProcedure(procedure_id);
-        dropCirc = _drops.getInotropeOptions();
-        
+        dropCirc = await _drops.getInotropeOptionsAsync();
+
         if (currentProcedure.SelectedInotropes != 0)
         {
             var t = currentProcedure.SelectedInotropes;
@@ -445,15 +458,13 @@ public class PreviewReport : IPreviewReport
             help = ci.description;
         }
         return help;
-        
     }
-    private async Task<string> getPMWiresAsync(int procedure_id)
+    private async Task<string> getPMWiresAsync(Class_Procedure currentProcedure)
     {
-       var help = "";
+        var help = "";
         List<Class_Item> dropCirc = new List<Class_Item>();
-        var currentProcedure = await _repo.getSpecificProcedure(procedure_id);
-        dropCirc = _drops.getPacemakerOptions();
-        
+        dropCirc = await _drops.getPacemakerOptionsAsync();
+
         if (currentProcedure.SelectedPacemaker != 0)
         {
             var t = currentProcedure.SelectedPacemaker;
@@ -462,23 +473,9 @@ public class PreviewReport : IPreviewReport
         }
         return help;
     }
-    private async Task<string> getIABPUsedAsync(int procedure_id)
-    {
-         // IABP
-        var help = "";
-        List<Class_Item> dropIABP = new List<Class_Item>();
-        dropIABP = await _drops.getCPB_iabp_ind();
-        Class_CPB cpb = await _icpb.getSpecificCPB(procedure_id);
-        if (cpb != null && cpb.IABP_IND != null && cpb.IABP_IND != "0")
-        {
-            var t = Convert.ToInt32(cpb.IABP_IND); 
-            var ci = dropIABP.Single(x => x.value == t);
-            help = ci.description;
-        }
-        return help;
-    }
 
-   
 
-   
+
+
+
 }

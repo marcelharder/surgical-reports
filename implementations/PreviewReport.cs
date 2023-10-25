@@ -154,12 +154,18 @@ public class PreviewReport : IPreviewReport
 
     private async Task<Class_Preview_Operative_report> addProcedureDetails(Class_Preview_Operative_report cp)
     {
-       // InstitutionalDTO text = new InstitutionalDTO();
+        InstitutionalDTO text = new InstitutionalDTO();
+        var currentProcedure = await _proc.getSpecificProcedure(cp.procedure_id);
+        var currentHospital = currentProcedure.hospital.ToString().makeSureTwoChar();
+        var currentSoort = currentProcedure.fdType.ToString();
+        
+        text = await _text.getInstitutionalReport(currentHospital, currentSoort, "");
+
         var cabg = await _cabg.getSpecificCABG(cp.procedure_id);
         if (cabg != null)
         {
-            cp.regel_1 = cp.regel_1 + await translateHarvestLocationLeg(cabg);
-            cp.regel_2 = cp.regel_2 + await translateHarvestLocationRadial(cabg);
+            cp.regel_1 = text.Regel1A + await translateHarvestLocationLeg(cabg) + text.Regel1C;
+            cp.regel_2 = text.Regel2A + await translateHarvestLocationRadial(cabg) + text.Regel2C;
         }
         var cpb = await _icpb.getSpecificCPB(cp.procedure_id);
         if (cpb != null)

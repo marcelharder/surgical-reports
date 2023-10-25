@@ -362,7 +362,7 @@ public class PreviewReport : IPreviewReport
     {
         var help = "";
         List<Class_Item> dropLeg = new List<Class_Item>();
-        dropLeg = await _drops.getCABGLeg();
+        dropLeg = await _drops.getCABGLeg();    
 
         if (cabg.leg_harvest_location != null)
         {

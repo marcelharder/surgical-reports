@@ -89,7 +89,6 @@ public class PreviewReport : IPreviewReport
 
                         return await saveNewPreviewReport(no);
                     }
-
                 }
             }
         }
@@ -151,36 +150,35 @@ public class PreviewReport : IPreviewReport
             return preview != null;
         }
     }
-
     private async Task<Class_Preview_Operative_report> addProcedureDetails(Class_Preview_Operative_report cp)
     {
         InstitutionalDTO text = new InstitutionalDTO();
         var currentProcedure = await _proc.getSpecificProcedure(cp.procedure_id);
         var currentHospital = currentProcedure.hospital.ToString().makeSureTwoChar();
         var currentSoort = currentProcedure.fdType.ToString();
-        
-        text = await _text.getInstitutionalReport(currentHospital, currentSoort, "");
 
-        var cabg = await _cabg.getSpecificCABG(cp.procedure_id);
-        if (cabg != null)
+        if (currentProcedure.fdType == 1) // doe dit eerst voor de CABG Lima/VSM
         {
-            cp.regel_1 = text.Regel1A + await translateHarvestLocationLeg(cabg) + text.Regel1C;
-            cp.regel_2 = text.Regel2A + await translateHarvestLocationRadial(cabg) + text.Regel2C;
+            text = await _text.getInstitutionalReport(currentHospital, currentSoort, "");
+            cp.regel_21 = cp.regel_21 + await getCirculationSupportAsync(currentProcedure);
+            cp.regel_23 = cp.regel_23 + await getPMWiresAsync(currentProcedure);
+
+            var cabg = await _cabg.getSpecificCABG(cp.procedure_id);
+            if (cabg != null)
+            {
+                cp.regel_1 = text.Regel1A + text.Regel1B + " " + await translateHarvestLocationLeg(cabg) + " " + text.Regel1C;
+                // cp.regel_2 = text.Regel2A + text.Regel2B + " " + await translateHarvestLocationRadial(cabg) + " " + text.Regel2C;
+            }
+            var cpb = await _icpb.getSpecificCPB(cp.procedure_id);
+            if (cpb != null)
+            {
+                cp.regel_5 = text.Regel5A + " " + cpb.LOWEST_CORE_TEMP + " " + text.Regel5C;
+                cp.regel_22 = cp.regel_22 + " " + await getIABPUsedAsync(cpb);
+
+                cp.regel_6 = await getCardioPlegiaTemp(cpb) + " " + await getCardioPlegiaRoute(cpb) + " " + await getCardioPlegiaType(cpb) + " with " + text.Regel6A + " of " + cpb.INFUSION_DOSE_INT + " ml";
+            }
         }
-        var cpb = await _icpb.getSpecificCPB(cp.procedure_id);
-        if (cpb != null)
-        {
-            cp.regel_6 = cp.regel_6 + await getCardioPlegiaTemp(cpb) + "" + await getCardioPlegiaRoute(cpb) + "" + await getCardioPlegiaType(cpb);
-            cp.regel_22 = cp.regel_22 + await getIABPUsedAsync(cpb);
-        }
-        var proc = await _proc.getSpecificProcedure(cp.procedure_id);
-        if (proc != null)
-        {
-            cp.regel_21 = cp.regel_21 +  await getCirculationSupportAsync(proc);
-            cp.regel_23 = cp.regel_23 + await getPMWiresAsync(proc);
-        }
-        // merge the InstitutionalDTO straight to the Class_Preview_Operative_report
-  //    cp = _map.Map<InstitutionalDTO, Class_Preview_Operative_report>(text, cp);
+
         return cp;
     }
     private async Task<Class_Preview_Operative_report> saveNewPreviewReport(Class_Preview_Operative_report cp)
@@ -363,12 +361,11 @@ public class PreviewReport : IPreviewReport
             return preview;
         }
     }
-
     private async Task<string> translateHarvestLocationLeg(Class_CABG cabg)
     {
         var help = "";
         List<Class_Item> dropLeg = new List<Class_Item>();
-        dropLeg = await _drops.getCABGLeg();    
+        dropLeg = await _drops.getCABGLeg();
 
         if (cabg.leg_harvest_location != null)
         {
@@ -433,7 +430,7 @@ public class PreviewReport : IPreviewReport
         {
             var test = Convert.ToInt32(cpb.CARDIOPLEGIA_TYPE);
             var ci = dropType.Single(x => x.value == test);
-            help = ci.description;
+            help = ci.description.ToLower();
         }
         return help;
     }

@@ -52,9 +52,9 @@
           <regel_18></regel_18>
           <regel_19></regel_19>
           <regel_20></regel_20>
-          <regel_21></regel_21>
-          <regel_22></regel_22>
-          <regel_23></regel_23>
+          <regel_21>  and supported the circulation </regel_21>
+          <regel_22>An IABP was  </regel_22>
+          <regel_23>Pacemaker wires were   </regel_23>
           <regel_24></regel_24>
           <regel_25></regel_25>
           <regel_26></regel_26>
@@ -367,9 +367,9 @@
           <regel_18></regel_18>
           <regel_19></regel_19>
           <regel_20></regel_20>
-          <regel_21></regel_21>
-          <regel_22></regel_22>
-          <regel_23></regel_23>
+          <regel_21>  and supported the circulation </regel_21>
+          <regel_22>An IABP was  </regel_22>
+          <regel_23>Pacemaker wires were   </regel_23>
           <regel_24></regel_24>
           <regel_25></regel_25>
           <regel_26></regel_26>
@@ -508,52 +508,7 @@
           <regel_33 />
         </soort>
       </text_by_type_of_surgery>
-      <circulation_support>
-        <items id="1">
-          <regel_21>wo. inotropic support oh zo i het maar net ook een keer</regel_21>
-        </items>
-        <items id="2">
-          <regel_21>with minimal inotropic support.</regel_21>
-        </items>
-        <items id="3">
-          <regel_21>with moderate inotropic support.</regel_21>
-        </items>
-        <items id="4">
-          <regel_21>with maximal inotropic support.</regel_21>
-        </items>
-      </circulation_support>
-      <iabp>
-        <items id="1">
-          <regel_22>An IABP was used for hemodynamic instability.dus</regel_22>
-        </items>
-        <items id="2">
-          <regel_22>An IABP was used for PTCA support.</regel_22>
-        </items>
-        <items id="3">
-          <regel_22>An IABP was used for unstable anginal complaints.</regel_22>
-        </items>
-        <items id="4">
-          <regel_22>An IABP was used to wean from CPB.</regel_22>
-        </items>
-        <items id="5">
-          <regel_22>An IABP was inserted prophylactically.</regel_22>
-        </items>
-      </iabp>
-      <pmwires>
-        <items id="1">
-          <regel_23>Pacemaker wires were not used.hier ook pm wires</regel_23>
-        </items>
-        <items id="2">
-          <regel_23>Pacemaker wires were placed on the right atrium.</regel_23>
-        </items>
-        <items id="3">
-          <regel_23>Pacemaker wires were placed on the right atrium and ventricle.</regel_23>
-        </items>
-        <items id="4">
-          <regel_23>Pacemaker wires were placed on the right ventricle.</regel_23>
-        </items>
-      </pmwires>
-    </reports>
+      </reports>
   </hospital>
   <hospital id="03">
     <reports>
@@ -1063,52 +1018,7 @@
           <regel_33 />
         </soort>
       </text_by_type_of_surgery>
-      <circulation_support>
-        <items id="1">
-          <regel_21>wo. inotropic support.</regel_21>
-        </items>
-        <items id="2">
-          <regel_21>with minimal inotropic support.</regel_21>
-        </items>
-        <items id="3">
-          <regel_21>with moderate inotropic support.</regel_21>
-        </items>
-        <items id="4">
-          <regel_21>with maximal inotropic support.</regel_21>
-        </items>
-      </circulation_support>
-      <iabp>
-        <items id="1">
-          <regel_22>An IABP was used for hemodynamic instability.</regel_22>
-        </items>
-        <items id="2">
-          <regel_22>An IABP was used for PTCA support.</regel_22>
-        </items>
-        <items id="3">
-          <regel_22>An IABP was used for unstable anginal complaints.</regel_22>
-        </items>
-        <items id="4">
-          <regel_22>An IABP was used to wean from CPB.</regel_22>
-        </items>
-        <items id="5">
-          <regel_22>An IABP was inserted prophylactically.</regel_22>
-        </items>
-      </iabp>
-      <pmwires>
-        <items id="1">
-          <regel_23>Pacemaker wires were not used.</regel_23>
-        </items>
-        <items id="2">
-          <regel_23>Pacemaker wires were placed on the right atrium.</regel_23>
-        </items>
-        <items id="3">
-          <regel_23>Pacemaker wires were placed on the right atrium and ventricle.</regel_23>
-        </items>
-        <items id="4">
-          <regel_23>Pacemaker wires were placed on the right ventricle.</regel_23>
-        </items>
-      </pmwires>
-    </reports>
+      </reports>
   </hospital>
   <hospital id="04">
     <reports>
@@ -1162,9 +1072,9 @@
           <regel_18></regel_18>
           <regel_19></regel_19>
           <regel_20></regel_20>
-          <regel_21></regel_21>
-          <regel_22></regel_22>
-          <regel_23></regel_23>
+          <regel_21>  and supported the circulation </regel_21>
+          <regel_22>An IABP was  </regel_22>
+          <regel_23>Pacemaker wires were   </regel_23>
           <regel_24></regel_24>
           <regel_25></regel_25>
           <regel_26></regel_26>
@@ -1225,9 +1135,9 @@
           <regel_18></regel_18>
           <regel_19></regel_19>
           <regel_20></regel_20>
-          <regel_21></regel_21>
-          <regel_22></regel_22>
-          <regel_23></regel_23>
+          <regel_21>  and supported the circulation </regel_21>
+          <regel_22>An IABP was  </regel_22>
+          <regel_23>Pacemaker wires were   </regel_23>
           <regel_24></regel_24>
           <regel_25></regel_25>
           <regel_26></regel_26>
@@ -1666,9 +1576,9 @@
           <regel_18></regel_18>
           <regel_19></regel_19>
           <regel_20></regel_20>
-          <regel_21></regel_21>
-          <regel_22></regel_22>
-          <regel_23></regel_23>
+          <regel_21>  and supported the circulation </regel_21>
+          <regel_22>An IABP was  </regel_22>
+          <regel_23>Pacemaker wires were   </regel_23>
           <regel_24></regel_24>
           <regel_25></regel_25>
           <regel_26></regel_26>
@@ -1681,52 +1591,7 @@
           <regel_33></regel_33>
         </soort>
       </text_by_type_of_surgery>
-      <circulation_support>
-        <items id="1">
-          <regel_21>wo. inotropic support.</regel_21>
-        </items>
-        <items id="2">
-          <regel_21>with minimal inotropic support.</regel_21>
-        </items>
-        <items id="3">
-          <regel_21>with moderate inotropic support.</regel_21>
-        </items>
-        <items id="4">
-          <regel_21>with maximal inotropic support.</regel_21>
-        </items>
-      </circulation_support>
-      <iabp>
-        <items id="1">
-          <regel_22>An IABP was used for hemodynamic instability.</regel_22>
-        </items>
-        <items id="2">
-          <regel_22>An IABP was used for PTCA support.</regel_22>
-        </items>
-        <items id="3">
-          <regel_22>An IABP was used for unstable anginal complaints.</regel_22>
-        </items>
-        <items id="4">
-          <regel_22>An IABP was used to wean from CPB.</regel_22>
-        </items>
-        <items id="5">
-          <regel_22>An IABP was inserted prophylactically.</regel_22>
-        </items>
-      </iabp>
-      <pmwires>
-        <items id="1">
-          <regel_23></regel_23>
-        </items>
-        <items id="2">
-          <regel_23></regel_23>
-        </items>
-        <items id="3">
-          <regel_23>An IABP was used for hemodynamic instability.</regel_23>
-        </items>
-        <items id="4">
-          <regel_23>An IABP was used for PTCA support.</regel_23>
-        </items>
-      </pmwires>
-    </reports>
+      </reports>
   </hospital>
   <hospital id="05">
     <reports>
@@ -2284,9 +2149,9 @@
           <regel_18></regel_18>
           <regel_19></regel_19>
           <regel_20></regel_20>
-          <regel_21></regel_21>
-          <regel_22></regel_22>
-          <regel_23></regel_23>
+          <regel_21>  and supported the circulation </regel_21>
+          <regel_22>An IABP was  </regel_22>
+          <regel_23>Pacemaker wires were   </regel_23>
           <regel_24></regel_24>
           <regel_25></regel_25>
           <regel_26></regel_26>
@@ -2299,52 +2164,7 @@
           <regel_33></regel_33>
         </soort>
       </text_by_type_of_surgery>
-      <circulation_support>
-        <items id="1">
-          <regel_21>wo. inotropic support.</regel_21>
-        </items>
-        <items id="2">
-          <regel_21>with minimal inotropic support.</regel_21>
-        </items>
-        <items id="3">
-          <regel_21>with moderate inotropic support.</regel_21>
-        </items>
-        <items id="4">
-          <regel_21>with maximal inotropic support.</regel_21>
-        </items>
-      </circulation_support>
-      <iabp>
-        <items id="1">
-          <regel_22>An IABP was used for hemodynamic instability.</regel_22>
-        </items>
-        <items id="2">
-          <regel_22>An IABP was used for PTCA support.</regel_22>
-        </items>
-        <items id="3">
-          <regel_22>An IABP was used for unstable anginal complaints.</regel_22>
-        </items>
-        <items id="4">
-          <regel_22>An IABP was used to wean from CPB.</regel_22>
-        </items>
-        <items id="5">
-          <regel_22>An IABP was inserted prophylactically.</regel_22>
-        </items>
-      </iabp>
-      <pmwires>
-        <items id="1">
-          <regel_23>Pacemaker wires were not used.</regel_23>
-        </items>
-        <items id="2">
-          <regel_23>Pacemaker wires were placed on the right atrium.</regel_23>
-        </items>
-        <items id="3">
-          <regel_23>Pacemaker wires were placed on the right atrium and ventricle.</regel_23>
-        </items>
-        <items id="4">
-          <regel_23>Pacemaker wires were placed on the right ventricle.</regel_23>
-        </items>
-      </pmwires>
-    </reports>
+      </reports>
   </hospital>
   <hospital id="06">
     <reports>
@@ -2854,52 +2674,7 @@
           <regel_33 />
         </soort>
       </text_by_type_of_surgery>
-      <circulation_support>
-        <items id="1">
-          <regel_21>wo. inotropic support.</regel_21>
-        </items>
-        <items id="2">
-          <regel_21>with minimal inotropic support.</regel_21>
-        </items>
-        <items id="3">
-          <regel_21>with moderate inotropic support.</regel_21>
-        </items>
-        <items id="4">
-          <regel_21>with maximal inotropic support.</regel_21>
-        </items>
-      </circulation_support>
-      <iabp>
-        <items id="1">
-          <regel_22>An IABP was used for hemodynamic instability.</regel_22>
-        </items>
-        <items id="2">
-          <regel_22>An IABP was used for PTCA support.</regel_22>
-        </items>
-        <items id="3">
-          <regel_22>An IABP was used for unstable anginal complaints.</regel_22>
-        </items>
-        <items id="4">
-          <regel_22>An IABP was used to wean from CPB.</regel_22>
-        </items>
-        <items id="5">
-          <regel_22>An IABP was inserted prophylactically.</regel_22>
-        </items>
-      </iabp>
-      <pmwires>
-        <items id="1">
-          <regel_23>Pacemaker wires were not used.</regel_23>
-        </items>
-        <items id="2">
-          <regel_23>Pacemaker wires were placed on the right atrium.</regel_23>
-        </items>
-        <items id="3">
-          <regel_23>Pacemaker wires were placed on the right atrium and ventricle.</regel_23>
-        </items>
-        <items id="4">
-          <regel_23>Pacemaker wires were placed on the right ventricle.</regel_23>
-        </items>
-      </pmwires>
-    </reports>
+      </reports>
   </hospital>
   <hospital id="08">
     <reports>
@@ -3079,9 +2854,9 @@
           <regel_18></regel_18>
           <regel_19></regel_19>
           <regel_20></regel_20>
-          <regel_21></regel_21>
-          <regel_22></regel_22>
-          <regel_23></regel_23>
+          <regel_21>  and supported the circulation </regel_21>
+          <regel_22>An IABP was  </regel_22>
+          <regel_23>Pacemaker wires were   </regel_23>
           <regel_24></regel_24>
           <regel_25></regel_25>
           <regel_26></regel_26>
@@ -3409,52 +3184,7 @@
           <regel_33 />
         </soort>
       </text_by_type_of_surgery>
-      <circulation_support>
-        <items id="1">
-          <regel_21>wo. inotropic support.</regel_21>
-        </items>
-        <items id="2">
-          <regel_21>with minimal inotropic support.</regel_21>
-        </items>
-        <items id="3">
-          <regel_21>with moderate inotropic support.</regel_21>
-        </items>
-        <items id="4">
-          <regel_21>with maximal inotropic support.</regel_21>
-        </items>
-      </circulation_support>
-      <iabp>
-        <items id="1">
-          <regel_22>An IABP was used for hemodynamic instability.</regel_22>
-        </items>
-        <items id="2">
-          <regel_22>An IABP was used for PTCA support.</regel_22>
-        </items>
-        <items id="3">
-          <regel_22>An IABP was used for unstable anginal complaints.</regel_22>
-        </items>
-        <items id="4">
-          <regel_22>An IABP was used to wean from CPB.</regel_22>
-        </items>
-        <items id="5">
-          <regel_22>An IABP was inserted prophylactically.</regel_22>
-        </items>
-      </iabp>
-      <pmwires>
-        <items id="1">
-          <regel_23>Pacemaker wires were not used.</regel_23>
-        </items>
-        <items id="2">
-          <regel_23>Pacemaker wires were placed on the right atrium.</regel_23>
-        </items>
-        <items id="3">
-          <regel_23>Pacemaker wires were placed on the right atrium and ventricle.</regel_23>
-        </items>
-        <items id="4">
-          <regel_23>Pacemaker wires were placed on the right ventricle.</regel_23>
-        </items>
-      </pmwires>
-    </reports>
+      </reports>
   </hospital>
   <hospital id="09">
     <reports>
@@ -3964,52 +3694,7 @@
           <regel_33 />
         </soort>
       </text_by_type_of_surgery>
-      <circulation_support>
-        <items id="1">
-          <regel_21>wo. inotropic support.</regel_21>
-        </items>
-        <items id="2">
-          <regel_21>with minimal inotropic support.</regel_21>
-        </items>
-        <items id="3">
-          <regel_21>with moderate inotropic support.</regel_21>
-        </items>
-        <items id="4">
-          <regel_21>with maximal inotropic support.</regel_21>
-        </items>
-      </circulation_support>
-      <iabp>
-        <items id="1">
-          <regel_22>An IABP was used for hemodynamic instability.</regel_22>
-        </items>
-        <items id="2">
-          <regel_22>An IABP was used for PTCA support.</regel_22>
-        </items>
-        <items id="3">
-          <regel_22>An IABP was used for unstable anginal complaints.</regel_22>
-        </items>
-        <items id="4">
-          <regel_22>An IABP was used to wean from CPB.</regel_22>
-        </items>
-        <items id="5">
-          <regel_22>An IABP was inserted prophylactically.</regel_22>
-        </items>
-      </iabp>
-      <pmwires>
-        <items id="1">
-          <regel_23>Pacemaker wires were not used.</regel_23>
-        </items>
-        <items id="2">
-          <regel_23>Pacemaker wires were placed on the right atrium.</regel_23>
-        </items>
-        <items id="3">
-          <regel_23>Pacemaker wires were placed on the right atrium and ventricle.</regel_23>
-        </items>
-        <items id="4">
-          <regel_23>Pacemaker wires were placed on the right ventricle.</regel_23>
-        </items>
-      </pmwires>
-    </reports>
+      </reports>
   </hospital>
   <hospital id="12">
     <reports>
@@ -4519,52 +4204,7 @@
           <regel_33 />
         </soort>
       </text_by_type_of_surgery>
-      <circulation_support>
-        <items id="1">
-          <regel_21>wo. inotropic support.</regel_21>
-        </items>
-        <items id="2">
-          <regel_21>with minimal inotropic support.</regel_21>
-        </items>
-        <items id="3">
-          <regel_21>with moderate inotropic support.</regel_21>
-        </items>
-        <items id="4">
-          <regel_21>with maximal inotropic support.</regel_21>
-        </items>
-      </circulation_support>
-      <iabp>
-        <items id="1">
-          <regel_22>An IABP was used for hemodynamic instability.</regel_22>
-        </items>
-        <items id="2">
-          <regel_22>An IABP was used for PTCA support.</regel_22>
-        </items>
-        <items id="3">
-          <regel_22>An IABP was used for unstable anginal complaints.</regel_22>
-        </items>
-        <items id="4">
-          <regel_22>An IABP was used to wean from CPB.</regel_22>
-        </items>
-        <items id="5">
-          <regel_22>An IABP was inserted prophylactically.</regel_22>
-        </items>
-      </iabp>
-      <pmwires>
-        <items id="1">
-          <regel_23>Pacemaker wires were not used.</regel_23>
-        </items>
-        <items id="2">
-          <regel_23>Pacemaker wires were placed on the right atrium.</regel_23>
-        </items>
-        <items id="3">
-          <regel_23>Pacemaker wires were placed on the right atrium and ventricle.</regel_23>
-        </items>
-        <items id="4">
-          <regel_23>Pacemaker wires were placed on the right ventricle.</regel_23>
-        </items>
-      </pmwires>
-    </reports>
+      </reports>
   </hospital>
   <hospital id="13">
     <reports>
@@ -4618,9 +4258,9 @@
           <regel_18></regel_18>
           <regel_19></regel_19>
           <regel_20></regel_20>
-          <regel_21></regel_21>
-          <regel_22></regel_22>
-          <regel_23></regel_23>
+          <regel_21>  and supported the circulation </regel_21>
+          <regel_22>An IABP was  </regel_22>
+          <regel_23>Pacemaker wires were   </regel_23>
           <regel_24></regel_24>
           <regel_25></regel_25>
           <regel_26></regel_26>
@@ -5074,52 +4714,7 @@
           <regel_33 />
         </soort>
       </text_by_type_of_surgery>
-      <circulation_support>
-        <items id="1">
-          <regel_21>wo. inotropic support.</regel_21>
-        </items>
-        <items id="2">
-          <regel_21>with minimal inotropic support.</regel_21>
-        </items>
-        <items id="3">
-          <regel_21>with moderate inotropic support.</regel_21>
-        </items>
-        <items id="4">
-          <regel_21>with maximal inotropic support.</regel_21>
-        </items>
-      </circulation_support>
-      <iabp>
-        <items id="1">
-          <regel_22>An IABP was used for hemodynamic instability.</regel_22>
-        </items>
-        <items id="2">
-          <regel_22>An IABP was used for PTCA support.</regel_22>
-        </items>
-        <items id="3">
-          <regel_22>An IABP was used for unstable anginal complaints.</regel_22>
-        </items>
-        <items id="4">
-          <regel_22>An IABP was used to wean from CPB.</regel_22>
-        </items>
-        <items id="5">
-          <regel_22>An IABP was inserted prophylactically.</regel_22>
-        </items>
-      </iabp>
-      <pmwires>
-        <items id="1">
-          <regel_23>Pacemaker wires were not used.</regel_23>
-        </items>
-        <items id="2">
-          <regel_23>Pacemaker wires were placed on the right atrium.</regel_23>
-        </items>
-        <items id="3">
-          <regel_23>Pacemaker wires were placed on the right atrium and ventricle.</regel_23>
-        </items>
-        <items id="4">
-          <regel_23>Pacemaker wires were placed on the right ventricle.</regel_23>
-        </items>
-      </pmwires>
-    </reports>
+      </reports>
   </hospital>
   <hospital id="34">
     <reports>
@@ -5629,52 +5224,7 @@
           <regel_33 />
         </soort>
       </text_by_type_of_surgery>
-      <circulation_support>
-        <items id="1">
-          <regel_21>wo. inotropic support.</regel_21>
-        </items>
-        <items id="2">
-          <regel_21>with minimal inotropic support.</regel_21>
-        </items>
-        <items id="3">
-          <regel_21>with moderate inotropic support.</regel_21>
-        </items>
-        <items id="4">
-          <regel_21>with maximal inotropic support.</regel_21>
-        </items>
-      </circulation_support>
-      <iabp>
-        <items id="1">
-          <regel_22>An IABP was used for hemodynamic instability.</regel_22>
-        </items>
-        <items id="2">
-          <regel_22>An IABP was used for PTCA support.</regel_22>
-        </items>
-        <items id="3">
-          <regel_22>An IABP was used for unstable anginal complaints.</regel_22>
-        </items>
-        <items id="4">
-          <regel_22>An IABP was used to wean from CPB.</regel_22>
-        </items>
-        <items id="5">
-          <regel_22>An IABP was inserted prophylactically.</regel_22>
-        </items>
-      </iabp>
-      <pmwires>
-        <items id="1">
-          <regel_23>Pacemaker wires were not used.</regel_23>
-        </items>
-        <items id="2">
-          <regel_23>Pacemaker wires were placed on the right atrium.</regel_23>
-        </items>
-        <items id="3">
-          <regel_23>Pacemaker wires were placed on the right atrium and ventricle.</regel_23>
-        </items>
-        <items id="4">
-          <regel_23>Pacemaker wires were placed on the right ventricle.</regel_23>
-        </items>
-      </pmwires>
-    </reports>
+      </reports>
   </hospital>
   <hospital id="37">
     <reports>
@@ -6184,52 +5734,7 @@
           <regel_33 />
         </soort>
       </text_by_type_of_surgery>
-      <circulation_support>
-        <items id="1">
-          <regel_21>wo. inotropic support.</regel_21>
-        </items>
-        <items id="2">
-          <regel_21>with minimal inotropic support.</regel_21>
-        </items>
-        <items id="3">
-          <regel_21>with moderate inotropic support.</regel_21>
-        </items>
-        <items id="4">
-          <regel_21>with maximal inotropic support.</regel_21>
-        </items>
-      </circulation_support>
-      <iabp>
-        <items id="1">
-          <regel_22>An IABP was used for hemodynamic instability.</regel_22>
-        </items>
-        <items id="2">
-          <regel_22>An IABP was used for PTCA support.</regel_22>
-        </items>
-        <items id="3">
-          <regel_22>An IABP was used for unstable anginal complaints.</regel_22>
-        </items>
-        <items id="4">
-          <regel_22>An IABP was used to wean from CPB.</regel_22>
-        </items>
-        <items id="5">
-          <regel_22>An IABP was inserted prophylactically.</regel_22>
-        </items>
-      </iabp>
-      <pmwires>
-        <items id="1">
-          <regel_23>Pacemaker wires were not used.</regel_23>
-        </items>
-        <items id="2">
-          <regel_23>Pacemaker wires were placed on the right atrium.</regel_23>
-        </items>
-        <items id="3">
-          <regel_23>Pacemaker wires were placed on the right atrium and ventricle.</regel_23>
-        </items>
-        <items id="4">
-          <regel_23>Pacemaker wires were placed on the right ventricle.</regel_23>
-        </items>
-      </pmwires>
-    </reports>
+      </reports>
   </hospital>
   <hospital id="48">
     <reports>
@@ -6787,9 +6292,9 @@
           <regel_18></regel_18>
           <regel_19></regel_19>
           <regel_20></regel_20>
-          <regel_21></regel_21>
-          <regel_22></regel_22>
-          <regel_23></regel_23>
+          <regel_21>  and supported the circulation </regel_21>
+          <regel_22>An IABP was  </regel_22>
+          <regel_23>Pacemaker wires were   </regel_23>
           <regel_24></regel_24>
           <regel_25></regel_25>
           <regel_26></regel_26>
@@ -6802,52 +6307,7 @@
           <regel_33></regel_33>
         </soort>
       </text_by_type_of_surgery>
-      <circulation_support>
-        <items id="1">
-          <regel_21>wo. inotropic support.</regel_21>
-        </items>
-        <items id="2">
-          <regel_21>with minimal inotropic support.</regel_21>
-        </items>
-        <items id="3">
-          <regel_21>with moderate inotropic support.</regel_21>
-        </items>
-        <items id="4">
-          <regel_21>with maximal inotropic support.</regel_21>
-        </items>
-      </circulation_support>
-      <iabp>
-        <items id="1">
-          <regel_22>An IABP was used for hemodynamic instability.</regel_22>
-        </items>
-        <items id="2">
-          <regel_22>An IABP was used for PTCA support.</regel_22>
-        </items>
-        <items id="3">
-          <regel_22>An IABP was used for unstable anginal complaints.</regel_22>
-        </items>
-        <items id="4">
-          <regel_22>An IABP was used to wean from CPB.</regel_22>
-        </items>
-        <items id="5">
-          <regel_22>An IABP was inserted prophylactically.</regel_22>
-        </items>
-      </iabp>
-      <pmwires>
-        <items id="1">
-          <regel_23>Pacemaker wires were not used.</regel_23>
-        </items>
-        <items id="2">
-          <regel_23>Pacemaker wires were placed on the right atrium.</regel_23>
-        </items>
-        <items id="3">
-          <regel_23>Pacemaker wires were placed on the right atrium and ventricle.</regel_23>
-        </items>
-        <items id="4">
-          <regel_23>Pacemaker wires were placed on the right ventricle.</regel_23>
-        </items>
-      </pmwires>
-    </reports>
+      </reports>
   </hospital>
   <hospital id="50">
     <reports>
@@ -7405,9 +6865,9 @@
           <regel_18></regel_18>
           <regel_19></regel_19>
           <regel_20></regel_20>
-          <regel_21></regel_21>
-          <regel_22></regel_22>
-          <regel_23></regel_23>
+          <regel_21>  and supported the circulation </regel_21>
+          <regel_22>An IABP was  </regel_22>
+          <regel_23>Pacemaker wires were   </regel_23>
           <regel_24></regel_24>
           <regel_25></regel_25>
           <regel_26></regel_26>
@@ -7420,52 +6880,7 @@
           <regel_33></regel_33>
         </soort>
       </text_by_type_of_surgery>
-      <circulation_support>
-        <items id="1">
-          <regel_21>wo. inotropic support.</regel_21>
-        </items>
-        <items id="2">
-          <regel_21>with minimal inotropic support.</regel_21>
-        </items>
-        <items id="3">
-          <regel_21>with moderate inotropic support.</regel_21>
-        </items>
-        <items id="4">
-          <regel_21>with maximal inotropic support.</regel_21>
-        </items>
-      </circulation_support>
-      <iabp>
-        <items id="1">
-          <regel_22>An IABP was used for hemodynamic instability.</regel_22>
-        </items>
-        <items id="2">
-          <regel_22>An IABP was used for PTCA support.</regel_22>
-        </items>
-        <items id="3">
-          <regel_22>An IABP was used for unstable anginal complaints.</regel_22>
-        </items>
-        <items id="4">
-          <regel_22>An IABP was used to wean from CPB.</regel_22>
-        </items>
-        <items id="5">
-          <regel_22>An IABP was inserted prophylactically.</regel_22>
-        </items>
-      </iabp>
-      <pmwires>
-        <items id="1">
-          <regel_23>Pacemaker wires were not used.</regel_23>
-        </items>
-        <items id="2">
-          <regel_23>Pacemaker wires were placed on the right atrium.</regel_23>
-        </items>
-        <items id="3">
-          <regel_23>Pacemaker wires were placed on the right atrium and ventricle.</regel_23>
-        </items>
-        <items id="4">
-          <regel_23>Pacemaker wires were placed on the right ventricle.</regel_23>
-        </items>
-      </pmwires>
-    </reports>
+      </reports>
   </hospital>
   <hospital id="134">
     <reports>
@@ -7975,52 +7390,7 @@
           <regel_33 />
         </soort>
       </text_by_type_of_surgery>
-      <circulation_support>
-        <items id="1">
-          <regel_21>wo. inotropic support.</regel_21>
-        </items>
-        <items id="2">
-          <regel_21>with minimal inotropic support.</regel_21>
-        </items>
-        <items id="3">
-          <regel_21>with moderate inotropic support.</regel_21>
-        </items>
-        <items id="4">
-          <regel_21>with maximal inotropic support.</regel_21>
-        </items>
-      </circulation_support>
-      <iabp>
-        <items id="1">
-          <regel_22>An IABP was used for hemodynamic instability.</regel_22>
-        </items>
-        <items id="2">
-          <regel_22>An IABP was used for PTCA support.</regel_22>
-        </items>
-        <items id="3">
-          <regel_22>An IABP was used for unstable anginal complaints.</regel_22>
-        </items>
-        <items id="4">
-          <regel_22>An IABP was used to wean from CPB.</regel_22>
-        </items>
-        <items id="5">
-          <regel_22>An IABP was inserted prophylactically.</regel_22>
-        </items>
-      </iabp>
-      <pmwires>
-        <items id="1">
-          <regel_23>Pacemaker wires were not used.</regel_23>
-        </items>
-        <items id="2">
-          <regel_23>Pacemaker wires were placed on the right atrium.</regel_23>
-        </items>
-        <items id="3">
-          <regel_23>Pacemaker wires were placed on the right atrium and ventricle.</regel_23>
-        </items>
-        <items id="4">
-          <regel_23>Pacemaker wires were placed on the right ventricle.</regel_23>
-        </items>
-      </pmwires>
-    </reports>
+      </reports>
   </hospital>
   <hospital id="135">
     <reports>
@@ -8530,52 +7900,7 @@
           <regel_33 />
         </soort>
       </text_by_type_of_surgery>
-      <circulation_support>
-        <items id="1">
-          <regel_21>wo. inotropic support.</regel_21>
-        </items>
-        <items id="2">
-          <regel_21>with minimal inotropic support.</regel_21>
-        </items>
-        <items id="3">
-          <regel_21>with moderate inotropic support.</regel_21>
-        </items>
-        <items id="4">
-          <regel_21>with maximal inotropic support.</regel_21>
-        </items>
-      </circulation_support>
-      <iabp>
-        <items id="1">
-          <regel_22>An IABP was used for hemodynamic instability.</regel_22>
-        </items>
-        <items id="2">
-          <regel_22>An IABP was used for PTCA support.</regel_22>
-        </items>
-        <items id="3">
-          <regel_22>An IABP was used for unstable anginal complaints.</regel_22>
-        </items>
-        <items id="4">
-          <regel_22>An IABP was used to wean from CPB.</regel_22>
-        </items>
-        <items id="5">
-          <regel_22>An IABP was inserted prophylactically.</regel_22>
-        </items>
-      </iabp>
-      <pmwires>
-        <items id="1">
-          <regel_23>Pacemaker wires were not used.</regel_23>
-        </items>
-        <items id="2">
-          <regel_23>Pacemaker wires were placed on the right atrium.</regel_23>
-        </items>
-        <items id="3">
-          <regel_23>Pacemaker wires were placed on the right atrium and ventricle.</regel_23>
-        </items>
-        <items id="4">
-          <regel_23>Pacemaker wires were placed on the right ventricle.</regel_23>
-        </items>
-      </pmwires>
-    </reports>
+      </reports>
   </hospital>
   <hospital id="46">
     <reports>
@@ -9085,52 +8410,7 @@
           <regel_33 />
         </soort>
       </text_by_type_of_surgery>
-      <circulation_support>
-        <items id="1">
-          <regel_21>wo. inotropic support.</regel_21>
-        </items>
-        <items id="2">
-          <regel_21>with minimal inotropic support.</regel_21>
-        </items>
-        <items id="3">
-          <regel_21>with moderate inotropic support.</regel_21>
-        </items>
-        <items id="4">
-          <regel_21>with maximal inotropic support.</regel_21>
-        </items>
-      </circulation_support>
-      <iabp>
-        <items id="1">
-          <regel_22>An IABP was used for hemodynamic instability.</regel_22>
-        </items>
-        <items id="2">
-          <regel_22>An IABP was used for PTCA support.</regel_22>
-        </items>
-        <items id="3">
-          <regel_22>An IABP was used for unstable anginal complaints.</regel_22>
-        </items>
-        <items id="4">
-          <regel_22>An IABP was used to wean from CPB.</regel_22>
-        </items>
-        <items id="5">
-          <regel_22>An IABP was inserted prophylactically.</regel_22>
-        </items>
-      </iabp>
-      <pmwires>
-        <items id="1">
-          <regel_23>Pacemaker wires were not used.</regel_23>
-        </items>
-        <items id="2">
-          <regel_23>Pacemaker wires were placed on the right atrium.</regel_23>
-        </items>
-        <items id="3">
-          <regel_23>Pacemaker wires were placed on the right atrium and ventricle.</regel_23>
-        </items>
-        <items id="4">
-          <regel_23>Pacemaker wires were placed on the right ventricle.</regel_23>
-        </items>
-      </pmwires>
-    </reports>
+      </reports>
   </hospital>
   <hospital id="99999">
     <reports>
@@ -9820,9 +9100,9 @@
           <regel_18></regel_18>
           <regel_19></regel_19>
           <regel_20></regel_20>
-          <regel_21></regel_21>
-          <regel_22></regel_22>
-          <regel_23></regel_23>
+          <regel_21>  and supported the circulation </regel_21>
+          <regel_22>An IABP was  </regel_22>
+          <regel_23>Pacemaker wires were   </regel_23>
           <regel_24></regel_24>
           <regel_25></regel_25>
           <regel_26></regel_26>
@@ -10150,51 +9430,6 @@
           <regel_33 />
         </soort>
       </text_by_type_of_surgery>
-      <circulation_support>
-        <items id="1">
-          <regel_21>Hallo-1</regel_21>
-        </items>
-        <items id="2">
-          <regel_21>Hallo-2</regel_21>
-        </items>
-        <items id="3">
-          <regel_21>Hallo-3</regel_21>
-        </items>
-        <items id="4">
-          <regel_21>Hallo-4</regel_21>
-        </items>
-      </circulation_support>
-      <iabp>
-        <items id="1">
-          <regel_22>Hallo-11</regel_22>
-        </items>
-        <items id="2">
-          <regel_22>Hallo-12</regel_22>
-        </items>
-        <items id="3">
-          <regel_22>Hallo-13</regel_22>
-        </items>
-        <items id="4">
-          <regel_22>Hallo-14</regel_22>
-        </items>
-        <items id="5">
-          <regel_22>Hallo-15</regel_22>
-        </items>
-      </iabp>
-      <pmwires>
-        <items id="1">
-          <regel_23>Hallo-now</regel_23>
-        </items>
-        <items id="2">
-          <regel_23>Hallo-ook</regel_23>
-        </items>
-        <items id="3">
-          <regel_23>Hallo-23</regel_23>
-        </items>
-        <items id="4">
-          <regel_23>Hallo-24</regel_23>
-        </items>
-      </pmwires>
     </reports>
   </hospital>
   <hospital id="44">
@@ -10249,9 +9484,9 @@
           <regel_18></regel_18>
           <regel_19></regel_19>
           <regel_20></regel_20>
-          <regel_21></regel_21>
-          <regel_22></regel_22>
-          <regel_23></regel_23>
+          <regel_21>  and supported the circulation </regel_21>
+          <regel_22>An IABP was  </regel_22>
+          <regel_23>Pacemaker wires were   </regel_23>
           <regel_24></regel_24>
           <regel_25></regel_25>
           <regel_26></regel_26>
@@ -10564,9 +9799,9 @@
           <regel_18></regel_18>
           <regel_19></regel_19>
           <regel_20></regel_20>
-          <regel_21></regel_21>
-          <regel_22></regel_22>
-          <regel_23></regel_23>
+          <regel_21>  and supported the circulation </regel_21>
+          <regel_22>An IABP was  </regel_22>
+          <regel_23>Pacemaker wires were   </regel_23>
           <regel_24></regel_24>
           <regel_25></regel_25>
           <regel_26></regel_26>
@@ -10705,52 +9940,7 @@
           <regel_33 />
         </soort>
       </text_by_type_of_surgery>
-      <circulation_support>
-        <items id="1">
-          <regel_21>wo. inotropic support oh zo i het maar net ook een keer</regel_21>
-        </items>
-        <items id="2">
-          <regel_21>with minimal inotropic support.</regel_21>
-        </items>
-        <items id="3">
-          <regel_21>with moderate inotropic support.</regel_21>
-        </items>
-        <items id="4">
-          <regel_21>with maximal inotropic support.</regel_21>
-        </items>
-      </circulation_support>
-      <iabp>
-        <items id="1">
-          <regel_22>An IABP was used for hemodynamic instability.dus</regel_22>
-        </items>
-        <items id="2">
-          <regel_22>An IABP was used for PTCA support.</regel_22>
-        </items>
-        <items id="3">
-          <regel_22>An IABP was used for unstable anginal complaints.</regel_22>
-        </items>
-        <items id="4">
-          <regel_22>An IABP was used to wean from CPB.</regel_22>
-        </items>
-        <items id="5">
-          <regel_22>An IABP was inserted prophylactically.</regel_22>
-        </items>
-      </iabp>
-      <pmwires>
-        <items id="1">
-          <regel_23>Pacemaker wires were not used.hier ook pm wires</regel_23>
-        </items>
-        <items id="2">
-          <regel_23>Pacemaker wires were placed on the right atrium.</regel_23>
-        </items>
-        <items id="3">
-          <regel_23>Pacemaker wires were placed on the right atrium and ventricle.</regel_23>
-        </items>
-        <items id="4">
-          <regel_23>Pacemaker wires were placed on the right ventricle.</regel_23>
-        </items>
-      </pmwires>
-    </reports>
+      </reports>
   </hospital>
   <hospital id="5">
     <reports>
@@ -10804,9 +9994,9 @@
           <regel_18></regel_18>
           <regel_19></regel_19>
           <regel_20></regel_20>
-          <regel_21></regel_21>
-          <regel_22></regel_22>
-          <regel_23></regel_23>
+          <regel_21>  and supported the circulation </regel_21>
+          <regel_22>An IABP was  </regel_22>
+          <regel_23>Pacemaker wires were   </regel_23>
           <regel_24></regel_24>
           <regel_25></regel_25>
           <regel_26></regel_26>
@@ -11119,9 +10309,9 @@
           <regel_18></regel_18>
           <regel_19></regel_19>
           <regel_20></regel_20>
-          <regel_21></regel_21>
-          <regel_22></regel_22>
-          <regel_23></regel_23>
+          <regel_21>  and supported the circulation </regel_21>
+          <regel_22>An IABP was  </regel_22>
+          <regel_23>Pacemaker wires were   </regel_23>
           <regel_24></regel_24>
           <regel_25></regel_25>
           <regel_26></regel_26>
@@ -11260,52 +10450,7 @@
           <regel_33 />
         </soort>
       </text_by_type_of_surgery>
-      <circulation_support>
-        <items id="1">
-          <regel_21>wo. inotropic support oh zo i het maar net ook een keer</regel_21>
-        </items>
-        <items id="2">
-          <regel_21>with minimal inotropic support.</regel_21>
-        </items>
-        <items id="3">
-          <regel_21>with moderate inotropic support.</regel_21>
-        </items>
-        <items id="4">
-          <regel_21>with maximal inotropic support.</regel_21>
-        </items>
-      </circulation_support>
-      <iabp>
-        <items id="1">
-          <regel_22>An IABP was used for hemodynamic instability.dus</regel_22>
-        </items>
-        <items id="2">
-          <regel_22>An IABP was used for PTCA support.</regel_22>
-        </items>
-        <items id="3">
-          <regel_22>An IABP was used for unstable anginal complaints.</regel_22>
-        </items>
-        <items id="4">
-          <regel_22>An IABP was used to wean from CPB.</regel_22>
-        </items>
-        <items id="5">
-          <regel_22>An IABP was inserted prophylactically.</regel_22>
-        </items>
-      </iabp>
-      <pmwires>
-        <items id="1">
-          <regel_23>Pacemaker wires were not used.hier ook pm wires</regel_23>
-        </items>
-        <items id="2">
-          <regel_23>Pacemaker wires were placed on the right atrium.</regel_23>
-        </items>
-        <items id="3">
-          <regel_23>Pacemaker wires were placed on the right atrium and ventricle.</regel_23>
-        </items>
-        <items id="4">
-          <regel_23>Pacemaker wires were placed on the right ventricle.</regel_23>
-        </items>
-      </pmwires>
-    </reports>
+     </reports>
   </hospital>
   <hospital id="4">
     <reports>
@@ -11359,9 +10504,9 @@
           <regel_18></regel_18>
           <regel_19></regel_19>
           <regel_20></regel_20>
-          <regel_21></regel_21>
-          <regel_22></regel_22>
-          <regel_23></regel_23>
+          <regel_21>  and supported the circulation </regel_21>
+          <regel_22>An IABP was  </regel_22>
+          <regel_23>Pacemaker wires were   </regel_23>
           <regel_24></regel_24>
           <regel_25></regel_25>
           <regel_26></regel_26>
@@ -11674,9 +10819,9 @@
           <regel_18></regel_18>
           <regel_19></regel_19>
           <regel_20></regel_20>
-          <regel_21></regel_21>
-          <regel_22></regel_22>
-          <regel_23></regel_23>
+          <regel_21>  and supported the circulation </regel_21>
+          <regel_22>An IABP was  </regel_22>
+          <regel_23>Pacemaker wires were   </regel_23>
           <regel_24></regel_24>
           <regel_25></regel_25>
           <regel_26></regel_26>
@@ -11815,51 +10960,6 @@
           <regel_33 />
         </soort>
       </text_by_type_of_surgery>
-      <circulation_support>
-        <items id="1">
-          <regel_21>wo. inotropic support oh zo i het maar net ook een keer</regel_21>
-        </items>
-        <items id="2">
-          <regel_21>with minimal inotropic support.</regel_21>
-        </items>
-        <items id="3">
-          <regel_21>with moderate inotropic support.</regel_21>
-        </items>
-        <items id="4">
-          <regel_21>with maximal inotropic support.</regel_21>
-        </items>
-      </circulation_support>
-      <iabp>
-        <items id="1">
-          <regel_22>An IABP was used for hemodynamic instability.dus</regel_22>
-        </items>
-        <items id="2">
-          <regel_22>An IABP was used for PTCA support.</regel_22>
-        </items>
-        <items id="3">
-          <regel_22>An IABP was used for unstable anginal complaints.</regel_22>
-        </items>
-        <items id="4">
-          <regel_22>An IABP was used to wean from CPB.</regel_22>
-        </items>
-        <items id="5">
-          <regel_22>An IABP was inserted prophylactically.</regel_22>
-        </items>
-      </iabp>
-      <pmwires>
-        <items id="1">
-          <regel_23>Pacemaker wires were not used.hier ook pm wires</regel_23>
-        </items>
-        <items id="2">
-          <regel_23>Pacemaker wires were placed on the right atrium.</regel_23>
-        </items>
-        <items id="3">
-          <regel_23>Pacemaker wires were placed on the right atrium and ventricle.</regel_23>
-        </items>
-        <items id="4">
-          <regel_23>Pacemaker wires were placed on the right ventricle.</regel_23>
-        </items>
-      </pmwires>
     </reports>
   </hospital>
   <hospital id="128">
@@ -11914,9 +11014,9 @@
           <regel_18></regel_18>
           <regel_19></regel_19>
           <regel_20></regel_20>
-          <regel_21></regel_21>
-          <regel_22></regel_22>
-          <regel_23></regel_23>
+          <regel_21>  and supported the circulation </regel_21>
+          <regel_22>An IABP was  </regel_22>
+          <regel_23>Pacemaker wires were   </regel_23>
           <regel_24></regel_24>
           <regel_25></regel_25>
           <regel_26></regel_26>
@@ -12040,9 +11140,9 @@
           <regel_18></regel_18>
           <regel_19></regel_19>
           <regel_20></regel_20>
-          <regel_21></regel_21>
-          <regel_22></regel_22>
-          <regel_23></regel_23>
+          <regel_21>  and supported the circulation </regel_21>
+          <regel_22>An IABP was  </regel_22>
+          <regel_23>Pacemaker wires were   </regel_23>
           <regel_24></regel_24>
           <regel_25></regel_25>
           <regel_26></regel_26>
@@ -12229,9 +11329,9 @@
           <regel_18></regel_18>
           <regel_19></regel_19>
           <regel_20></regel_20>
-          <regel_21></regel_21>
-          <regel_22></regel_22>
-          <regel_23></regel_23>
+          <regel_21>  and supported the circulation </regel_21>
+          <regel_22>An IABP was  </regel_22>
+          <regel_23>Pacemaker wires were   </regel_23>
           <regel_24></regel_24>
           <regel_25></regel_25>
           <regel_26></regel_26>
@@ -12419,7 +11519,7 @@
           <regel_19></regel_19>
           <regel_20></regel_20>
           <regel_21>with minimal inotropic support.</regel_21>
-          <regel_22></regel_22>
+          <regel_22>An IABP was  </regel_22>
           <regel_23>Pacemaker wires were placed on the right atrium.</regel_23>
           <regel_24></regel_24>
           <regel_25></regel_25>
@@ -12481,9 +11581,9 @@
           <regel_18></regel_18>
           <regel_19></regel_19>
           <regel_20></regel_20>
-          <regel_21></regel_21>
-          <regel_22></regel_22>
-          <regel_23></regel_23>
+          <regel_21>  and supported the circulation </regel_21>
+          <regel_22>An IABP was  </regel_22>
+          <regel_23>Pacemaker wires were   </regel_23>
           <regel_24></regel_24>
           <regel_25></regel_25>
           <regel_26></regel_26>
@@ -12496,52 +11596,7 @@
           <regel_33></regel_33>
         </soort>
       </text_by_type_of_surgery>
-      <circulation_support>
-        <items id="1">
-          <regel_21>wo. inotropic support oh zo i het maar net ook een keer</regel_21>
-        </items>
-        <items id="2">
-          <regel_21>with minimal inotropic support.</regel_21>
-        </items>
-        <items id="3">
-          <regel_21>with moderate inotropic support.</regel_21>
-        </items>
-        <items id="4">
-          <regel_21>with maximal inotropic support.</regel_21>
-        </items>
-      </circulation_support>
-      <iabp>
-        <items id="1">
-          <regel_22>An IABP was used for hemodynamic instability.dus</regel_22>
-        </items>
-        <items id="2">
-          <regel_22>An IABP was used for PTCA support.</regel_22>
-        </items>
-        <items id="3">
-          <regel_22>An IABP was used for unstable anginal complaints.</regel_22>
-        </items>
-        <items id="4">
-          <regel_22>An IABP was used to wean from CPB.</regel_22>
-        </items>
-        <items id="5">
-          <regel_22>An IABP was inserted prophylactically.</regel_22>
-        </items>
-      </iabp>
-      <pmwires>
-        <items id="1">
-          <regel_23>Pacemaker wires were not used.hier ook pm wires</regel_23>
-        </items>
-        <items id="2">
-          <regel_23>Pacemaker wires were placed on the right atrium.</regel_23>
-        </items>
-        <items id="3">
-          <regel_23>Pacemaker wires were placed on the right atrium and ventricle.</regel_23>
-        </items>
-        <items id="4">
-          <regel_23>Pacemaker wires were placed on the right ventricle.</regel_23>
-        </items>
-      </pmwires>
-    </reports>
+     </reports>
   </hospital>
   <hospital id="25">
     <reports>
@@ -12595,9 +11650,9 @@
           <regel_18></regel_18>
           <regel_19></regel_19>
           <regel_20></regel_20>
-          <regel_21></regel_21>
-          <regel_22></regel_22>
-          <regel_23></regel_23>
+          <regel_21> and supported the circulation </regel_21>
+          <regel_22>An IABP was </regel_22>
+          <regel_23>Pacemaker wires were </regel_23>
           <regel_24></regel_24>
           <regel_25></regel_25>
           <regel_26></regel_26>
@@ -12910,9 +11965,9 @@
           <regel_18></regel_18>
           <regel_19></regel_19>
           <regel_20></regel_20>
-          <regel_21></regel_21>
-          <regel_22></regel_22>
-          <regel_23></regel_23>
+          <regel_21>  and supported the circulation </regel_21>
+          <regel_22>An IABP was  </regel_22>
+          <regel_23>Pacemaker wires were   </regel_23>
           <regel_24></regel_24>
           <regel_25></regel_25>
           <regel_26></regel_26>
@@ -13051,51 +12106,6 @@
           <regel_33 />
         </soort>
       </text_by_type_of_surgery>
-      <circulation_support>
-        <items id="1">
-          <regel_21>wo. inotropic support oh zo i het maar net ook een keer</regel_21>
-        </items>
-        <items id="2">
-          <regel_21>with minimal inotropic support.</regel_21>
-        </items>
-        <items id="3">
-          <regel_21>with moderate inotropic support.</regel_21>
-        </items>
-        <items id="4">
-          <regel_21>with maximal inotropic support.</regel_21>
-        </items>
-      </circulation_support>
-      <iabp>
-        <items id="1">
-          <regel_22>An IABP was used for hemodynamic instability.dus</regel_22>
-        </items>
-        <items id="2">
-          <regel_22>An IABP was used for PTCA support.</regel_22>
-        </items>
-        <items id="3">
-          <regel_22>An IABP was used for unstable anginal complaints.</regel_22>
-        </items>
-        <items id="4">
-          <regel_22>An IABP was used to wean from CPB.</regel_22>
-        </items>
-        <items id="5">
-          <regel_22>An IABP was inserted prophylactically.</regel_22>
-        </items>
-      </iabp>
-      <pmwires>
-        <items id="1">
-          <regel_23>Pacemaker wires were not used.hier ook pm wires</regel_23>
-        </items>
-        <items id="2">
-          <regel_23>Pacemaker wires were placed on the right atrium.</regel_23>
-        </items>
-        <items id="3">
-          <regel_23>Pacemaker wires were placed on the right atrium and ventricle.</regel_23>
-        </items>
-        <items id="4">
-          <regel_23>Pacemaker wires were placed on the right ventricle.</regel_23>
-        </items>
-      </pmwires>
     </reports>
   </hospital>
 </root>

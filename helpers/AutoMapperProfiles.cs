@@ -38,7 +38,38 @@ namespace surgical_reports.helpers;
             .ForMember(dest => dest.regel_11, opt => opt.MapFrom(src => src.Regel11A + src.Regel11B + src.Regel11C))
             .ForMember(dest => dest.regel_12, opt => opt.MapFrom(src => src.Regel12A + src.Regel12B + src.Regel12C))
             .ForMember(dest => dest.regel_13, opt => opt.MapFrom(src => src.Regel13A + src.Regel13B + src.Regel13C))
-            .ForMember(dest => dest.regel_14, opt => opt.MapFrom(src => src.Regel14A + src.Regel14B + src.Regel14C));
+            .ForMember(dest => dest.regel_14, opt => opt.MapFrom(src => src.Regel14A + src.Regel14B + src.Regel14C))
+            .ForMember(dest => dest.regel_15, opt => opt.MapFrom(src => src.Regel15))
+            .ForMember(dest => dest.regel_16, opt => opt.MapFrom(src => src.Regel16))
+            .ForMember(dest => dest.regel_17, opt => opt.MapFrom(src => src.Regel17))
+            .ForMember(dest => dest.regel_18, opt => opt.MapFrom(src => src.Regel18))
+            .ForMember(dest => dest.regel_19, opt => opt.MapFrom(src => src.Regel19))
+            .ForMember(dest => dest.regel_20, opt => opt.MapFrom(src => src.Regel20))
+            .ForMember(dest => dest.regel_21, opt => opt.MapFrom(src => src.Regel21))
+            .ForMember(dest => dest.regel_22, opt => opt.MapFrom(src => src.Regel22))
+            .ForMember(dest => dest.regel_23, opt => opt.MapFrom(src => src.Regel23))
+            .ForMember(dest => dest.regel_24, opt => opt.MapFrom(src => src.Regel24))
+            .ForMember(dest => dest.regel_25, opt => opt.MapFrom(src => src.Regel25))
+            .ForMember(dest => dest.regel_26, opt => opt.MapFrom(src => src.Regel26))
+            .ForMember(dest => dest.regel_27, opt => opt.MapFrom(src => src.Regel27))
+            .ForMember(dest => dest.regel_28, opt => opt.MapFrom(src => src.Regel28))
+            .ForMember(dest => dest.regel_29, opt => opt.MapFrom(src => src.Regel29))
+            .ForMember(dest => dest.regel_30, opt => opt.MapFrom(src => src.Regel30))
+            .ForMember(dest => dest.regel_31, opt => opt.MapFrom(src => src.Regel31))
+            .ForMember(dest => dest.regel_32, opt => opt.MapFrom(src => src.Regel32))
+            .ForMember(dest => dest.regel_33, opt => opt.MapFrom(src => src.Regel33))
+           
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            ;
 
 
 

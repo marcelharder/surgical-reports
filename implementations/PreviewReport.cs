@@ -84,6 +84,7 @@ public class PreviewReport : IPreviewReport
 
                         // get the suggestion from the InstitutionalReports.xml
                         var text = await _text.getInstitutionalReport(currentProcedure.hospital.ToString(), currentProcedure.fdType.ToString(), description);
+
                         var no = _map.Map<InstitutionalDTO, Class_Preview_Operative_report>(text);
                         no.procedure_id = currentProcedure.ProcedureId;
 
@@ -137,7 +138,7 @@ public class PreviewReport : IPreviewReport
         using (var connection = _context.CreateConnection())
         {
             var preview = await connection.QuerySingleOrDefaultAsync<Class_Preview_Operative_report>(query, new { procedure_id });
-            preview = await addProcedureDetails(preview);// adds things like harvest location etc ..
+            //preview = await addProcedureDetails(preview);// adds things like harvest location etc ..
             return preview;
         }
     }
@@ -173,10 +174,20 @@ public class PreviewReport : IPreviewReport
             if (cpb != null)
             {
                 cp.regel_5 = text.Regel5A + " " + cpb.LOWEST_CORE_TEMP + " " + text.Regel5C;
-                cp.regel_22 = cp.regel_22 + " " + await getIABPUsedAsync(cpb);
+                cp.regel_22 = cp.regel_22 + await getIABPStuff(cpb);
 
                 cp.regel_6 = await getCardioPlegiaTemp(cpb) + " " + await getCardioPlegiaRoute(cpb) + " " + await getCardioPlegiaType(cpb) + " with " + text.Regel6A + " of " + cpb.INFUSION_DOSE_INT + " ml";
             }
+        }
+        else
+        {
+            var cpb1 = await _icpb.getSpecificCPB(cp.procedure_id);
+            // now get the details of the IABP
+            cp.regel_22 = cp.regel_22 + await getIABPStuff(cpb1);
+            // circulation support
+            cp.regel_21 = cp.regel_21 + await getCirculationSupportAsync(currentProcedure);
+            // pacemaker wires
+            cp.regel_23 = cp.regel_23 + await getPMWiresAsync(currentProcedure);
         }
 
         return cp;
@@ -434,13 +445,43 @@ public class PreviewReport : IPreviewReport
         }
         return help;
     }
-    private async Task<string> getIABPUsedAsync(Class_CPB cpb)
+    private async Task<string> getIABPStuff(Class_CPB cpb)
     {
-        // IABP
+        string help = "";
+        if (cpb.IABP_OPTIONS != null && cpb.IABP_OPTIONS != "0")
+        {
+            help = await getIABPWhenInserted(cpb);
+            help = help + " inserted ";
+            if (cpb.IABP_IND != null && cpb.IABP_IND != "0")
+            {
+                help = help + "for " + await getIABPUsedAsync(cpb);
+            }
+            else { help = " not used."; }
+        }
+        else { help = " not used."; }
+        return help;
+    }
+    private async Task<string> getIABPWhenInserted(Class_CPB cpb)
+    {
+        // IABP when inserted, bv preoperatively etc
         var help = "";
         List<Class_Item> dropIABP = new List<Class_Item>();
+        dropIABP = await _drops.getCPB_iabp_timing();
+        if (cpb.IABP_OPTIONS != null && cpb.IABP_OPTIONS != "0")
+        {
+            var t = Convert.ToInt32(cpb.IABP_OPTIONS);
+            var ci = dropIABP.Single(x => x.value == t);
+            help = ci.description;
+        }
+        return help;
+    }
+    private async Task<string> getIABPUsedAsync(Class_CPB cpb)
+    {
+        // IABP indication
+        var help = "not used";
+        List<Class_Item> dropIABP = new List<Class_Item>();
         dropIABP = await _drops.getCPB_iabp_ind();
-        if (cpb != null && cpb.IABP_IND != null && cpb.IABP_IND != "0")
+        if (cpb.IABP_IND != null && cpb.IABP_IND != "0")
         {
             var t = Convert.ToInt32(cpb.IABP_IND);
             var ci = dropIABP.Single(x => x.value == t);
@@ -476,9 +517,5 @@ public class PreviewReport : IPreviewReport
         }
         return help;
     }
-
-
-
-
 
 }

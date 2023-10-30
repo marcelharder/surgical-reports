@@ -3648,27 +3648,6 @@
          <line_9_b>we could discharge the patient in good health</line_9_b>
       </discharge_summary>
    </discharge>
-   
-   <closing_remark_by_type_of_surgery>
-      <soort>
-         <value>1</value>
-         <closing_remark_1>and supported the circulation</closing_remark_1>
-         <closing_remark_2>An intra-aortic balloon pump</closing_remark_2>
-         <closing_remark_3>Pacemaker wires were</closing_remark_3>
-         <closing_remark_4 />
-         <closing_remark_5 />
-         <closing_remark_6 />
-      </soort>
-      <soort>
-         <value>2</value>
-         <closing_remark_1 />
-         <closing_remark_2 />
-         <closing_remark_3 />
-         <closing_remark_4 />
-         <closing_remark_5 />
-         <closing_remark_6 />
-      </soort>
-   </closing_remark_by_type_of_surgery>
    <career>
       <items>
          <description>Entrusted Professional Activity</description>

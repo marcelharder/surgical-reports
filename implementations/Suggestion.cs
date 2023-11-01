@@ -304,7 +304,6 @@ public class Suggestion : ISuggestion
     {
         await Task.Run(() =>
         {
-
             help.regel_1_a = c.regel_1;
             help.regel_2_a = c.regel_2;
             help.regel_3_a = c.regel_3;

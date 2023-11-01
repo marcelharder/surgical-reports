@@ -11,12 +11,16 @@ public class PreviewReport : IPreviewReport
     private IMapper _map;
     private IInstitutionalText _text;
     private IProcedureRepository _proc;
+    private IHospitalRepository _hos;
     private ICPBRepo _icpb;
     private ICABGRepo _cabg;
     private OperatieDrops _drops;
+
+    private string _currentLanguage;
     public PreviewReport(
         OperatieDrops drops,
         IProcedureRepository proc,
+        IHospitalRepository hos,
         ICPBRepo icpb,
         ICABGRepo cabg,
         IWebHostEnvironment env,
@@ -34,36 +38,40 @@ public class PreviewReport : IPreviewReport
         _cabg = cabg;
         _env = env;
         _drops = drops;
+        _hos = hos;
+        _currentLanguage = "";
 
     }
     public async Task<Class_Preview_Operative_report> getPreViewAsync(int procedure_id)
     {
+        // get the current language
+        var currentProcedure = await _proc.getSpecificProcedure(procedure_id);
+        var currentHospital = currentProcedure.hospital;
+        var hospital = await _hos.GetSpecificHospital(currentHospital.ToString());
+        _currentLanguage = hospital.country;
+        
         // check if the procedure exists
         if (await _proc.getSpecificProcedure(procedure_id) != null)
         {
-
-
-            if (await findPreview(procedure_id))
-            {
-                return await getPRA(procedure_id);
-            }
+            if (await findPreview(procedure_id)) { return await getPRA(procedure_id); }
             else
             {
                 //add a new preview instance to database
                 var result = new Class_Preview_Operative_report();
                 result.procedure_id = procedure_id;
-
-                var currentProcedure = await _proc.getSpecificProcedure(procedure_id);
                 var user_id = currentProcedure.SelectedSurgeon;
-
-
                 // look for userspecificreport
                 if (await UserHasASuggestionForThisProcedure(user_id, currentProcedure.fdType))
                 {
                     var usersuggestion = await getUserSpecificSuggestion(user_id, currentProcedure.fdType);
-
                     result = _map.Map<Class_Suggestion, Class_Preview_Operative_report>(usersuggestion);
                     result.procedure_id = procedure_id;
+                    var text = await getStatic_Text_Per_Country(currentProcedure);
+                    result.regel_21 = text[0];
+                    result.regel_22 = text[1];
+                    result.regel_23 = text[2];
+
+
                     return await saveNewPreviewReport(result);
                 }
                 else
@@ -73,6 +81,10 @@ public class PreviewReport : IPreviewReport
                     if (currentProcedure.fdType == 6)
                     {
                         result.regel_1 = "This procedure is not (yet) available for reporting";
+                        var text = await getStatic_Text_Per_Country(currentProcedure);
+                        result.regel_21 = text[0];
+                        result.regel_22 = text[1];
+                        result.regel_23 = text[2];
                         return await saveNewPreviewReport(result);
                     }
                     else
@@ -83,17 +95,64 @@ public class PreviewReport : IPreviewReport
                         var description = getDescription(currentProcedure.fdType.ToString());
 
                         // get the suggestion from the InstitutionalReports.xml
-                        var text = await _text.getInstitutionalReport(currentProcedure.hospital.ToString(), currentProcedure.fdType.ToString(), description);
-
-                        var no = _map.Map<InstitutionalDTO, Class_Preview_Operative_report>(text);
+                        var t = await _text.getInstitutionalReport(currentProcedure.hospital.ToString(), currentProcedure.fdType.ToString(), description);
+                        var no = _map.Map<InstitutionalDTO, Class_Preview_Operative_report>(t);
                         no.procedure_id = currentProcedure.ProcedureId;
-
+                        var text = await getStatic_Text_Per_Country(currentProcedure);
+                        no.regel_21 = text[0];
+                        no.regel_22 = text[1];
+                        no.regel_23 = text[2];
                         return await saveNewPreviewReport(no);
                     }
                 }
             }
         }
         else { return null; }
+    }
+
+    private async Task<List<string>> getStatic_Text_Per_Country(Class_Procedure currentProcedure)
+    {
+        // this gives a language specific text if the general details are filled
+
+        List<string> static_text = new List<string>();
+        var iabp_result = "";
+        var cpb = await _icpb.getSpecificCPB(currentProcedure.ProcedureId);
+
+        if (cpb != null)
+        {
+            iabp_result = await getIABPStuff(cpb);
+        }
+
+        
+        switch (_currentLanguage)
+        {
+            case "IT":
+                if (currentProcedure.SelectedInotropes != 0) { static_text.Add("y supportado"); } else static_text.Add("");
+                if (iabp_result != "") { static_text.Add("e IABP "); } else static_text.Add("");
+                if (currentProcedure.SelectedPacemaker != 0) { static_text.Add("something italian"); } else static_text.Add("");
+                break;
+            case "NL":
+                if (currentProcedure.SelectedInotropes != 0) { static_text.Add("en ondersteunde de circulatie "); } else static_text.Add("");
+                if (iabp_result != "") { static_text.Add("Een IABP werd "); } else static_text.Add("");
+                if (currentProcedure.SelectedPacemaker != 0) { static_text.Add("Pacemaker draden werden "); } else static_text.Add("");
+                break;
+            case "GB":
+                if (currentProcedure.SelectedInotropes != 0) { static_text.Add("and supported the circulation  "); } else static_text.Add("");
+                if (iabp_result != "") { static_text.Add("An IABP was "); } else static_text.Add("");
+                if (currentProcedure.SelectedPacemaker != 0) { static_text.Add("Pacemaker wires were "); } else static_text.Add("");
+                break;
+            case "SA":
+                if (currentProcedure.SelectedInotropes != 0) { static_text.Add("and supported the circulation  "); } else static_text.Add("");
+                if (iabp_result != "") { static_text.Add("An IABP was "); } else static_text.Add("");
+                if (currentProcedure.SelectedPacemaker != 0) { static_text.Add("Pacemaker wires were "); } else static_text.Add("");
+                break;
+            case "US":
+                if (currentProcedure.SelectedInotropes != 0) { static_text.Add("and supported the circulation  "); } else static_text.Add("");
+                if (iabp_result != "") { static_text.Add("An IABP was "); } else static_text.Add("");
+                if (currentProcedure.SelectedPacemaker != 0) { static_text.Add("Pacemaker wires were "); } else static_text.Add("");
+                break;
+        }
+        return static_text;
     }
     public async Task<Class_Preview_Operative_report> resetPreViewAsync(int procedure_id)
     {
@@ -138,7 +197,6 @@ public class PreviewReport : IPreviewReport
         using (var connection = _context.CreateConnection())
         {
             var preview = await connection.QuerySingleOrDefaultAsync<Class_Preview_Operative_report>(query, new { procedure_id });
-            //preview = await addProcedureDetails(preview);// adds things like harvest location etc ..
             return preview;
         }
     }
@@ -156,7 +214,12 @@ public class PreviewReport : IPreviewReport
         InstitutionalDTO text = new InstitutionalDTO();
         var currentProcedure = await _proc.getSpecificProcedure(cp.procedure_id);
         var currentHospital = currentProcedure.hospital.ToString().makeSureTwoChar();
+        var hos = await _hos.GetSpecificHospital(currentHospital);
+        var currentlanguage = hos.country;
         var currentSoort = currentProcedure.fdType.ToString();
+        
+
+
 
         if (currentProcedure.fdType == 1) // doe dit eerst voor de CABG Lima/VSM
         {
@@ -181,15 +244,15 @@ public class PreviewReport : IPreviewReport
         }
         else
         {
-            var cpb1 = await _icpb.getSpecificCPB(cp.procedure_id);
-            // now get the details of the IABP
-            cp.regel_22 = cp.regel_22 + await getIABPStuff(cpb1);
-            // circulation support
             cp.regel_21 = cp.regel_21 + await getCirculationSupportAsync(currentProcedure);
-            // pacemaker wires
             cp.regel_23 = cp.regel_23 + await getPMWiresAsync(currentProcedure);
+            var cpb1 = await _icpb.getSpecificCPB(cp.procedure_id);
+            if (cpb1 != null)
+            {
+                // now get the details of the IABP
+                cp.regel_22 = cp.regel_22 + await getIABPStuff(cpb1);
+            }
         }
-
         return cp;
     }
     private async Task<Class_Preview_Operative_report> saveNewPreviewReport(Class_Preview_Operative_report cp)
@@ -376,7 +439,7 @@ public class PreviewReport : IPreviewReport
     {
         var help = "";
         List<Class_Item> dropLeg = new List<Class_Item>();
-        dropLeg = await _drops.getCABGLeg();
+        dropLeg = await _drops.getCABGLeg(_currentLanguage);
 
         if (cabg.leg_harvest_location != null)
         {
@@ -391,7 +454,7 @@ public class PreviewReport : IPreviewReport
     {
         var help = "";
         List<Class_Item> dropRadial = new List<Class_Item>();
-        dropRadial = await _drops.getCABGRadial();
+        dropRadial = await _drops.getCABGRadial(_currentLanguage);
 
         if (cabg.radial_harvest_location != null)
         {
@@ -407,7 +470,7 @@ public class PreviewReport : IPreviewReport
         //temp
         var help = "";
         List<Class_Item> dropTemp = new List<Class_Item>();
-        dropTemp = await _drops.getCPB_temp();
+        dropTemp = await _drops.getCPB_temp(_currentLanguage);
         if (cpb.cardiopl_temp != null)
         {
             var test = Convert.ToInt32(cpb.cardiopl_temp);
@@ -422,7 +485,7 @@ public class PreviewReport : IPreviewReport
         // delivery
         var help = "";
         List<Class_Item> dropDelivery = new List<Class_Item>();
-        dropDelivery = await _drops.getCPB_delivery();
+        dropDelivery = await _drops.getCPB_delivery(_currentLanguage);
         if (cpb.INFUSION_MODE_ANTE != null)
         {
             var test = Convert.ToInt32(cpb.INFUSION_MODE_ANTE);
@@ -436,7 +499,7 @@ public class PreviewReport : IPreviewReport
         // typeCardiopleg
         var help = "";
         List<Class_Item> dropType = new List<Class_Item>();
-        dropType = await _drops.getTypeCardiopleg();
+        dropType = await _drops.getTypeCardiopleg(_currentLanguage);
         if (cpb.CARDIOPLEGIA_TYPE != null)
         {
             var test = Convert.ToInt32(cpb.CARDIOPLEGIA_TYPE);
@@ -456,44 +519,46 @@ public class PreviewReport : IPreviewReport
             {
                 help = help + "for " + await getIABPUsedAsync(cpb);
             }
-            else { help = " not used."; }
+            else { help = ""; }
         }
-        else { help = " not used."; }
+        else { help = ""; }
         return help;
     }
     private async Task<string> getIABPWhenInserted(Class_CPB cpb)
     {
         // IABP when inserted, bv preoperatively etc
         var help = "";
-        List<Class_Item> dropIABP = new List<Class_Item>();
-        dropIABP = await _drops.getCPB_iabp_timing();
-        if (cpb.IABP_OPTIONS != null && cpb.IABP_OPTIONS != "0")
+        List<Class_Item> drop = new List<Class_Item>();
+        drop = await _drops.getCPB_iabp_timing(_currentLanguage);
+        try
         {
             var t = Convert.ToInt32(cpb.IABP_OPTIONS);
-            var ci = dropIABP.Single(x => x.value == t);
+            var ci = drop.Single(x => x.value == t);
             help = ci.description;
         }
+        catch (Exception e) { Console.Write(e.InnerException); }
         return help;
     }
     private async Task<string> getIABPUsedAsync(Class_CPB cpb)
     {
         // IABP indication
-        var help = "not used";
-        List<Class_Item> dropIABP = new List<Class_Item>();
-        dropIABP = await _drops.getCPB_iabp_ind();
-        if (cpb.IABP_IND != null && cpb.IABP_IND != "0")
+        var help = "";
+        List<Class_Item> drop = new List<Class_Item>();
+        drop = await _drops.getCPB_iabp_ind(_currentLanguage);
+        try
         {
             var t = Convert.ToInt32(cpb.IABP_IND);
-            var ci = dropIABP.Single(x => x.value == t);
+            var ci = drop.Single(x => x.value == t);
             help = ci.description;
         }
+        catch (Exception e) { Console.Write(e.InnerException); }
         return help;
     }
     private async Task<string> getCirculationSupportAsync(Class_Procedure currentProcedure)
     {
         var help = "";
         List<Class_Item> dropCirc = new List<Class_Item>();
-        dropCirc = await _drops.getInotropeOptionsAsync();
+        dropCirc = await _drops.getInotropeOptionsAsync(_currentLanguage);
 
         if (currentProcedure.SelectedInotropes != 0)
         {
@@ -507,7 +572,7 @@ public class PreviewReport : IPreviewReport
     {
         var help = "";
         List<Class_Item> dropCirc = new List<Class_Item>();
-        dropCirc = await _drops.getPacemakerOptionsAsync();
+        dropCirc = await _drops.getPacemakerOptionsAsync(_currentLanguage);
 
         if (currentProcedure.SelectedPacemaker != 0)
         {

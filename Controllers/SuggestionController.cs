@@ -40,6 +40,7 @@ public class SuggestionController : ControllerBase
         var current_suggestion = await _repo.GetIndividualSuggestion(soort,userId);
 
         Class_Suggestion c = await _repo.mapToSuggestionFromPreview(current_suggestion, cp);
+        
 
         var result = await _repo.updateSuggestion(c);
         return Ok(result);

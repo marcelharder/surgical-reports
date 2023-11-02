@@ -211,6 +211,217 @@
          </pacemaker>
       </operatie>
    </language>
+   <language id="US">
+      <generaltext>
+         <items>and supported the circulation </items>
+         <items>An IABP was </items>
+         <items>Pacemaker wires were </items>
+      </generaltext>
+      <cabg>
+         <dropradial>
+            <items>
+               <description>the left arm</description>
+               <value>1</value>
+            </items>
+            <items>
+               <description>the right arm</description>
+               <value>2</value>
+            </items>
+            <items>
+               <description>both arms</description>
+               <value>3</value>
+            </items>
+         </dropradial>
+         <dropleg>
+            <items>
+               <description>the right lower leg</description>
+               <value>1</value>
+            </items>
+            <items>
+               <description>the left lower leg</description>
+               <value>2</value>
+            </items>
+            <items>
+               <description>both lower legs</description>
+               <value>3</value>
+            </items>
+            <items>
+               <description>the right upper leg</description>
+               <value>4</value>
+            </items>
+            <items>
+               <description>the left upper leg</description>
+               <value>5</value>
+            </items>
+            <items>
+               <description>both upper legs</description>
+               <value>6</value>
+            </items>
+            <items>
+               <description>the right lower and upper leg</description>
+               <value>7</value>
+            </items>
+            <items>
+               <description>the left lower and upper leg</description>
+               <value>8</value>
+            </items>
+         </dropleg>
+      </cabg>
+      <cpb>
+         <delivery>
+            <items>
+               <description>antegrade</description>
+               <value>1</value>
+            </items>
+            <items>
+               <description>retrograde</description>
+               <value>2</value>
+            </items>
+            <items>
+               <description>combined ante- en retrograde</description>
+               <value>3</value>
+            </items>
+         </delivery>
+         <iabp_ind>
+            <items>
+               <description>hemodynamic instability</description>
+               <value>1</value>
+            </items>
+            <items>
+               <description>PTCA support</description>
+               <value>2</value>
+            </items>
+            <items>
+               <description>unstable angina</description>
+               <value>3</value>
+            </items>
+            <items>
+               <description>bypass wean</description>
+               <value>4</value>
+            </items>
+            <items>
+               <description>prophylactic</description>
+               <value>5</value>
+            </items>
+         </iabp_ind>
+         <iabp_ind_when>
+            <items>
+               <description>pre-operative</description>
+               <value>1</value>
+            </items>
+            <items>
+               <description>intra-operative</description>
+               <value>2</value>
+            </items>
+            <items>
+               <description>post-operative</description>
+               <value>3</value>
+            </items>
+         </iabp_ind_when>
+
+         <timing>
+            <items>
+               <description>on/off</description>
+               <value>1</value>
+            </items>
+            <items>
+               <description>continuous</description>
+               <value>2</value>
+            </items>
+         </timing>
+         <temp>
+            <items>
+               <description>cold</description>
+               <value>1</value>
+            </items>
+            <items>
+               <description>lukewarm</description>
+               <value>2</value>
+            </items>
+         </temp>
+
+         <typeCardiopleg>
+            <items>
+               <description>Crystalloid cardioplegia</description>
+               <value>1</value>
+            </items>
+            <items>
+               <description>Blood cardioplegia</description>
+               <value>2</value>
+            </items>
+            <items>
+               <description>Blood reperfusion</description>
+               <value>3</value>
+            </items>
+         </typeCardiopleg>
+      </cpb>
+      <operatie>
+         <pleura>
+            <items>
+               <description>the L pleura opened</description>
+               <value>1</value>
+            </items>
+            <items>
+               <description>the R pleura opened</description>
+               <value>2</value>
+            </items>
+            <items>
+               <description>both pleurae opened</description>
+               <value>3</value>
+            </items>
+            <items>
+               <description>both pleurae remained closed</description>
+               <value>4</value>
+            </items>
+         </pleura>
+         <inotropica>
+            <items>
+               <description>wo. inotropic support</description>
+               <value>1</value>
+            </items>
+            <items>
+               <description>with minimal inotropic support</description>
+               <value>2</value>
+            </items>
+            <items>
+               <description>with moderate inotropic support</description>
+               <value>3</value>
+            </items>
+            <items>
+               <description>with maximal inotropic support</description>
+               <value>4</value>
+            </items>
+         </inotropica>
+         <pericard>
+            <items>
+               <description>stayed open</description>
+               <value>1</value>
+            </items>
+            <items>
+               <description>was closed</description>
+               <value>2</value>
+            </items>
+         </pericard>
+         <pacemaker>
+            <items>
+               <description>not used</description>
+               <value>1</value>
+            </items>
+            <items>
+               <description>placed on the R atrium</description>
+               <value>2</value>
+            </items>
+            <items>
+               <description>placed on the R atrium and ventricle</description>
+               <value>3</value>
+            </items>
+            <items>
+               <description>placed on the R ventricle</description>
+               <value>4</value>
+            </items>
+         </pacemaker>
+      </operatie>
+   </language>
    <language id="NL">
       <generaltext>
          <items>en ondersteunde de circulatie </items>

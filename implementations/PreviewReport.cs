@@ -49,29 +49,25 @@ public class PreviewReport : IPreviewReport
         var currentHospital = currentProcedure.hospital;
         var hospital = await _hos.GetSpecificHospital(currentHospital.ToString());
         _currentLanguage = hospital.country;
-        
+
         // check if the procedure exists
         if (await _proc.getSpecificProcedure(procedure_id) != null)
         {
             if (await findPreview(procedure_id)) { return await getPRA(procedure_id); }
-            else
-            {
-                //add a new preview instance to database
-                var result = new Class_Preview_Operative_report();
+            else //add a new preview instance to database
+            {   var result = new Class_Preview_Operative_report();
                 result.procedure_id = procedure_id;
                 var user_id = currentProcedure.SelectedSurgeon;
-                // look for userspecificreport
-                if (await UserHasASuggestionForThisProcedure(user_id, currentProcedure.fdType))
+                if (await UserHasASuggestionForThisProcedure(user_id, currentProcedure.fdType))// look for userspecificreport
                 {
                     var usersuggestion = await getUserSpecificSuggestion(user_id, currentProcedure.fdType);
                     result = _map.Map<Class_Suggestion, Class_Preview_Operative_report>(usersuggestion);
                     result.procedure_id = procedure_id;
+                    
                     var text = await getStatic_Text_Per_Country(currentProcedure);
                     result.regel_21 = text[0];
                     result.regel_22 = text[1];
                     result.regel_23 = text[2];
-
-
                     return await saveNewPreviewReport(result);
                 }
                 else
@@ -81,6 +77,7 @@ public class PreviewReport : IPreviewReport
                     if (currentProcedure.fdType == 6)
                     {
                         result.regel_1 = "This procedure is not (yet) available for reporting";
+                        
                         var text = await getStatic_Text_Per_Country(currentProcedure);
                         result.regel_21 = text[0];
                         result.regel_22 = text[1];
@@ -98,6 +95,7 @@ public class PreviewReport : IPreviewReport
                         var t = await _text.getInstitutionalReport(currentProcedure.hospital.ToString(), currentProcedure.fdType.ToString(), description);
                         var no = _map.Map<InstitutionalDTO, Class_Preview_Operative_report>(t);
                         no.procedure_id = currentProcedure.ProcedureId;
+                       
                         var text = await getStatic_Text_Per_Country(currentProcedure);
                         no.regel_21 = text[0];
                         no.regel_22 = text[1];
@@ -113,46 +111,31 @@ public class PreviewReport : IPreviewReport
     private async Task<List<string>> getStatic_Text_Per_Country(Class_Procedure currentProcedure)
     {
         // this gives a language specific text if the general details are filled
-
         List<string> static_text = new List<string>();
+        List<string> help;
         var iabp_result = "";
         var cpb = await _icpb.getSpecificCPB(currentProcedure.ProcedureId);
 
-        if (cpb != null)
-        {
-            iabp_result = await getIABPStuff(cpb);
-        }
-
-        
+        if (cpb != null) { iabp_result = await getIABPStuff(cpb); }
         switch (_currentLanguage)
         {
-            case "IT":
-                if (currentProcedure.SelectedInotropes != 0) { static_text.Add("y supportado"); } else static_text.Add("");
-                if (iabp_result != "") { static_text.Add("e IABP "); } else static_text.Add("");
-                if (currentProcedure.SelectedPacemaker != 0) { static_text.Add("something italian"); } else static_text.Add("");
-                break;
-            case "NL":
-                if (currentProcedure.SelectedInotropes != 0) { static_text.Add("en ondersteunde de circulatie "); } else static_text.Add("");
-                if (iabp_result != "") { static_text.Add("Een IABP werd "); } else static_text.Add("");
-                if (currentProcedure.SelectedPacemaker != 0) { static_text.Add("Pacemaker draden werden "); } else static_text.Add("");
-                break;
-            case "GB":
-                if (currentProcedure.SelectedInotropes != 0) { static_text.Add("and supported the circulation  "); } else static_text.Add("");
-                if (iabp_result != "") { static_text.Add("An IABP was "); } else static_text.Add("");
-                if (currentProcedure.SelectedPacemaker != 0) { static_text.Add("Pacemaker wires were "); } else static_text.Add("");
-                break;
-            case "SA":
-                if (currentProcedure.SelectedInotropes != 0) { static_text.Add("and supported the circulation  "); } else static_text.Add("");
-                if (iabp_result != "") { static_text.Add("An IABP was "); } else static_text.Add("");
-                if (currentProcedure.SelectedPacemaker != 0) { static_text.Add("Pacemaker wires were "); } else static_text.Add("");
-                break;
-            case "US":
-                if (currentProcedure.SelectedInotropes != 0) { static_text.Add("and supported the circulation  "); } else static_text.Add("");
-                if (iabp_result != "") { static_text.Add("An IABP was "); } else static_text.Add("");
-                if (currentProcedure.SelectedPacemaker != 0) { static_text.Add("Pacemaker wires were "); } else static_text.Add("");
-                break;
-        }
-        return static_text;
+            case "IT":help = await _drops.getGeneralText("IT");static_text = getStatic(help, currentProcedure, iabp_result);break;
+            case "NL":help = await _drops.getGeneralText("NL");static_text = getStatic(help, currentProcedure, iabp_result);break;
+            case "GB":help = await _drops.getGeneralText("GB");static_text = getStatic(help, currentProcedure, iabp_result);break;
+            case "SA":help = await _drops.getGeneralText("SA");static_text = getStatic(help, currentProcedure, iabp_result);break;
+            case "DE":help = await _drops.getGeneralText("DE");static_text = getStatic(help, currentProcedure, iabp_result);break;
+            case "US":help = await _drops.getGeneralText("US");static_text = getStatic(help, currentProcedure, iabp_result);break;
+            default:  help = await _drops.getGeneralText("GB");static_text = getStatic(help, currentProcedure, iabp_result);break;
+         }
+          return static_text;
+    }
+
+    private List<string> getStatic(List<string> help, Class_Procedure currentProcedure, string iabp_result){
+        var r = new List<string>();
+         if (currentProcedure.SelectedInotropes != 0) { r.Add(help[0]); } else r.Add("");
+         if (iabp_result != "")                       { r.Add(help[1]); } else r.Add("");
+         if (currentProcedure.SelectedPacemaker != 0) { r.Add(help[2]); } else r.Add("");
+     return r;
     }
     public async Task<Class_Preview_Operative_report> resetPreViewAsync(int procedure_id)
     {
@@ -217,7 +200,7 @@ public class PreviewReport : IPreviewReport
         var hos = await _hos.GetSpecificHospital(currentHospital);
         var currentlanguage = hos.country;
         var currentSoort = currentProcedure.fdType.ToString();
-        
+
 
 
 

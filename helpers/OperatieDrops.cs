@@ -17,6 +17,26 @@ public class OperatieDrops
         _doc = doc;
     }
 
+    public async Task<List<string>> getGeneralText(string language)
+    {
+       var ret = new List<string>();
+        await Task.Run(() =>
+          {
+              IEnumerable<XElement> opa = from el in _doc.Descendants("language")
+                                          where (string)el.Attribute("id") == language
+                                          select el;
+              foreach (XElement el in opa)
+              {
+                  IEnumerable<XElement> op = from tr in opa.Descendants("generaltext").Elements("items") select tr;
+                  foreach (XElement s in op)
+                  {
+                    ret.Add(s.Value);
+                  }
+              }
+          });
+        return ret;
+    }
+
     public async Task<List<Class_Item>> getInotropeOptionsAsync(string language)
     {
         _help.Clear();

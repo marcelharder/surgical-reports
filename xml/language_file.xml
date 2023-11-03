@@ -617,87 +617,87 @@
       <cpb>
          <delivery>
             <items>
-               <description>antegrade</description>
+               <description>antegrade </description>
                <value>1</value>
             </items>
             <items>
-               <description>retrograde</description>
+               <description>retrograde </description>
                <value>2</value>
             </items>
             <items>
-               <description>combined ante- en retrograde</description>
+               <description>gecombineerd ante- en retrograde</description>
                <value>3</value>
             </items>
          </delivery>
          <iabp_ind>
             <items>
-               <description>hemodynamic instability</description>
+               <description>voor hemodynamische instabiliteit </description>
                <value>1</value>
             </items>
             <items>
-               <description>PTCA support</description>
+               <description>om PTCA te ondersteunen </description>
                <value>2</value>
             </items>
             <items>
-               <description>unstable angina</description>
+               <description>voor instabiele angina </description>
                <value>3</value>
             </items>
             <items>
-               <description>bypass wean</description>
+               <description>om de bypass te beeindigen </description>
                <value>4</value>
             </items>
             <items>
-               <description>prophylactic</description>
+               <description>als prophylactische maatregel</description>
                <value>5</value>
             </items>
          </iabp_ind>
          <iabp_ind_when>
             <items>
-               <description>pre-operative</description>
+               <description>pre-operatief ingebracht </description>
                <value>1</value>
             </items>
             <items>
-               <description>intra-operative</description>
+               <description>intra-operatief ingebracht </description>
                <value>2</value>
             </items>
             <items>
-               <description>post-operative</description>
+               <description>post-operatief ingebracht </description>
                <value>3</value>
             </items>
          </iabp_ind_when>
 
          <timing>
             <items>
-               <description>on/off</description>
+               <description>aan/uit </description>
                <value>1</value>
             </items>
             <items>
-               <description>continuous</description>
+               <description>continu </description>
                <value>2</value>
             </items>
          </timing>
          <temp>
             <items>
-               <description>cold</description>
+               <description>koude </description>
                <value>1</value>
             </items>
             <items>
-               <description>lukewarm</description>
+               <description>lauwe </description>
                <value>2</value>
             </items>
          </temp>
 
          <typeCardiopleg>
             <items>
-               <description>Crystalloid cardioplegia</description>
+               <description>Crystalloide cardioplegie </description>
                <value>1</value>
             </items>
             <items>
-               <description>Blood cardioplegia</description>
+               <description>Bloed cardioplegie </description>
                <value>2</value>
             </items>
             <items>
-               <description>Blood reperfusion</description>
+               <description>Bloed reperfusie </description>
                <value>3</value>
             </items>
          </typeCardiopleg>
@@ -751,19 +751,19 @@
          </pericard>
          <pacemaker>
             <items>
-               <description>not used</description>
+               <description>niet gebruikt</description>
                <value>1</value>
             </items>
             <items>
-               <description>placed on the R atrium</description>
+               <description>geplaatst op het R atrium</description>
                <value>2</value>
             </items>
             <items>
-               <description>placed on the R atrium and ventricle</description>
+               <description>geplaatst op het R atrium en ventrikel</description>
                <value>3</value>
             </items>
             <items>
-               <description>placed on the R ventricle</description>
+               <description>geplaatst op het R ventrikel</description>
                <value>4</value>
             </items>
          </pacemaker>

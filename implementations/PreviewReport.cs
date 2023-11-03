@@ -497,10 +497,10 @@ public class PreviewReport : IPreviewReport
         if (cpb.IABP_OPTIONS != null && cpb.IABP_OPTIONS != "0")
         {
             help = await getIABPWhenInserted(cpb);
-            help = help + " inserted ";
+            
             if (cpb.IABP_IND != null && cpb.IABP_IND != "0")
             {
-                help = help + "for " + await getIABPUsedAsync(cpb);
+                help = help + await getIABPUsedAsync(cpb);
             }
             else { help = ""; }
         }

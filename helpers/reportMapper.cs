@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Xml.Linq;
 using Microsoft.AspNetCore.Identity;
+using Org.BouncyCastle.Crypto.Parameters;
 
 namespace surgical_reports.helpers
 {
@@ -24,6 +25,8 @@ namespace surgical_reports.helpers
 
         private IProcedureRepository _proc;
         private IPreviewReport _prev;
+
+        private string _currentLanguage;
 
 
         private IUserRepository _user;
@@ -48,6 +51,7 @@ namespace surgical_reports.helpers
             _proc = proc;
             _prev = prev;
             _valve = valve;
+            _currentLanguage = "";
         }
 
 
@@ -122,6 +126,9 @@ namespace surgical_reports.helpers
             var help = new Class_Final_operative_report();
             help.procedure_id = cp.ProcedureId;
             var current_user = await _user.GetUser(cp.SelectedSurgeon);
+            var currentHospitalId = cp.hospital.ToString().makeSureTwoChar();
+            var currentHospital = await _hos.GetSpecificHospital(currentHospitalId);
+            _currentLanguage = currentHospital.country; // is used to get the correct language in translateCABGStuff etc
 
             // this is used to compile the final report from different sources
             ReportHeaderDTO currentHeader = await mapToReportHeaderAsync(cp);
@@ -467,7 +474,7 @@ namespace surgical_reports.helpers
             XDocument order = XDocument.Load(filename);
             // get the GB details, because all abreviations are english anyway
             IEnumerable<XElement> opa = from el in order.Descendants("language")
-                                        where (string)el.Attribute("id") == "GB"
+                                        where (string)el.Attribute("id") == _currentLanguage
                                         select el;
             foreach (XElement ele in opa)
             {

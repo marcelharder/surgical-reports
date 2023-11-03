@@ -115,7 +115,7 @@ namespace surgical_reports.helpers
 
 
         public async Task<Class_Final_operative_report> updateFinalReportAsync(
-            Class_privacy_model pm, 
+            Class_privacy_model pm,
             Class_Procedure cp,
             int report_code)
         {
@@ -126,7 +126,7 @@ namespace surgical_reports.helpers
             // this is used to compile the final report from different sources
             ReportHeaderDTO currentHeader = await mapToReportHeaderAsync(cp);
             Class_Preview_Operative_report prev = await _prev.getSpecificPVR(cp.ProcedureId);
-            
+
             if (report_code == 1)
             {
                 help.Regel17 = prev.regel_1;
@@ -465,64 +465,66 @@ namespace surgical_reports.helpers
             var contentRoot = _env.ContentRootPath;
             var filename = Path.Combine(contentRoot, "xml/language_file.xml");
             XDocument order = XDocument.Load(filename);
-            IEnumerable<XElement> help = from d in order.Descendants("cabg") select d;
-            foreach (XElement x in help)
+            // get the GB details, because all abreviations are english anyway
+            IEnumerable<XElement> opa = from el in order.Descendants("language")
+                                        where (string)el.Attribute("id") == "GB"
+                                        select el;
+            foreach (XElement ele in opa)
             {
-
-                switch (soort)
-                {
-                    // locatie
-                    case 1:
-                        IEnumerable<XElement> rm = from d in order.Descendants("locatie").Elements("items") select d;
-                        foreach (XElement el in rm)
-                        {
-                            if (el.Element("value").Value == test)
+                 IEnumerable<XElement> op = from tr in ele.Descendants("cabg") select tr;
+                  foreach (XElement s in op)
+                  {
+                       switch (soort)
+                    {
+                        // locatie
+                        case 1:
+                            IEnumerable<XElement> rm = from d in s.Descendants("locatie").Elements("items") select d;
+                            foreach (XElement el in rm)
                             {
-                                result = el.Element("description").Value;
+                                if (el.Element("value").Value == test)
+                                {
+                                    result = el.Element("description").Value;
+                                }
                             }
-                        }
-                        break;
-                    // quality
-                    case 2:
-                        IEnumerable<XElement> rm1 = from d in order.Descendants("quality").Elements("items") select d;
-                        foreach (XElement el in rm1)
-                        {
-                            if (el.Element("value").Value == test)
+                            break;
+                        // quality
+                        case 2:
+                            IEnumerable<XElement> rm1 = from d in s.Descendants("quality").Elements("items") select d;
+                            foreach (XElement el in rm1)
                             {
-                                result = el.Element("description").Value;
+                                if (el.Element("value").Value == test)
+                                {
+                                    result = el.Element("description").Value;
+                                }
                             }
-                        }
-                        break;
-                    // diameter
-                    case 3:
-                        IEnumerable<XElement> rm2 = from d in order.Descendants("diameter").Elements("items") select d;
-                        foreach (XElement el in rm2)
-                        {
-                            if (el.Element("value").Value == test)
+                            break;
+                        // diameter
+                        case 3:
+                            IEnumerable<XElement> rm2 = from d in s.Descendants("diameter").Elements("items") select d;
+                            foreach (XElement el in rm2)
                             {
-                                result = el.Element("description").Value;
+                                if (el.Element("value").Value == test)
+                                {
+                                    result = el.Element("description").Value;
+                                }
                             }
-                        }
-                        break;
-                    // angle
-                    case 4:
-                        IEnumerable<XElement> rm3 = from d in order.Descendants("angle").Elements("items") select d;
-                        foreach (XElement el in rm3)
-                        {
-                            if (el.Element("value").Value == test)
+                            break;
+                        // angle
+                        case 4:
+                            IEnumerable<XElement> rm3 = from d in s.Descendants("angle").Elements("items") select d;
+                            foreach (XElement el in rm3)
                             {
-                                result = el.Element("description").Value;
+                                if (el.Element("value").Value == test)
+                                {
+                                    result = el.Element("description").Value;
+                                }
                             }
-                        }
-                        break;
+                            break;
 
 
-                }
+                    }
 
-
-
-
-
+                  }
             }
             return result;
         }
@@ -585,6 +587,6 @@ namespace surgical_reports.helpers
         }
         public HospitalForReturnDTO mapToHospitalForReturn(Class_Hospital x) { return _map.Map<Class_Hospital, HospitalForReturnDTO>(x); }
         public Class_Hospital mapToHospital(HospitalForReturnDTO x, Class_Hospital h) { h = _map.Map<HospitalForReturnDTO, Class_Hospital>(x, h); return h; }
-        
+
     }
 }

@@ -1,23 +1,12 @@
-
-using System.Net.WebSockets;
-using System.Resources;
-
 namespace surgical_reports.implementations;
 
 public class InstitutionalText : IInstitutionalText
 {
     private XDocument _doc;
+    private XDocument _doc1;
     private IWebHostEnvironment _env;
-    private List<Class_Item> dropLeg = new List<Class_Item>();
-    private IProcedureRepository _proc;
-    private ICPBRepo _icpb;
-    private ICABGRepo _cabg;
 
-    public InstitutionalText(
-    ICABGRepo cabg,
-    ICPBRepo icpb,
-    IProcedureRepository proc,
-    IWebHostEnvironment env)
+    public InstitutionalText(IWebHostEnvironment env)
     {
         _env = env;
         var content = _env.ContentRootPath;
@@ -25,17 +14,19 @@ public class InstitutionalText : IInstitutionalText
         var test = Path.Combine(content, filename);
         XDocument doc = XDocument.Load($"{test}");
         _doc = doc;
-        _proc = proc;
-        _icpb = icpb;
-        _cabg = cabg;
+
+        var filename1 = "xml/procedure.xml";
+        var test1 = Path.Combine(content, filename1);
+        XDocument doc1 = XDocument.Load($"{test1}");
+        _doc1 = doc1;
+
+
 
     }
 
-    public async Task<InstitutionalDTO> getInstitutionalReport(string hospital, string soort, string description)
+    public async Task<InstitutionalDTO> getInstitutionalReport(string hospital, string soort)
     {
         hospital = hospital.makeSureTwoChar();
-        //dropRadial = await _drop.getCABGRadial();
-        //dropLeg = await _drop.getCABGLeg();
         var result = new InstitutionalDTO();
         await Task.Run(async () =>
         {
@@ -56,8 +47,7 @@ public class InstitutionalText : IInstitutionalText
                                           select tr;
                 if (t.Count() == 0)
                 { // no institutional record found so come up with a new record now
-                  // get description from fdType
-                  // var description = await getProcedureDescriptionAsync(procedure_id);
+                    var description = await getProcedureDescriptionAsync(soort);
                     result = this.getEmptyRecord(description);
                     // now save this to the xml file again
                     await addXelementtoXML(hospital, soort, result);
@@ -66,7 +56,6 @@ public class InstitutionalText : IInstitutionalText
                 {  // there is a institutional record for this soort of procedure
                     foreach (XElement ad in t)
                     {
-
                         result = await getExitingRecordAsync(ad);
                     }
                 }
@@ -74,6 +63,23 @@ public class InstitutionalText : IInstitutionalText
         });
         return result;
     }
+
+    private async Task<string> getProcedureDescriptionAsync(string soort)
+    {
+        var help = "";
+        await Task.Run(() =>
+        {
+            IEnumerable<XElement> t = from tr in _doc1.Descendants("Code")
+                                      where (string)tr.Element("ID") == soort
+                                      select tr;
+            foreach (XElement el in t)
+            {
+                help = el.Element("Description").Value;
+            }
+        });
+        return help;
+  }
+
     public string updateInstitutionalReport(InstitutionalDTO rep, int soort, int hospitalNo)
     {
         var contentRoot = _env.ContentRootPath;

@@ -92,7 +92,7 @@ public class PreviewReport : IPreviewReport
                         var description = getDescription(currentProcedure.fdType.ToString());
 
                         // get the suggestion from the InstitutionalReports.xml
-                        var t = await _text.getInstitutionalReport(currentProcedure.hospital.ToString(), currentProcedure.fdType.ToString(), description);
+                        var t = await _text.getInstitutionalReport(currentProcedure.hospital.ToString(), currentProcedure.fdType.ToString());
                         var no = _map.Map<InstitutionalDTO, Class_Preview_Operative_report>(t);
                         no.procedure_id = currentProcedure.ProcedureId;
                        
@@ -206,7 +206,7 @@ public class PreviewReport : IPreviewReport
 
         if (currentProcedure.fdType == 1) // doe dit eerst voor de CABG Lima/VSM
         {
-            text = await _text.getInstitutionalReport(currentHospital, currentSoort, "");
+            text = await _text.getInstitutionalReport(currentHospital, currentSoort);
             cp.regel_21 = cp.regel_21 + await getCirculationSupportAsync(currentProcedure);
             cp.regel_23 = cp.regel_23 + await getPMWiresAsync(currentProcedure);
 

@@ -508,7 +508,7 @@
           <regel_33 />
         </soort>
       </text_by_type_of_surgery>
-      </reports>
+    </reports>
   </hospital>
   <hospital id="03">
     <reports>
@@ -1018,7 +1018,7 @@
           <regel_33 />
         </soort>
       </text_by_type_of_surgery>
-      </reports>
+    </reports>
   </hospital>
   <hospital id="04">
     <reports>
@@ -1591,7 +1591,7 @@
           <regel_33></regel_33>
         </soort>
       </text_by_type_of_surgery>
-      </reports>
+    </reports>
   </hospital>
   <hospital id="05">
     <reports>
@@ -2164,7 +2164,7 @@
           <regel_33></regel_33>
         </soort>
       </text_by_type_of_surgery>
-      </reports>
+    </reports>
   </hospital>
   <hospital id="06">
     <reports>
@@ -2674,7 +2674,7 @@
           <regel_33 />
         </soort>
       </text_by_type_of_surgery>
-      </reports>
+    </reports>
   </hospital>
   <hospital id="08">
     <reports>
@@ -3184,7 +3184,7 @@
           <regel_33 />
         </soort>
       </text_by_type_of_surgery>
-      </reports>
+    </reports>
   </hospital>
   <hospital id="09">
     <reports>
@@ -3694,7 +3694,7 @@
           <regel_33 />
         </soort>
       </text_by_type_of_surgery>
-      </reports>
+    </reports>
   </hospital>
   <hospital id="12">
     <reports>
@@ -4204,7 +4204,7 @@
           <regel_33 />
         </soort>
       </text_by_type_of_surgery>
-      </reports>
+    </reports>
   </hospital>
   <hospital id="13">
     <reports>
@@ -4714,7 +4714,7 @@
           <regel_33 />
         </soort>
       </text_by_type_of_surgery>
-      </reports>
+    </reports>
   </hospital>
   <hospital id="34">
     <reports>
@@ -5224,7 +5224,7 @@
           <regel_33 />
         </soort>
       </text_by_type_of_surgery>
-      </reports>
+    </reports>
   </hospital>
   <hospital id="37">
     <reports>
@@ -5734,7 +5734,7 @@
           <regel_33 />
         </soort>
       </text_by_type_of_surgery>
-      </reports>
+    </reports>
   </hospital>
   <hospital id="48">
     <reports>
@@ -6307,7 +6307,7 @@
           <regel_33></regel_33>
         </soort>
       </text_by_type_of_surgery>
-      </reports>
+    </reports>
   </hospital>
   <hospital id="50">
     <reports>
@@ -6880,7 +6880,7 @@
           <regel_33></regel_33>
         </soort>
       </text_by_type_of_surgery>
-      </reports>
+    </reports>
   </hospital>
   <hospital id="134">
     <reports>
@@ -7390,7 +7390,7 @@
           <regel_33 />
         </soort>
       </text_by_type_of_surgery>
-      </reports>
+    </reports>
   </hospital>
   <hospital id="135">
     <reports>
@@ -7900,7 +7900,7 @@
           <regel_33 />
         </soort>
       </text_by_type_of_surgery>
-      </reports>
+    </reports>
   </hospital>
   <hospital id="46">
     <reports>
@@ -8410,7 +8410,7 @@
           <regel_33 />
         </soort>
       </text_by_type_of_surgery>
-      </reports>
+    </reports>
   </hospital>
   <hospital id="99999">
     <reports>
@@ -9940,7 +9940,7 @@
           <regel_33 />
         </soort>
       </text_by_type_of_surgery>
-      </reports>
+    </reports>
   </hospital>
   <hospital id="5">
     <reports>
@@ -10450,7 +10450,7 @@
           <regel_33 />
         </soort>
       </text_by_type_of_surgery>
-     </reports>
+    </reports>
   </hospital>
   <hospital id="4">
     <reports>
@@ -11343,69 +11343,6 @@
           <regel_32></regel_32>
           <regel_33></regel_33>
         </soort>
-        <soort id="5">
-          <regel_1_a>Iodine, draping and full midsternotomy.</regel_1_a>
-          <regel_1_b />
-          <regel_1_c />
-          <regel_2_a>The pericardium opened with a T-shaped incision and suspended to the sternal retractor. Careful hemostasis</regel_2_a>
-          <regel_2_b />
-          <regel_2_c />
-          <regel_3_a>of the sternal edges and thymus remnants. The heparin was given and we placed pursestring sutures</regel_3_a>
-          <regel_3_b />
-          <regel_3_c />
-          <regel_4_a>on the ascending aorta and right atrium. Cardiopulmonary bypass was started after we checked the ACT</regel_4_a>
-          <regel_4_b />
-          <regel_4_c />
-          <regel_5_a>The temperature of the patient was brought down to</regel_5_a>
-          <regel_5_b>degrees Centigrade and the aortic cross clamp placed</regel_5_b>
-          <regel_5_c />
-          <regel_6_a>We opened the ascending aorta through a hockey stick shaped incision down to the non-coronary cusp</regel_6_a>
-          <regel_6_b />
-          <regel_6_c />
-          <regel_7_a />
-          <regel_7_b />
-          <regel_7_c />
-          <regel_8_a>We removed the aortic valve and cleared the aortic annulus of any residual calcium deposits.</regel_8_a>
-          <regel_8_b />
-          <regel_8_c />
-          <regel_9_a>Waterson's groove was developed and the left atrium opened. We used the mitral retractor and obtained an</regel_9_a>
-          <regel_9_b />
-          <regel_9_c />
-          <regel_10_a>excellent view of the mitral valve. The leaflets were thickened and in places heavily calcified. The subvalvular</regel_10_a>
-          <regel_10_b />
-          <regel_10_c />
-          <regel_11_a>apparatus was also thickened and stiff. These findings made a mitral repair unattractive and unpredictable. We decided to implant</regel_11_a>
-          <regel_11_b />
-          <regel_11_c />
-          <regel_12_a />
-          <regel_12_b />
-          <regel_12_c />
-          <regel_13_a />
-          <regel_13_b />
-          <regel_13_c />
-          <regel_14_a />
-          <regel_14_b />
-          <regel_14_c />
-          <regel_15>The prostheses functioned without any obstructions and the aorta and LA were closed with a combined matress and</regel_15>
-          <regel_16>over and over technique. We inserted an aortic root vent and after careful de-airing of the heart the</regel_16>
-          <regel_17>aortic crossclamp was released. The root vent was set at 150 ml per minute. The heart regained sinusrhythm</regel_17>
-          <regel_18 />
-          <regel_19 />
-          <regel_20 />
-          <regel_21 />
-          <regel_22 />
-          <regel_23 />
-          <regel_24 />
-          <regel_25 />
-          <regel_26 />
-          <regel_27 />
-          <regel_28 />
-          <regel_29 />
-          <regel_30 />
-          <regel_31 />
-          <regel_32 />
-          <regel_33 />
-        </soort>
         <soort id="51">
           <regel_1_a>Iodine, draping and full midsternotomy.</regel_1_a>
           <regel_1_b />
@@ -11595,8 +11532,197 @@
           <regel_32></regel_32>
           <regel_33></regel_33>
         </soort>
+        <soort id="28">
+          <regel_1_a>No institutional text for: </regel_1_a>
+          <regel_1_b></regel_1_b>
+          <regel_1_c></regel_1_c>
+          <regel_2_a>Please enter your custom report here and 'Save as suggestion'</regel_2_a>
+          <regel_2_b></regel_2_b>
+          <regel_2_c></regel_2_c>
+          <regel_3_a></regel_3_a>
+          <regel_3_b></regel_3_b>
+          <regel_3_c></regel_3_c>
+          <regel_4_a></regel_4_a>
+          <regel_4_b></regel_4_b>
+          <regel_4_c></regel_4_c>
+          <regel_5_a></regel_5_a>
+          <regel_5_b></regel_5_b>
+          <regel_5_c></regel_5_c>
+          <regel_6_a></regel_6_a>
+          <regel_6_b></regel_6_b>
+          <regel_6_c></regel_6_c>
+          <regel_7_a></regel_7_a>
+          <regel_7_b></regel_7_b>
+          <regel_7_c></regel_7_c>
+          <regel_8_a></regel_8_a>
+          <regel_8_b></regel_8_b>
+          <regel_8_c></regel_8_c>
+          <regel_9_a></regel_9_a>
+          <regel_9_b></regel_9_b>
+          <regel_9_c></regel_9_c>
+          <regel_10_a></regel_10_a>
+          <regel_10_b></regel_10_b>
+          <regel_10_c></regel_10_c>
+          <regel_11_a></regel_11_a>
+          <regel_11_b></regel_11_b>
+          <regel_11_c></regel_11_c>
+          <regel_12_a></regel_12_a>
+          <regel_12_b></regel_12_b>
+          <regel_12_c></regel_12_c>
+          <regel_13_a></regel_13_a>
+          <regel_13_b></regel_13_b>
+          <regel_13_c></regel_13_c>
+          <regel_14_a></regel_14_a>
+          <regel_14_b></regel_14_b>
+          <regel_14_c></regel_14_c>
+          <regel_15></regel_15>
+          <regel_16></regel_16>
+          <regel_17></regel_17>
+          <regel_18></regel_18>
+          <regel_19></regel_19>
+          <regel_20></regel_20>
+          <regel_21></regel_21>
+          <regel_22></regel_22>
+          <regel_23></regel_23>
+          <regel_24></regel_24>
+          <regel_25></regel_25>
+          <regel_26></regel_26>
+          <regel_27></regel_27>
+          <regel_28></regel_28>
+          <regel_29></regel_29>
+          <regel_30></regel_30>
+          <regel_31></regel_31>
+          <regel_32></regel_32>
+          <regel_33></regel_33>
+        </soort>
+        <soort id="5">
+          <regel_1_a>No institutional text for: AVR MVR</regel_1_a>
+          <regel_1_b></regel_1_b>
+          <regel_1_c></regel_1_c>
+          <regel_2_a>Please enter your custom report here and 'Save as suggestion'</regel_2_a>
+          <regel_2_b></regel_2_b>
+          <regel_2_c></regel_2_c>
+          <regel_3_a></regel_3_a>
+          <regel_3_b></regel_3_b>
+          <regel_3_c></regel_3_c>
+          <regel_4_a></regel_4_a>
+          <regel_4_b></regel_4_b>
+          <regel_4_c></regel_4_c>
+          <regel_5_a></regel_5_a>
+          <regel_5_b></regel_5_b>
+          <regel_5_c></regel_5_c>
+          <regel_6_a></regel_6_a>
+          <regel_6_b></regel_6_b>
+          <regel_6_c></regel_6_c>
+          <regel_7_a></regel_7_a>
+          <regel_7_b></regel_7_b>
+          <regel_7_c></regel_7_c>
+          <regel_8_a></regel_8_a>
+          <regel_8_b></regel_8_b>
+          <regel_8_c></regel_8_c>
+          <regel_9_a></regel_9_a>
+          <regel_9_b></regel_9_b>
+          <regel_9_c></regel_9_c>
+          <regel_10_a></regel_10_a>
+          <regel_10_b></regel_10_b>
+          <regel_10_c></regel_10_c>
+          <regel_11_a></regel_11_a>
+          <regel_11_b></regel_11_b>
+          <regel_11_c></regel_11_c>
+          <regel_12_a></regel_12_a>
+          <regel_12_b></regel_12_b>
+          <regel_12_c></regel_12_c>
+          <regel_13_a></regel_13_a>
+          <regel_13_b></regel_13_b>
+          <regel_13_c></regel_13_c>
+          <regel_14_a></regel_14_a>
+          <regel_14_b></regel_14_b>
+          <regel_14_c></regel_14_c>
+          <regel_15></regel_15>
+          <regel_16></regel_16>
+          <regel_17></regel_17>
+          <regel_18></regel_18>
+          <regel_19></regel_19>
+          <regel_20></regel_20>
+          <regel_21></regel_21>
+          <regel_22></regel_22>
+          <regel_23></regel_23>
+          <regel_24></regel_24>
+          <regel_25></regel_25>
+          <regel_26></regel_26>
+          <regel_27></regel_27>
+          <regel_28></regel_28>
+          <regel_29></regel_29>
+          <regel_30></regel_30>
+          <regel_31></regel_31>
+          <regel_32></regel_32>
+          <regel_33></regel_33>
+        </soort>
+        <soort id="55">
+          <regel_1_a>No institutional text for: MVP TVP</regel_1_a>
+          <regel_1_b></regel_1_b>
+          <regel_1_c></regel_1_c>
+          <regel_2_a>Please enter your custom report here and 'Save as suggestion'</regel_2_a>
+          <regel_2_b></regel_2_b>
+          <regel_2_c></regel_2_c>
+          <regel_3_a></regel_3_a>
+          <regel_3_b></regel_3_b>
+          <regel_3_c></regel_3_c>
+          <regel_4_a></regel_4_a>
+          <regel_4_b></regel_4_b>
+          <regel_4_c></regel_4_c>
+          <regel_5_a></regel_5_a>
+          <regel_5_b></regel_5_b>
+          <regel_5_c></regel_5_c>
+          <regel_6_a></regel_6_a>
+          <regel_6_b></regel_6_b>
+          <regel_6_c></regel_6_c>
+          <regel_7_a></regel_7_a>
+          <regel_7_b></regel_7_b>
+          <regel_7_c></regel_7_c>
+          <regel_8_a></regel_8_a>
+          <regel_8_b></regel_8_b>
+          <regel_8_c></regel_8_c>
+          <regel_9_a></regel_9_a>
+          <regel_9_b></regel_9_b>
+          <regel_9_c></regel_9_c>
+          <regel_10_a></regel_10_a>
+          <regel_10_b></regel_10_b>
+          <regel_10_c></regel_10_c>
+          <regel_11_a></regel_11_a>
+          <regel_11_b></regel_11_b>
+          <regel_11_c></regel_11_c>
+          <regel_12_a></regel_12_a>
+          <regel_12_b></regel_12_b>
+          <regel_12_c></regel_12_c>
+          <regel_13_a></regel_13_a>
+          <regel_13_b></regel_13_b>
+          <regel_13_c></regel_13_c>
+          <regel_14_a></regel_14_a>
+          <regel_14_b></regel_14_b>
+          <regel_14_c></regel_14_c>
+          <regel_15></regel_15>
+          <regel_16></regel_16>
+          <regel_17></regel_17>
+          <regel_18></regel_18>
+          <regel_19></regel_19>
+          <regel_20></regel_20>
+          <regel_21></regel_21>
+          <regel_22></regel_22>
+          <regel_23></regel_23>
+          <regel_24></regel_24>
+          <regel_25></regel_25>
+          <regel_26></regel_26>
+          <regel_27></regel_27>
+          <regel_28></regel_28>
+          <regel_29></regel_29>
+          <regel_30></regel_30>
+          <regel_31></regel_31>
+          <regel_32></regel_32>
+          <regel_33></regel_33>
+        </soort>
       </text_by_type_of_surgery>
-     </reports>
+    </reports>
   </hospital>
   <hospital id="25">
     <reports>

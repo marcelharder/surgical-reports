@@ -2,7 +2,7 @@ namespace surgical_reports.interfaces;
 
     public interface IInstitutionalText
     {
-        Task<InstitutionalDTO> getInstitutionalReport(string hospital, string soort, string description);
+        Task<InstitutionalDTO> getInstitutionalReport(string hospital, string soort);
         Task addRecordInXML(string id);
         string updateInstitutionalReport(InstitutionalDTO rep, int hospitalNo, int soort);
         AdditionalReportDTO getAdditionalReportItems(int hospitalNo,int which);

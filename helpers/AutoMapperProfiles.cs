@@ -23,6 +23,25 @@ namespace surgical_reports.helpers;
             .ForMember(dest => dest.regel_13, opt => opt.MapFrom(src => src.regel_13_a + src.regel_13_b + src.regel_13_c))
             .ForMember(dest => dest.regel_14, opt => opt.MapFrom(src => src.regel_14_a + src.regel_14_b + src.regel_14_c));
 
+
+            CreateMap<Class_Preview_Operative_report, Class_Suggestion>()
+            .ForMember(dest => dest.regel_1_a, opt => opt.MapFrom(src => src.regel_1))
+            .ForMember(dest => dest.regel_2_a, opt => opt.MapFrom(src => src.regel_2))
+            .ForMember(dest => dest.regel_3_a, opt => opt.MapFrom(src => src.regel_3))
+            .ForMember(dest => dest.regel_4_a, opt => opt.MapFrom(src => src.regel_4))
+            .ForMember(dest => dest.regel_5_a, opt => opt.MapFrom(src => src.regel_5))
+            .ForMember(dest => dest.regel_6_a, opt => opt.MapFrom(src => src.regel_6))
+            .ForMember(dest => dest.regel_7_a, opt => opt.MapFrom(src => src.regel_7))
+            .ForMember(dest => dest.regel_8_a, opt => opt.MapFrom(src => src.regel_8))
+            .ForMember(dest => dest.regel_9_a, opt => opt.MapFrom(src => src.regel_9))
+            .ForMember(dest => dest.regel_10_a, opt => opt.MapFrom(src => src.regel_10))
+            .ForMember(dest => dest.regel_11_a, opt => opt.MapFrom(src => src.regel_11))
+            .ForMember(dest => dest.regel_12_a, opt => opt.MapFrom(src => src.regel_12))
+            .ForMember(dest => dest.regel_13_a, opt => opt.MapFrom(src => src.regel_13))
+            .ForMember(dest => dest.regel_14_a, opt => opt.MapFrom(src => src.regel_14));
+
+
+
             CreateMap<InstitutionalDTO, Class_Preview_Operative_report>()
             .ForMember(dest => dest.Id, opt => opt.Ignore())
             .ForMember(dest => dest.regel_1, opt => opt.MapFrom(src => src.Regel1A + src.Regel1B + src.Regel1C))

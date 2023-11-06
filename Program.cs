@@ -20,8 +20,6 @@ builder.Services.AddScoped<IPreviewReport, PreviewReport>();
 builder.Services.AddAutoMapper(typeof(AutoMapperProfiles));
 
 
-
-
 builder.Services.AddControllers();
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle

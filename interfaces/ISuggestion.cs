@@ -10,8 +10,7 @@
 
         Task<Class_Suggestion> AddIndividualSuggestion(Class_Suggestion c);
 
-        Task<Class_Suggestion> mapToSuggestionFromPreview(Class_Suggestion help, Class_Preview_Operative_report c);
-
+      
         
     }
 

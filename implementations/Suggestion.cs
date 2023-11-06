@@ -192,7 +192,8 @@ public class Suggestion : ISuggestion
         using (var connection = _context.CreateConnection())
         {
             var result = await connection.QuerySingleOrDefaultAsync<Class_Suggestion>(query, new { userId, soort });
-            if(result == null){
+            if (result == null)
+            {
                 var sug = new Class_Suggestion();
                 sug.user = userId;
                 sug.soort = soort;
@@ -225,11 +226,12 @@ public class Suggestion : ISuggestion
        "regel_24 = @regel_24, regel_25 = @regel_25, regel_26 = @regel_26, " +
        "regel_27 = @regel_27, regel_28 = @regel_28, regel_29 = @regel_29, " +
        "regel_30 = @regel_30, regel_31 = @regel_31, regel_32 = @regel_32, " +
-       "regel_33 = @regel_33 WHERE soort = @soort AND user = @user";
+       "regel_33 = @regel_33, soort = @soort, user = @user WHERE id = @id";
 
         var parameters = new DynamicParameters();
+        parameters.Add("id", cs.Id, DbType.Int32);
         parameters.Add("soort", cs.soort, DbType.Int32);
-        parameters.Add("user", cs.user, DbType.String);
+        parameters.Add("user", cs.user, DbType.Int32);
         parameters.Add("regel_1_a", cs.regel_1_a, DbType.String);
         parameters.Add("regel_1_b", cs.regel_1_b, DbType.String);
         parameters.Add("regel_1_c", cs.regel_1_c, DbType.String);
@@ -295,66 +297,18 @@ public class Suggestion : ISuggestion
         parameters.Add("regel_32", cs.regel_32, DbType.String);
         parameters.Add("regel_33", cs.regel_33, DbType.String);
 
-        try { using (var connection = _context.CreateConnection()) { await connection.ExecuteAsync(query, parameters); } }
+        try
+        {
+            using (var connection = _context.CreateConnection())
+            {
+                await connection.ExecuteAsync(query, parameters);
+            }
+        }
         catch (Exception e) { Console.WriteLine(e.InnerException); }
 
         return 1;
     }
-    public async Task<Class_Suggestion> mapToSuggestionFromPreview(Class_Suggestion help, Class_Preview_Operative_report c)
-    {
-        await Task.Run(() =>
-        {
-            help.regel_1_a = c.regel_1;
-            help.regel_2_a = c.regel_2;
-            help.regel_3_a = c.regel_3;
-            help.regel_4_a = c.regel_4;
-            help.regel_5_a = c.regel_5;
-            help.regel_6_a = c.regel_6;
-            help.regel_7_a = c.regel_7;
-            help.regel_8_a = c.regel_8;
-            help.regel_9_a = c.regel_9;
-            help.regel_10_a = c.regel_10;
-            help.regel_11_a = c.regel_11;
-            help.regel_12_a = c.regel_12;
-            help.regel_13_a = c.regel_13;
-            help.regel_14_a = c.regel_14;
-            help.regel_15 = c.regel_15;
-            help.regel_16 = c.regel_16;
-            help.regel_17 = c.regel_17;
-            help.regel_18 = c.regel_18;
-            help.regel_19 = c.regel_19;
-            help.regel_20 = c.regel_20;
-            help.regel_21 = c.regel_21;
-            help.regel_22 = c.regel_22;
-            help.regel_23 = c.regel_23;
-            help.regel_24 = c.regel_24;
-            help.regel_25 = c.regel_25;
-            help.regel_26 = c.regel_26;
-            help.regel_27 = c.regel_27;
-            help.regel_28 = c.regel_28;
-            help.regel_29 = c.regel_29;
-            help.regel_30 = c.regel_30;
-            help.regel_31 = c.regel_31;
-            help.regel_32 = c.regel_32;
-            help.regel_33 = c.regel_33;
-
-            help.regel_1_b = ""; help.regel_1_c = "";
-            help.regel_2_b = ""; help.regel_2_c = "";
-            help.regel_3_b = ""; help.regel_3_c = "";
-            help.regel_4_b = ""; help.regel_4_c = "";
-            help.regel_5_b = ""; help.regel_5_c = "";
-            help.regel_6_b = ""; help.regel_6_c = "";
-            help.regel_7_b = ""; help.regel_7_c = "";
-            help.regel_8_b = ""; help.regel_8_c = "";
-            help.regel_9_b = ""; help.regel_9_c = "";
-            help.regel_10_b = ""; help.regel_10_c = "";
-            help.regel_11_b = ""; help.regel_11_c = "";
-            help.regel_12_b = ""; help.regel_12_c = "";
-            help.regel_13_b = ""; help.regel_13_c = "";
-            help.regel_14_b = ""; help.regel_14_c = "";
-        });
-        return help;
-    }
+ 
     private Class_Item mapSuggestionToClassItem(Class_Suggestion sug)
     {
         var help = new Class_Item();

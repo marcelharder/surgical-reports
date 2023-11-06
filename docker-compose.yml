@@ -39,7 +39,7 @@ services:
       - db 
 
   reports:
-    image: reports:v16
+    image: reports:v17
     networks:
       - internal-container-network
     ports:

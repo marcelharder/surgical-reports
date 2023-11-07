@@ -11,6 +11,7 @@ public class Suggestion : ISuggestion
     }
     public async Task<Class_Suggestion> AddIndividualSuggestion(Class_Suggestion cs)
     {
+        if(noDuplicate(cs.soort, cs.user)){} else {await deleteSuggestionAsync(cs.soort, cs.user);}
 
         var query = "INSERT INTO Suggestions (soort, user, regel_1_a, regel_1_b, regel_1_c, regel_2_a, regel_2_b, regel_2_c, " +
         "regel_3_a, regel_3_b, regel_3_c,regel_4_a, regel_4_b, regel_4_c,regel_5_a, regel_5_b, regel_5_c, " +
@@ -168,11 +169,19 @@ public class Suggestion : ISuggestion
                 regel_32 = cs.regel_32,
                 regel_33 = cs.regel_33
             };
+            await updateSuggestion(createdSuggestion);
             return createdSuggestion;
         }
-
-
-
+     }
+    private async Task<int> deleteSuggestionAsync(int soort, string user)
+    {
+        var query = "DELETE FROM Suggestions WHERE soort = @soort AND user = @user";
+        using (var connection = _context.CreateConnection()) { await connection.ExecuteAsync(query, new { soort, user }); }
+        return 1;
+    }
+    private bool noDuplicate(int soort, string user)
+    {
+        if(GetIndividualSuggestion(soort,user) == null){return true;} else {return false;}
     }
     public async Task<List<Class_Item>> GetAllIndividualSuggestions(string userId)
     {
@@ -226,7 +235,7 @@ public class Suggestion : ISuggestion
        "regel_24 = @regel_24, regel_25 = @regel_25, regel_26 = @regel_26, " +
        "regel_27 = @regel_27, regel_28 = @regel_28, regel_29 = @regel_29, " +
        "regel_30 = @regel_30, regel_31 = @regel_31, regel_32 = @regel_32, " +
-       "regel_33 = @regel_33, soort = @soort, user = @user WHERE id = @id";
+       "regel_33 = @regel_33 WHERE soort = @soort AND user = @user";
 
         var parameters = new DynamicParameters();
         parameters.Add("id", cs.Id, DbType.Int32);
@@ -308,7 +317,6 @@ public class Suggestion : ISuggestion
 
         return 1;
     }
- 
     private Class_Item mapSuggestionToClassItem(Class_Suggestion sug)
     {
         var help = new Class_Item();

@@ -354,6 +354,72 @@
          <items>Pacemaker wires were </items>
       </generaltext>
       <cabg>
+         <quality>
+            <items>
+               <description>good</description>
+               <value>1</value>
+            </items>
+            <items>
+               <description>bad</description>
+               <value>2</value>
+            </items>
+         </quality>
+         <diameter>
+            <items>
+               <description>less than 1 mm</description>
+               <value>1</value>
+            </items>
+            <items>
+               <description>1 mm</description>
+               <value>2</value>
+            </items>
+            <items>
+               <description>1.25 mm</description>
+               <value>3</value>
+            </items>
+            <items>
+               <description>1.50 mm</description>
+               <value>4</value>
+            </items>
+            <items>
+               <description>1.75 mm</description>
+               <value>5</value>
+            </items>
+            <items>
+               <description>2.0 mm</description>
+               <value>6</value>
+            </items>
+            <items>
+               <description>2.5 mm</description>
+               <value>7</value>
+            </items>
+            <items>
+               <description>more than 2.5 mm</description>
+               <value>8</value>
+            </items>
+         </diameter>
+         <angle>
+            <items>
+               <description>0</description>
+               <value>1</value>
+            </items>
+            <items>
+               <description>30</description>
+               <value>2</value>
+            </items>
+            <items>
+               <description>45</description>
+               <value>3</value>
+            </items>
+            <items>
+               <description>60</description>
+               <value>4</value>
+            </items>
+            <items>
+               <description>90</description>
+               <value>5</value>
+            </items>
+         </angle>
          <dropradial>
             <items>
                <description>the left arm</description>
@@ -402,6 +468,76 @@
                <value>8</value>
             </items>
          </dropleg>
+         <locatie>
+            <items>
+               <description>proximal RCA</description>
+               <value>1</value>
+            </items>
+            <items>
+               <description>mid RCA</description>
+               <value>2</value>
+            </items>
+            <items>
+               <description>distal RCA</description>
+               <value>3</value>
+            </items>
+            <items>
+               <description>RCA - PDA</description>
+               <value>4</value>
+            </items>
+            <items>
+               <description>RCA - LV branch</description>
+               <value>5</value>
+            </items>
+            <items>
+               <description>Mainstem CA</description>
+               <value>6</value>
+            </items>
+            <items>
+               <description>proximal LAD</description>
+               <value>7</value>
+            </items>
+            <items>
+               <description>mid LAD</description>
+               <value>8</value>
+            </items>
+            <items>
+               <description>distal LAD</description>
+               <value>9</value>
+            </items>
+            <items>
+               <description>diag 1</description>
+               <value>10</value>
+            </items>
+            <items>
+               <description>diag 2</description>
+               <value>11</value>
+            </items>
+            <items>
+               <description>proximal CX</description>
+               <value>12</value>
+            </items>
+            <items>
+               <description>distal CX</description>
+               <value>13</value>
+            </items>
+            <items>
+               <description>Anterolateral</description>
+               <value>14</value>
+            </items>
+            <items>
+               <description>OM 1</description>
+               <value>15</value>
+            </items>
+            <items>
+               <description>OM 2</description>
+               <value>16</value>
+            </items>
+            <items>
+               <description>CX-PDA</description>
+               <value>17</value>
+            </items>
+         </locatie>
       </cabg>
       <cpb>
          <delivery>
@@ -565,6 +701,72 @@
          <items>Pacemaker draden werden </items>
       </generaltext>
       <cabg>
+         <quality>
+            <items>
+               <description>good</description>
+               <value>1</value>
+            </items>
+            <items>
+               <description>bad</description>
+               <value>2</value>
+            </items>
+         </quality>
+         <diameter>
+            <items>
+               <description>less than 1 mm</description>
+               <value>1</value>
+            </items>
+            <items>
+               <description>1 mm</description>
+               <value>2</value>
+            </items>
+            <items>
+               <description>1.25 mm</description>
+               <value>3</value>
+            </items>
+            <items>
+               <description>1.50 mm</description>
+               <value>4</value>
+            </items>
+            <items>
+               <description>1.75 mm</description>
+               <value>5</value>
+            </items>
+            <items>
+               <description>2.0 mm</description>
+               <value>6</value>
+            </items>
+            <items>
+               <description>2.5 mm</description>
+               <value>7</value>
+            </items>
+            <items>
+               <description>more than 2.5 mm</description>
+               <value>8</value>
+            </items>
+         </diameter>
+         <angle>
+            <items>
+               <description>0</description>
+               <value>1</value>
+            </items>
+            <items>
+               <description>30</description>
+               <value>2</value>
+            </items>
+            <items>
+               <description>45</description>
+               <value>3</value>
+            </items>
+            <items>
+               <description>60</description>
+               <value>4</value>
+            </items>
+            <items>
+               <description>90</description>
+               <value>5</value>
+            </items>
+         </angle>
          <dropradial>
             <items>
                <description>the left arm</description>
@@ -613,6 +815,76 @@
                <value>8</value>
             </items>
          </dropleg>
+         <locatie>
+            <items>
+               <description>proximal RCA</description>
+               <value>1</value>
+            </items>
+            <items>
+               <description>mid RCA</description>
+               <value>2</value>
+            </items>
+            <items>
+               <description>distal RCA</description>
+               <value>3</value>
+            </items>
+            <items>
+               <description>RCA - PDA</description>
+               <value>4</value>
+            </items>
+            <items>
+               <description>RCA - LV branch</description>
+               <value>5</value>
+            </items>
+            <items>
+               <description>Mainstem CA</description>
+               <value>6</value>
+            </items>
+            <items>
+               <description>proximal LAD</description>
+               <value>7</value>
+            </items>
+            <items>
+               <description>mid LAD</description>
+               <value>8</value>
+            </items>
+            <items>
+               <description>distal LAD</description>
+               <value>9</value>
+            </items>
+            <items>
+               <description>diag 1</description>
+               <value>10</value>
+            </items>
+            <items>
+               <description>diag 2</description>
+               <value>11</value>
+            </items>
+            <items>
+               <description>proximal CX</description>
+               <value>12</value>
+            </items>
+            <items>
+               <description>distal CX</description>
+               <value>13</value>
+            </items>
+            <items>
+               <description>Anterolateral</description>
+               <value>14</value>
+            </items>
+            <items>
+               <description>OM 1</description>
+               <value>15</value>
+            </items>
+            <items>
+               <description>OM 2</description>
+               <value>16</value>
+            </items>
+            <items>
+               <description>CX-PDA</description>
+               <value>17</value>
+            </items>
+         </locatie>
       </cabg>
       <cpb>
          <delivery>
@@ -776,6 +1048,72 @@
          <items>ai ai Pacemaker draden werden </items>
       </generaltext>
       <cabg>
+         <quality>
+            <items>
+               <description>good</description>
+               <value>1</value>
+            </items>
+            <items>
+               <description>bad</description>
+               <value>2</value>
+            </items>
+         </quality>
+         <diameter>
+            <items>
+               <description>less than 1 mm</description>
+               <value>1</value>
+            </items>
+            <items>
+               <description>1 mm</description>
+               <value>2</value>
+            </items>
+            <items>
+               <description>1.25 mm</description>
+               <value>3</value>
+            </items>
+            <items>
+               <description>1.50 mm</description>
+               <value>4</value>
+            </items>
+            <items>
+               <description>1.75 mm</description>
+               <value>5</value>
+            </items>
+            <items>
+               <description>2.0 mm</description>
+               <value>6</value>
+            </items>
+            <items>
+               <description>2.5 mm</description>
+               <value>7</value>
+            </items>
+            <items>
+               <description>more than 2.5 mm</description>
+               <value>8</value>
+            </items>
+         </diameter>
+         <angle>
+            <items>
+               <description>0</description>
+               <value>1</value>
+            </items>
+            <items>
+               <description>30</description>
+               <value>2</value>
+            </items>
+            <items>
+               <description>45</description>
+               <value>3</value>
+            </items>
+            <items>
+               <description>60</description>
+               <value>4</value>
+            </items>
+            <items>
+               <description>90</description>
+               <value>5</value>
+            </items>
+         </angle>
          <dropradial>
             <items>
                <description>the left arm</description>
@@ -824,6 +1162,76 @@
                <value>8</value>
             </items>
          </dropleg>
+         <locatie>
+            <items>
+               <description>proximal RCA</description>
+               <value>1</value>
+            </items>
+            <items>
+               <description>mid RCA</description>
+               <value>2</value>
+            </items>
+            <items>
+               <description>distal RCA</description>
+               <value>3</value>
+            </items>
+            <items>
+               <description>RCA - PDA</description>
+               <value>4</value>
+            </items>
+            <items>
+               <description>RCA - LV branch</description>
+               <value>5</value>
+            </items>
+            <items>
+               <description>Mainstem CA</description>
+               <value>6</value>
+            </items>
+            <items>
+               <description>proximal LAD</description>
+               <value>7</value>
+            </items>
+            <items>
+               <description>mid LAD</description>
+               <value>8</value>
+            </items>
+            <items>
+               <description>distal LAD</description>
+               <value>9</value>
+            </items>
+            <items>
+               <description>diag 1</description>
+               <value>10</value>
+            </items>
+            <items>
+               <description>diag 2</description>
+               <value>11</value>
+            </items>
+            <items>
+               <description>proximal CX</description>
+               <value>12</value>
+            </items>
+            <items>
+               <description>distal CX</description>
+               <value>13</value>
+            </items>
+            <items>
+               <description>Anterolateral</description>
+               <value>14</value>
+            </items>
+            <items>
+               <description>OM 1</description>
+               <value>15</value>
+            </items>
+            <items>
+               <description>OM 2</description>
+               <value>16</value>
+            </items>
+            <items>
+               <description>CX-PDA</description>
+               <value>17</value>
+            </items>
+         </locatie>
       </cabg>
       <cpb>
          <delivery>
@@ -987,6 +1395,72 @@
          <items>ai ai Pacemaker draden werden </items>
       </generaltext>
       <cabg>
+         <quality>
+            <items>
+               <description>good</description>
+               <value>1</value>
+            </items>
+            <items>
+               <description>bad</description>
+               <value>2</value>
+            </items>
+         </quality>
+         <diameter>
+            <items>
+               <description>less than 1 mm</description>
+               <value>1</value>
+            </items>
+            <items>
+               <description>1 mm</description>
+               <value>2</value>
+            </items>
+            <items>
+               <description>1.25 mm</description>
+               <value>3</value>
+            </items>
+            <items>
+               <description>1.50 mm</description>
+               <value>4</value>
+            </items>
+            <items>
+               <description>1.75 mm</description>
+               <value>5</value>
+            </items>
+            <items>
+               <description>2.0 mm</description>
+               <value>6</value>
+            </items>
+            <items>
+               <description>2.5 mm</description>
+               <value>7</value>
+            </items>
+            <items>
+               <description>more than 2.5 mm</description>
+               <value>8</value>
+            </items>
+         </diameter>
+         <angle>
+            <items>
+               <description>0</description>
+               <value>1</value>
+            </items>
+            <items>
+               <description>30</description>
+               <value>2</value>
+            </items>
+            <items>
+               <description>45</description>
+               <value>3</value>
+            </items>
+            <items>
+               <description>60</description>
+               <value>4</value>
+            </items>
+            <items>
+               <description>90</description>
+               <value>5</value>
+            </items>
+         </angle>
          <dropradial>
             <items>
                <description>the left arm</description>
@@ -1035,6 +1509,76 @@
                <value>8</value>
             </items>
          </dropleg>
+         <locatie>
+            <items>
+               <description>proximal RCA</description>
+               <value>1</value>
+            </items>
+            <items>
+               <description>mid RCA</description>
+               <value>2</value>
+            </items>
+            <items>
+               <description>distal RCA</description>
+               <value>3</value>
+            </items>
+            <items>
+               <description>RCA - PDA</description>
+               <value>4</value>
+            </items>
+            <items>
+               <description>RCA - LV branch</description>
+               <value>5</value>
+            </items>
+            <items>
+               <description>Mainstem CA</description>
+               <value>6</value>
+            </items>
+            <items>
+               <description>proximal LAD</description>
+               <value>7</value>
+            </items>
+            <items>
+               <description>mid LAD</description>
+               <value>8</value>
+            </items>
+            <items>
+               <description>distal LAD</description>
+               <value>9</value>
+            </items>
+            <items>
+               <description>diag 1</description>
+               <value>10</value>
+            </items>
+            <items>
+               <description>diag 2</description>
+               <value>11</value>
+            </items>
+            <items>
+               <description>proximal CX</description>
+               <value>12</value>
+            </items>
+            <items>
+               <description>distal CX</description>
+               <value>13</value>
+            </items>
+            <items>
+               <description>Anterolateral</description>
+               <value>14</value>
+            </items>
+            <items>
+               <description>OM 1</description>
+               <value>15</value>
+            </items>
+            <items>
+               <description>OM 2</description>
+               <value>16</value>
+            </items>
+            <items>
+               <description>CX-PDA</description>
+               <value>17</value>
+            </items>
+         </locatie>
       </cabg>
       <cpb>
          <delivery>
@@ -1198,6 +1742,72 @@
          <items>ai ai Pacemaker draden werden </items>
       </generaltext>
       <cabg>
+         <quality>
+            <items>
+               <description>good</description>
+               <value>1</value>
+            </items>
+            <items>
+               <description>bad</description>
+               <value>2</value>
+            </items>
+         </quality>
+         <diameter>
+            <items>
+               <description>less than 1 mm</description>
+               <value>1</value>
+            </items>
+            <items>
+               <description>1 mm</description>
+               <value>2</value>
+            </items>
+            <items>
+               <description>1.25 mm</description>
+               <value>3</value>
+            </items>
+            <items>
+               <description>1.50 mm</description>
+               <value>4</value>
+            </items>
+            <items>
+               <description>1.75 mm</description>
+               <value>5</value>
+            </items>
+            <items>
+               <description>2.0 mm</description>
+               <value>6</value>
+            </items>
+            <items>
+               <description>2.5 mm</description>
+               <value>7</value>
+            </items>
+            <items>
+               <description>more than 2.5 mm</description>
+               <value>8</value>
+            </items>
+         </diameter>
+         <angle>
+            <items>
+               <description>0</description>
+               <value>1</value>
+            </items>
+            <items>
+               <description>30</description>
+               <value>2</value>
+            </items>
+            <items>
+               <description>45</description>
+               <value>3</value>
+            </items>
+            <items>
+               <description>60</description>
+               <value>4</value>
+            </items>
+            <items>
+               <description>90</description>
+               <value>5</value>
+            </items>
+         </angle>
          <dropradial>
             <items>
                <description>the left arm</description>
@@ -1246,6 +1856,76 @@
                <value>8</value>
             </items>
          </dropleg>
+         <locatie>
+            <items>
+               <description>proximal RCA</description>
+               <value>1</value>
+            </items>
+            <items>
+               <description>mid RCA</description>
+               <value>2</value>
+            </items>
+            <items>
+               <description>distal RCA</description>
+               <value>3</value>
+            </items>
+            <items>
+               <description>RCA - PDA</description>
+               <value>4</value>
+            </items>
+            <items>
+               <description>RCA - LV branch</description>
+               <value>5</value>
+            </items>
+            <items>
+               <description>Mainstem CA</description>
+               <value>6</value>
+            </items>
+            <items>
+               <description>proximal LAD</description>
+               <value>7</value>
+            </items>
+            <items>
+               <description>mid LAD</description>
+               <value>8</value>
+            </items>
+            <items>
+               <description>distal LAD</description>
+               <value>9</value>
+            </items>
+            <items>
+               <description>diag 1</description>
+               <value>10</value>
+            </items>
+            <items>
+               <description>diag 2</description>
+               <value>11</value>
+            </items>
+            <items>
+               <description>proximal CX</description>
+               <value>12</value>
+            </items>
+            <items>
+               <description>distal CX</description>
+               <value>13</value>
+            </items>
+            <items>
+               <description>Anterolateral</description>
+               <value>14</value>
+            </items>
+            <items>
+               <description>OM 1</description>
+               <value>15</value>
+            </items>
+            <items>
+               <description>OM 2</description>
+               <value>16</value>
+            </items>
+            <items>
+               <description>CX-PDA</description>
+               <value>17</value>
+            </items>
+         </locatie>
       </cabg>
       <cpb>
          <delivery>
@@ -1409,6 +2089,72 @@
          <items>ai ai Pacemaker draden werden </items>
       </generaltext>
       <cabg>
+         <quality>
+            <items>
+               <description>good</description>
+               <value>1</value>
+            </items>
+            <items>
+               <description>bad</description>
+               <value>2</value>
+            </items>
+         </quality>
+         <diameter>
+            <items>
+               <description>less than 1 mm</description>
+               <value>1</value>
+            </items>
+            <items>
+               <description>1 mm</description>
+               <value>2</value>
+            </items>
+            <items>
+               <description>1.25 mm</description>
+               <value>3</value>
+            </items>
+            <items>
+               <description>1.50 mm</description>
+               <value>4</value>
+            </items>
+            <items>
+               <description>1.75 mm</description>
+               <value>5</value>
+            </items>
+            <items>
+               <description>2.0 mm</description>
+               <value>6</value>
+            </items>
+            <items>
+               <description>2.5 mm</description>
+               <value>7</value>
+            </items>
+            <items>
+               <description>more than 2.5 mm</description>
+               <value>8</value>
+            </items>
+         </diameter>
+         <angle>
+            <items>
+               <description>0</description>
+               <value>1</value>
+            </items>
+            <items>
+               <description>30</description>
+               <value>2</value>
+            </items>
+            <items>
+               <description>45</description>
+               <value>3</value>
+            </items>
+            <items>
+               <description>60</description>
+               <value>4</value>
+            </items>
+            <items>
+               <description>90</description>
+               <value>5</value>
+            </items>
+         </angle>
          <dropradial>
             <items>
                <description>the left arm</description>
@@ -1457,6 +2203,76 @@
                <value>8</value>
             </items>
          </dropleg>
+         <locatie>
+            <items>
+               <description>proximal RCA</description>
+               <value>1</value>
+            </items>
+            <items>
+               <description>mid RCA</description>
+               <value>2</value>
+            </items>
+            <items>
+               <description>distal RCA</description>
+               <value>3</value>
+            </items>
+            <items>
+               <description>RCA - PDA</description>
+               <value>4</value>
+            </items>
+            <items>
+               <description>RCA - LV branch</description>
+               <value>5</value>
+            </items>
+            <items>
+               <description>Mainstem CA</description>
+               <value>6</value>
+            </items>
+            <items>
+               <description>proximal LAD</description>
+               <value>7</value>
+            </items>
+            <items>
+               <description>mid LAD</description>
+               <value>8</value>
+            </items>
+            <items>
+               <description>distal LAD</description>
+               <value>9</value>
+            </items>
+            <items>
+               <description>diag 1</description>
+               <value>10</value>
+            </items>
+            <items>
+               <description>diag 2</description>
+               <value>11</value>
+            </items>
+            <items>
+               <description>proximal CX</description>
+               <value>12</value>
+            </items>
+            <items>
+               <description>distal CX</description>
+               <value>13</value>
+            </items>
+            <items>
+               <description>Anterolateral</description>
+               <value>14</value>
+            </items>
+            <items>
+               <description>OM 1</description>
+               <value>15</value>
+            </items>
+            <items>
+               <description>OM 2</description>
+               <value>16</value>
+            </items>
+            <items>
+               <description>CX-PDA</description>
+               <value>17</value>
+            </items>
+         </locatie>
       </cabg>
       <cpb>
          <delivery>

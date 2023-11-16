@@ -107,7 +107,6 @@ public class PreviewReport : IPreviewReport
         }
         else { return null; }
     }
-
     private async Task<List<string>> getStatic_Text_Per_Country(Class_Procedure currentProcedure)
     {
         // this gives a language specific text if the general details are filled
@@ -129,7 +128,6 @@ public class PreviewReport : IPreviewReport
          }
           return static_text;
     }
-
     private List<string> getStatic(List<string> help, Class_Procedure currentProcedure, string iabp_result){
         var r = new List<string>();
          if (currentProcedure.SelectedInotropes != 0) { r.Add(help[0]); } else r.Add("");

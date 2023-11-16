@@ -23,12 +23,12 @@ private readonly IWebHostEnvironment _env;
             _proc = proc;
         }
 
-        [AllowAnonymous]
+       /*  [AllowAnonymous]
         [HttpGet("{id}")]
         public IActionResult Get(int id)
         {
            return File(this.GetStream(id.ToString()), "application/pdf", $"{id}.pdf");
-        }
+        } */
         [AllowAnonymous]
         [HttpGet("getRefReport/{hash}")]
         public async Task<IActionResult> getPdfForRefPhys(string hash)
@@ -37,9 +37,12 @@ private readonly IWebHostEnvironment _env;
             var id = await _proc.getProcedureIdFromHash(hash);
             if (id == 0 || await _impdf.PdfDoesNotExists(id.ToString()))
             {
-                return BadRequest("Your operative report is not found or expired ...");
+                return Ok(0);
+               // return BadRequest("Your operative report is not found or expired ...");
             }
-            return File(this.GetStream(id.ToString()), "application/pdf", $"{id}.pdf");
+            else {return Ok(id);}
+           
+           // return File(this.GetStream(id.ToString()), "application/pdf", $"{id}.pdf");
         }
 
         private Stream GetStream(string id_string)

@@ -35,6 +35,14 @@ public class SuggestionController : ControllerBase
         return Ok(p);
     }
 
+    [HttpPut("personalized")]
+    public async Task<IActionResult> PutSuggestion(Class_Suggestion cp)
+    {
+        var result = await _repo.updateSuggestion(cp);
+        return Ok(result);
+    }
+
+
     [HttpPut]
     public async Task<IActionResult> Put(Class_Preview_Operative_report cp)
     {

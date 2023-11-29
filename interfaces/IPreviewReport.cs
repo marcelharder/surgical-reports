@@ -8,4 +8,5 @@ public interface IPreviewReport
         Task<int> updatePVR(Class_Preview_Operative_report pv);
         Task<bool> findPreview(int procedure_id);
         string getReportCode(string fdType);
-    }
+        Task<ReportHeaderDTO> getReportHeaderAsync(int procedure_id);
+}

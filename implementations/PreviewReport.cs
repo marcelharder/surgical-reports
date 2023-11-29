@@ -14,11 +14,14 @@ public class PreviewReport : IPreviewReport
     private IHospitalRepository _hos;
     private ICPBRepo _icpb;
     private ICABGRepo _cabg;
+
+    private IUserRepository _user;
     private OperatieDrops _drops;
 
     private string _currentLanguage;
     public PreviewReport(
         OperatieDrops drops,
+        IUserRepository user,
         IProcedureRepository proc,
         IHospitalRepository hos,
         ICPBRepo icpb,
@@ -31,6 +34,7 @@ public class PreviewReport : IPreviewReport
     {
         _context = context;
         _map = map;
+        _user = user;
         _text = text;
         _env = env;
         _proc = proc;
@@ -41,6 +45,50 @@ public class PreviewReport : IPreviewReport
         _hos = hos;
         _currentLanguage = "";
 
+    }
+
+    public async Task<ReportHeaderDTO> getReportHeaderAsync(int procedure_id)
+    {
+        var dto = new ReportHeaderDTO();
+        // get the current language
+        var currentProcedure = await _proc.getSpecificProcedure(procedure_id);
+        var currentHospital = currentProcedure.hospital;
+        var hospital = await _hos.GetSpecificHospital(currentHospital.ToString());
+        _currentLanguage = hospital.country;
+        var current_user = await _user.GetUser(currentProcedure.SelectedSurgeon);
+
+        dto.Id = currentProcedure.ProcedureId;
+        dto.hospital_image = hospital.imageUrl;
+
+        var l = new List<string>();
+        l = await this.getHeaderTextAsync(hospital.hospitalNo);
+
+        dto.hospital_city = l[0];
+        dto.hospital_name = l[1];
+        dto.hospital_number = l[2];
+        dto.hospital_unit = l[3];
+        dto.hospital_dept = l[4];
+
+        dto.operation_date = currentProcedure.DateOfSurgery;
+        var help = await getSpecificEmployeeAsync(currentProcedure.SelectedPerfusionist);
+        dto.perfusionist = help.name.UppercaseFirst();
+        dto.surgeon = current_user.KnownAs.UppercaseFirst();
+        dto.physician = current_user.KnownAs.UppercaseFirst();
+        help = await getSpecificEmployeeAsync(currentProcedure.SelectedAnaesthesist);
+        dto.anaesthesiologist = help.name.UppercaseFirst();
+        var user = await _user.GetUser(currentProcedure.SelectedAssistant);
+        if (user != null) { dto.assistant = user.KnownAs.UppercaseFirst(); } else { dto.assistant = "n/a"; }
+        dto.surgeon_picture = current_user.PhotoUrl;
+        dto.diagnosis = "";
+        dto.operation = currentProcedure.Description;
+        dto.title = "Operative Report";
+        dto.Comment_1 = currentProcedure.Comment1;
+        dto.Comment_2 = currentProcedure.Comment2;
+        dto.Comment_3 = currentProcedure.Comment3;
+
+
+
+        return dto;
     }
     public async Task<Class_Preview_Operative_report> getPreViewAsync(int procedure_id)
     {
@@ -55,7 +103,8 @@ public class PreviewReport : IPreviewReport
         {
             if (await findPreview(procedure_id)) { return await getPRA(procedure_id); }
             else //add a new preview instance to database
-            {   var result = new Class_Preview_Operative_report();
+            {
+                var result = new Class_Preview_Operative_report();
                 result.procedure_id = procedure_id;
                 var user_id = currentProcedure.SelectedSurgeon;
                 if (await UserHasASuggestionForThisProcedure(user_id, currentProcedure.fdType))// look for userspecificreport
@@ -63,7 +112,7 @@ public class PreviewReport : IPreviewReport
                     var usersuggestion = await getUserSpecificSuggestion(user_id, currentProcedure.fdType);
                     result = _map.Map<Class_Suggestion, Class_Preview_Operative_report>(usersuggestion);
                     result.procedure_id = procedure_id;
-                    
+
                     var text = await getStatic_Text_Per_Country(currentProcedure);
                     result.regel_21 = text[0];
                     result.regel_22 = text[1];
@@ -77,7 +126,7 @@ public class PreviewReport : IPreviewReport
                     if (currentProcedure.fdType == 6)
                     {
                         result.regel_1 = "This procedure is not (yet) available for reporting";
-                        
+
                         var text = await getStatic_Text_Per_Country(currentProcedure);
                         result.regel_21 = text[0];
                         result.regel_22 = text[1];
@@ -95,7 +144,7 @@ public class PreviewReport : IPreviewReport
                         var t = await _text.getInstitutionalReport(currentProcedure.hospital.ToString(), currentProcedure.fdType.ToString());
                         var no = _map.Map<InstitutionalDTO, Class_Preview_Operative_report>(t);
                         no.procedure_id = currentProcedure.ProcedureId;
-                       
+
                         var text = await getStatic_Text_Per_Country(currentProcedure);
                         no.regel_21 = text[0];
                         no.regel_22 = text[1];
@@ -118,22 +167,23 @@ public class PreviewReport : IPreviewReport
         if (cpb != null) { iabp_result = await getIABPStuff(cpb); }
         switch (_currentLanguage)
         {
-            case "IT":help = await _drops.getGeneralText("IT");static_text = getStatic(help, currentProcedure, iabp_result);break;
-            case "NL":help = await _drops.getGeneralText("NL");static_text = getStatic(help, currentProcedure, iabp_result);break;
-            case "GB":help = await _drops.getGeneralText("GB");static_text = getStatic(help, currentProcedure, iabp_result);break;
-            case "SA":help = await _drops.getGeneralText("SA");static_text = getStatic(help, currentProcedure, iabp_result);break;
-            case "DE":help = await _drops.getGeneralText("DE");static_text = getStatic(help, currentProcedure, iabp_result);break;
-            case "US":help = await _drops.getGeneralText("US");static_text = getStatic(help, currentProcedure, iabp_result);break;
-            default:  help = await _drops.getGeneralText("GB");static_text = getStatic(help, currentProcedure, iabp_result);break;
-         }
-          return static_text;
+            case "IT": help = await _drops.getGeneralText("IT"); static_text = getStatic(help, currentProcedure, iabp_result); break;
+            case "NL": help = await _drops.getGeneralText("NL"); static_text = getStatic(help, currentProcedure, iabp_result); break;
+            case "GB": help = await _drops.getGeneralText("GB"); static_text = getStatic(help, currentProcedure, iabp_result); break;
+            case "SA": help = await _drops.getGeneralText("SA"); static_text = getStatic(help, currentProcedure, iabp_result); break;
+            case "DE": help = await _drops.getGeneralText("DE"); static_text = getStatic(help, currentProcedure, iabp_result); break;
+            case "US": help = await _drops.getGeneralText("US"); static_text = getStatic(help, currentProcedure, iabp_result); break;
+            default: help = await _drops.getGeneralText("GB"); static_text = getStatic(help, currentProcedure, iabp_result); break;
+        }
+        return static_text;
     }
-    private List<string> getStatic(List<string> help, Class_Procedure currentProcedure, string iabp_result){
+    private List<string> getStatic(List<string> help, Class_Procedure currentProcedure, string iabp_result)
+    {
         var r = new List<string>();
-         if (currentProcedure.SelectedInotropes != 0) { r.Add(help[0]); } else r.Add("");
-         if (iabp_result != "")                       { r.Add(help[1]); } else r.Add("");
-         if (currentProcedure.SelectedPacemaker != 0) { r.Add(help[2]); } else r.Add("");
-     return r;
+        if (currentProcedure.SelectedInotropes != 0) { r.Add(help[0]); } else r.Add("");
+        if (iabp_result != "") { r.Add(help[1]); } else r.Add("");
+        if (currentProcedure.SelectedPacemaker != 0) { r.Add(help[2]); } else r.Add("");
+        return r;
     }
     public async Task<Class_Preview_Operative_report> resetPreViewAsync(int procedure_id)
     {
@@ -495,7 +545,7 @@ public class PreviewReport : IPreviewReport
         if (cpb.IABP_OPTIONS != null && cpb.IABP_OPTIONS != "0")
         {
             help = await getIABPWhenInserted(cpb);
-            
+
             if (cpb.IABP_IND != null && cpb.IABP_IND != "0")
             {
                 help = help + await getIABPUsedAsync(cpb);
@@ -563,5 +613,35 @@ public class PreviewReport : IPreviewReport
         }
         return help;
     }
+    private async Task<List<string>> getHeaderTextAsync(string current_hospital_id)
+    {
+        var help = new List<string>();
+        var hospitalId = current_hospital_id.makeSureTwoChar();
+        var query = "SELECT * FROM Hospitals WHERE HospitalNo = @current_hospital_id";
+        using (var connection = _context.CreateConnection())
+        {
+            var sh = await connection.QueryFirstOrDefaultAsync<Class_Hospital>(query, new { hospitalId });
+            help.Add(sh.OpReportDetails1);
+            help.Add(sh.OpReportDetails2);
+            help.Add("Hospital No:");
+            help.Add(sh.OpReportDetails4);
+            help.Add(sh.OpReportDetails5);
+            return help;
+        }
+    }
+    private async Task<Class_Employee> getSpecificEmployeeAsync(int test)
+    {
+        var help = new Class_Employee();
+        if (test == 0) { help.name = "n/a"; }
+        else
+        {
+            var query = "SELECT * FROM Employees WHERE Id = @test";
+            using (var connection = _context.CreateConnection())
+            {
+                help = await connection.QueryFirstOrDefaultAsync<Class_Employee>(query, new { test });
 
+            }
+        }
+        return help;
+    }
 }

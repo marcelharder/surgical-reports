@@ -1,27 +1,39 @@
+using System.Text.Json;
+using Microsoft.Extensions.Options;
+
 namespace surgical_reports.implementations;
 
 public class HospitalRepository : IHospitalRepository
 {
-    private readonly DapperContext _context;
+
     private IMapper _map;
-   
-    public HospitalRepository(DapperContext context, IMapper map)
+    private IOptions<ComSettings> _com;
+
+    public HospitalRepository(DapperContext context, IMapper map, IOptions<ComSettings> com)
     {
-        _context = context;
         _map = map;
-       
+        _com = com;
     }
 
     public async Task<HospitalForReturnDTO> GetSpecificHospital(string id)
     {
         var hospitalNo = id.makeSureTwoChar();
-        var query = "SELECT * FROM Hospitals WHERE HospitalNo = @hospitalNo";
-        using (var connection = _context.CreateConnection())
+        var comaddress = _com.Value.hospitalURL;
+        var st = "Hospital/" + hospitalNo;
+        comaddress = comaddress + st;
+        using (var httpClient = new HttpClient())
         {
-            var report = await connection.QuerySingleOrDefaultAsync<Class_Hospital>(query, new { hospitalNo });
-            var result = _map.Map<HospitalForReturnDTO>(report);
-
-        return result;
+            using (var response = await httpClient.GetAsync(comaddress))
+            {
+                string help = await response.Content.ReadAsStringAsync();
+                if (help != "")
+                {
+                    var res = JsonSerializer.Deserialize<Class_Hospital>(help);
+                    var result = _map.Map<HospitalForReturnDTO>(res);
+                    return result;
+                }
+                else { return null; }
+            }
         }
     }
 }

@@ -1,5 +1,7 @@
 var builder = WebApplication.CreateBuilder(args);
 
+builder.Services.Configure<ComSettings>(builder.Configuration.GetSection("ComSettings"));
+
 // Add services to the container.
 builder.Services.AddTransient<MySqlConnection>(_ => new MySqlConnection(builder.Configuration["ConnectionStrings:SQLConnection"]));
 builder.Services.AddSingleton<DapperContext>();

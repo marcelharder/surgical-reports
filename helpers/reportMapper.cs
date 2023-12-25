@@ -128,6 +128,7 @@ namespace surgical_reports.helpers
             var current_user = await _user.GetUser(cp.SelectedSurgeon);
             var currentHospitalId = cp.hospital.ToString().makeSureTwoChar();
             var currentHospital = await _hos.GetSpecificHospital(currentHospitalId);
+            
             _currentLanguage = currentHospital.country; // is used to get the correct language in translateCABGStuff etc
 
             // this is used to compile the final report from different sources

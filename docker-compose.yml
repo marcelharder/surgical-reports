@@ -24,12 +24,22 @@ services:
       - internal-container-network
     volumes:
       - mariadb-data:/var/lib/mysql
-
-  comservice:
-    image: comservice:v91
-    restart: always
-    networks: 
-     - internal-container-network 
+  
+  hospital:
+    image: hospital_app:v5
+    networks:
+      - internal-container-network
+    ports:
+      - 8103:80
+    depends_on:
+      - db
+  
+  
+  #comservice:
+  #  image: comservice:v91
+  #  restart: always
+  #  networks: 
+  #   - internal-container-network 
 
   #training:
   #  image: training:v12
@@ -38,25 +48,25 @@ services:
   #  depends_on:
   #    - db 
 
-  reports:
-    image: reports:v25
-    networks:
-      - internal-container-network
-    ports:
-      - 8089:80
-    depends_on:
-      - db
+  #reports:
+  #  image: reports:v25
+  #  networks:
+  #    - internal-container-network
+  #  ports:
+  #    - 8089:80
+  #  depends_on:
+  #    - db
 
-  onlinevalve_md:
-    image: inventory_md:v26
-    networks:
-     - internal-container-network
-    volumes:
-     - sqldata:/root/.aspnet/DataProtection-Keys
-    ports:
-     - 8045:80
-    depends_on: 
-     - db
+  #onlinevalve_md:
+  #  image: inventory_md:v26
+  #  networks:
+  #   - internal-container-network
+  #  volumes:
+  #   - sqldata:/root/.aspnet/DataProtection-Keys
+  #  ports:
+  #   - 8045:80
+  #  depends_on: 
+  #   - db
 
   #tracPersonal:
   #  image: sql_app:v90

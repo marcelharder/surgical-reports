@@ -4,6 +4,7 @@ COPY Release App/
 WORKDIR /App
 
 COPY xml/*.xml /App/xml/
+COPY assets/json/*.json /App/assets/json/
 COPY assets/pdf/*.pdf /App/assets/pdf/
 #COPY assets/images/*.jpg /App/assets/images/
 

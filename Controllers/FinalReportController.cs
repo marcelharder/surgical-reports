@@ -2,58 +2,59 @@
 
 namespace surgical_reports.Controllers;
 
-    [ApiController]
-    [Route("api/[controller]")]
-    public class FinalReportController : ControllerBase
+[ApiController]
+[Route("api/[controller]")]
+public class FinalReportController : ControllerBase
+{
+
+    private readonly IWebHostEnvironment _env;
+    private IProcedureRepository _proc;
+    private IManageFinalReport _impdf;
+
+
+    public FinalReportController(
+        IWebHostEnvironment env,
+        IManageFinalReport impdf,
+
+        IProcedureRepository proc)
     {
-       
-private readonly IWebHostEnvironment _env;
-        private IProcedureRepository _proc;
-        private IManageFinalReport _impdf;
-
-
-        public FinalReportController(
-            IWebHostEnvironment env,
-            IManageFinalReport impdf,
-
-            IProcedureRepository proc)
-        {
-            _env = env;
-            _impdf = impdf;
-            _proc = proc;
-        }
-
-       /*  [AllowAnonymous]
-        [HttpGet("{id}")]
-        public IActionResult Get(int id)
-        {
-           return File(this.GetStream(id.ToString()), "application/pdf", $"{id}.pdf");
-        } */
-        [AllowAnonymous]
-        [HttpGet("getRefReport/{hash}")]
-        public async Task<IActionResult> getPdfForRefPhys(string hash)
-        {
-            _impdf.DeleteExpiredReports(); // delete expired reports 
-            var id = await _proc.getProcedureIdFromHash(hash);
-            if (id == 0 || await _impdf.PdfDoesNotExists(id.ToString()))
-            {
-                return Ok(0);
-               // return BadRequest("Your operative report is not found or expired ...");
-            }
-            else {return Ok(id);}
-           
-           // return File(this.GetStream(id.ToString()), "application/pdf", $"{id}.pdf");
-        }
-
-        private Stream GetStream(string id_string)
-        {
-            var pathToFile = _env.ContentRootPath + "/assets/pdf/";
-            var file_name = pathToFile + id_string + ".pdf";
-            var stream = new FileStream(file_name, FileMode.Open, FileAccess.Read);
-            stream.Position = 0;
-            return stream;
-        }
-       
-
-       
+        _env = env;
+        _impdf = impdf;
+        _proc = proc;
     }
+
+    [AllowAnonymous]
+    [HttpGet("{id}")]
+    public IActionResult Get(int id)
+    {
+        return File(this.GetStream(id.ToString()), "application/pdf", $"{id}.pdf");
+    }
+
+    [AllowAnonymous]
+    [HttpGet("getRefReport/{hash}")]
+    public async Task<IActionResult> getPdfForRefPhys(string hash)
+    {
+        _impdf.DeleteExpiredReports(); // delete expired reports 
+        var id = await _proc.getProcedureIdFromHash(hash);
+        if (id == 0 || await _impdf.PdfDoesNotExists(id.ToString()))
+        {
+            return BadRequest("Your operative report is not found or expired ...");
+        }
+        else
+        {
+            return File(this.GetStream(id.ToString()), "application/pdf", $"{id}.pdf");
+        }
+    }
+
+    private Stream GetStream(string id_string)
+    {
+        var pathToFile = _env.ContentRootPath + "/assets/pdf/";
+        var file_name = pathToFile + id_string + ".pdf";
+        var stream = new FileStream(file_name, FileMode.Open, FileAccess.Read);
+        stream.Position = 0;
+        return stream;
+    }
+
+
+
+}

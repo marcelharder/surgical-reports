@@ -1,7 +1,3 @@
-
-using System.Collections;
-using surgical_reports.helpers;
-
 namespace surgical_reports.implementations;
 
 public class PreviewReport : IPreviewReport
@@ -61,7 +57,7 @@ public class PreviewReport : IPreviewReport
         dto.hospital_image = hospital.imageUrl;
 
         var l = new List<string>();
-        l = await this.getHeaderTextAsync(hospital.hospitalNo);
+        l = await this.getHeaderTextAsync(hospital);
 
         dto.hospital_city = l[0];
         dto.hospital_name = l[1];
@@ -613,21 +609,18 @@ public class PreviewReport : IPreviewReport
         }
         return help;
     }
-    private async Task<List<string>> getHeaderTextAsync(string current_hospital_id)
+    private async Task<List<string>> getHeaderTextAsync(HospitalForReturnDTO sh)
     {
         var help = new List<string>();
-        var hospitalId = current_hospital_id.makeSureTwoChar();
-        var query = "SELECT * FROM Hospitals WHERE HospitalNo = @current_hospital_id";
-        using (var connection = _context.CreateConnection())
+        await Task.Run(() =>
         {
-            var sh = await connection.QueryFirstOrDefaultAsync<Class_Hospital>(query, new { hospitalId });
             help.Add(sh.OpReportDetails1);
             help.Add(sh.OpReportDetails2);
             help.Add("Hospital No:");
             help.Add(sh.OpReportDetails4);
             help.Add(sh.OpReportDetails5);
-            return help;
-        }
+        });
+        return help;
     }
     private async Task<Class_Employee> getSpecificEmployeeAsync(int test)
     {
@@ -639,7 +632,6 @@ public class PreviewReport : IPreviewReport
             using (var connection = _context.CreateConnection())
             {
                 help = await connection.QueryFirstOrDefaultAsync<Class_Employee>(query, new { test });
-
             }
         }
         return help;

@@ -37,9 +37,8 @@ public class PreViewReportController : ControllerBase
     [HttpGet("reset/{id}")]
     public async Task<IActionResult> resetReport(int id) { var help = await _repo.resetPreViewAsync(id); return Ok(help); }
 
-     [HttpGet("getReportHeader/{iprocedure_id}")]
+     [HttpGet("getReportHeader/{procedure_id}")]
     public async Task<IActionResult> reportHeader(int procedure_id) { var help = await _repo.getReportHeaderAsync(procedure_id); return Ok(help); }
-
   
     [HttpPost]
     // this comes from the save and print button and results in a pdf

@@ -31,19 +31,19 @@ services:
     networks: 
      - internal-container-network 
 
-  training:
-    image: training:v12
-    networks:
-      - internal-container-network
-    depends_on:
-      - db 
+  #training:
+  #  image: training:v12
+  #  networks:
+  #    - internal-container-network
+  #  depends_on:
+  #    - db 
 
   reports:
-    image: reports:v23
+    image: reports:v25
     networks:
       - internal-container-network
     ports:
-      - 8086:80
+      - 8089:80
     depends_on:
       - db
 
